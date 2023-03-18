@@ -1,2 +1,3 @@
-# OpenSourceRepoTemplate
-OpenSourceRepoTemplate
+# WLCS
+
+A cross-platform Weightlifting Competition System

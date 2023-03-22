@@ -1,7 +1,8 @@
 ﻿namespace Domain.Common.Primitives;
-public abstract class Entity : IEquatable<Entity>
+public abstract class Entity<TId> : IEquatable<Entity<TId>>
+    where TId : notnull
 {
-    protected Entity(Guid id)
+    protected Entity(TId id)
     {
         Id = id;
     }
@@ -9,54 +10,29 @@ public abstract class Entity : IEquatable<Entity>
     {
     }
 
-    public Guid Id { get; protected init; }
+    public TId? Id { get; protected init; }
 
-    public static bool operator ==(Entity? left, Entity? right)
+    public static bool operator ==(Entity<TId>? left, Entity<TId>? right)
     {
         return left is not null && right is not null && left.Equals(right);
     }
 
-    public static bool operator !=(Entity? left, Entity? right)
+    public static bool operator !=(Entity<TId>? left, Entity<TId>? right)
     {
         return !(left == right);
     }
     public override bool Equals(object? obj)
     {
-        if (obj is null)
-        {
-            return false;
-        }
-
-        if (obj.GetType() != GetType())
-        {
-            return false;
-        }
-
-        if (obj is not Entity entity)
-        {
-            return false;
-        }
-
-        return entity.Id == Id;
+        return obj is Entity<TId> entity && Id!.Equals(entity.Id);
     }
 
-    public bool Equals(Entity? other)
+    public bool Equals(Entity<TId>? other)
     {
-        if (other is null)
-        {
-            return false;
-        }
-
-        if (other.GetType() != GetType())
-        {
-            return false;
-        }
-
-        return other.Id == Id;
+        return Equals((object ?)other);
     }
 
     public override int GetHashCode()
     {
-        return Id.GetHashCode() * 41;
+        return Id!.GetHashCode() * 41;
     }
 }

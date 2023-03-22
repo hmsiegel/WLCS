@@ -1,21 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    builder.Services
+        .InstallServices(
+        builder.Configuration,
+        typeof(IServiceInstaller).Assembly);
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+var app = builder.Build();
+{
+    app.RegisterPipelineCompnents(typeof(Program));
+    app.Run();
+}

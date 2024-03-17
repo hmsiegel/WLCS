@@ -1,0 +1,35 @@
+﻿namespace Application.Behaviors;
+public sealed class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest> validator)
+    : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
+        where TResponse : IErrorOr
+{
+    private readonly IValidator<TRequest>? _validator = validator;
+
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
+    {
+        if (_validator is null)
+        {
+            return await next().ConfigureAwait(false);
+        }
+
+        var validationResult = await _validator.ValidateAsync(
+            request,
+            cancellationToken).ConfigureAwait(false);
+
+        if (validationResult.IsValid)
+        {
+            return await next().ConfigureAwait(false);
+        }
+
+        var errors = validationResult.Errors
+            .ConvertAll(error => Error.Validation(
+                code: error.PropertyName,
+                description: error.ErrorMessage));
+
+        return (dynamic)errors;
+    }
+}

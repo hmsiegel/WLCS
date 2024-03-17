@@ -1,4 +1,4 @@
-﻿# Remove the line below if you want to inherit .editorconfig settings from higher directories
+# Remove the line below if you want to inherit .editorconfig settings from higher directories
 root = true
 
 # C# files
@@ -50,6 +50,7 @@ dotnet_style_null_propagation = true
 dotnet_style_object_initializer = true
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
 dotnet_style_prefer_auto_properties = true
+dotnet_style_prefer_collection_expression = when_types_loosely_match
 dotnet_style_prefer_compound_assignment = true
 dotnet_style_prefer_conditional_expression_over_assignment = true
 dotnet_style_prefer_conditional_expression_over_return = true
@@ -70,8 +71,8 @@ dotnet_code_quality_unused_parameters = all
 dotnet_remove_unnecessary_suppression_exclusions = none
 
 # New line preferences
-dotnet_style_allow_multiple_blank_lines_experimental = true
-dotnet_style_allow_statement_immediately_after_block_experimental = true
+dotnet_style_allow_multiple_blank_lines_experimental = false
+dotnet_style_allow_statement_immediately_after_block_experimental = false
 
 #### C# Coding Conventions ####
 
@@ -116,17 +117,17 @@ csharp_style_prefer_primary_constructors = true:suggestion
 csharp_style_prefer_top_level_statements = true:silent
 
 # Expression-level preferences
-csharp_prefer_simple_default_expression = true:suggestion
+csharp_prefer_simple_default_expression = true
 csharp_style_deconstructed_variable_declaration = true
 csharp_style_implicit_object_creation_when_type_is_apparent = true
 csharp_style_inlined_variable_declaration = true
 csharp_style_prefer_index_operator = true
 csharp_style_prefer_local_over_anonymous_function = true
-csharp_style_prefer_null_check_over_type_check = true:suggestion
+csharp_style_prefer_null_check_over_type_check = true
 csharp_style_prefer_range_operator = true
 csharp_style_prefer_tuple_swap = true
 csharp_style_prefer_utf8_string_literals = true
-csharp_style_throw_expression = true:suggestion
+csharp_style_throw_expression = true
 csharp_style_unused_value_assignment_preference = discard_variable
 csharp_style_unused_value_expression_statement_preference = discard_variable
 
@@ -137,7 +138,7 @@ csharp_using_directive_placement = outside_namespace:silent
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
 csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true
 csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true
-csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false
 csharp_style_allow_embedded_statements_on_same_line_experimental = true
 
 #### C# Formatting Rules ####
@@ -242,47 +243,35 @@ dotnet_naming_style.underscore.required_suffix =
 dotnet_naming_style.underscore.word_separator = 
 dotnet_naming_style.underscore.capitalization = camel_case
 
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+
+# CA1040: Avoid empty interfaces
+dotnet_diagnostic.CA1040.severity = none
+
+# CA1711: Identifiers should not have incorrect suffix
+dotnet_diagnostic.CA1711.severity = none
+
 # SA1200: Using directives should be placed correctly
 dotnet_diagnostic.SA1200.severity = none
 
 # SA1208: System using directives should be placed before other using directives
 dotnet_diagnostic.SA1208.severity = none
 
-# SA1633: File should have header
-dotnet_diagnostic.SA1633.severity = none
+# IDE0058: Expression value is never used
+dotnet_diagnostic.IDE0058.severity = none
 
-# SA1601: Partial elements should be documented
-dotnet_diagnostic.SA1601.severity = none
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none
 
-# SA1401: Fields should be private
-dotnet_diagnostic.SA1401.severity = none
-
-# SA1600: Elements should be documented
-dotnet_diagnostic.SA1600.severity = none
+# CA1310: Specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = none
 
 # SA1309: Field names should not begin with underscore
 dotnet_diagnostic.SA1309.severity = none
 
-# SA1101: Prefix local calls with this
-dotnet_diagnostic.SA1101.severity = none
-
-# SA1602: Enumeration items should be documented
-dotnet_diagnostic.SA1602.severity = none
-
 # SA1009: Closing parenthesis should be spaced correctly
 dotnet_diagnostic.SA1009.severity = none
-
-# SA1313: Parameter names should begin with lower-case letter
-dotnet_diagnostic.SA1313.severity = none
-
-# CS1591: Missing XML comment for publicly visible type or member
-dotnet_diagnostic.CS1591.severity = none
-
-# SA1010: Opening square brackets should be spaced correctly
-dotnet_diagnostic.SA1010.severity = none
-
-# CA1030: Use events where appropriate
-dotnet_diagnostic.CA1030.severity = none
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
@@ -303,8 +292,4 @@ dotnet_style_prefer_inferred_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
-dotnet_style_namespace_match_folder = true:suggestion
-
-# IDE0060: Remove unused parameter
-dotnet_diagnostic.IDE0060.severity = none
 dotnet_style_prefer_collection_expression = when_types_loosely_match:suggestion

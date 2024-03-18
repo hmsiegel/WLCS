@@ -1,4 +1,14 @@
 ﻿namespace Application.Behaviors;
+
+/// <summary>
+/// Represents the validation pipeline behavior.
+/// </summary>
+/// <typeparam name="TRequest">The request type.</typeparam>
+/// <typeparam name="TResponse">The response type.</typeparam>
+/// <summary>
+/// Initializes a new instance of the <see cref="ValidationBehavior{TRequest,TResponse}"/> class.
+/// </summary>
+/// <param name="validator">The validators for the given request.</param>
 public sealed class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest> validator)
     : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
@@ -6,6 +16,7 @@ public sealed class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest>
 {
     private readonly IValidator<TRequest>? _validator = validator;
 
+    /// <inheritdoc/>
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,

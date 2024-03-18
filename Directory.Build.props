@@ -14,6 +14,7 @@
 			PrivateAssets="all"
 			Condition="$(MSBuildProjectExtension) == '.csproj'" />
 		<AdditionalFile Include="$(MSBuildThisFileDirectory).editorconfig" Link="Properties\.editorconfig" />
+		<AdditionalFile Include="$(MSBuildThisFileDirectory)stylecopy.json" Link="Properties\.editorconfig" />
 	</ItemGroup>
 
 	<ItemGroup>

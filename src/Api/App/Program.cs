@@ -2,22 +2,34 @@ LoggingUtility.Run(() =>
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services
+    .InstallServicesFromAssemblies(
+        builder.Configuration,
+        App.AssemblyReference.Assembly,
+        Authorization.AssemblyReference.Assembly,
+        Persistence.AssemblyReference.Assembly);
 
     builder.Host.UseSerilogWihtConfiguration();
 
     var app = builder.Build();
 
-    if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+    app
+        .UseSwagger()
+        .UseSwaggerUI()
+        .UseCors(corsPolicyBuilder =>
+        {
+            corsPolicyBuilder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 
     app.UseSerilogRequestLogging();
-
     app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
 
     app.Run();
 });

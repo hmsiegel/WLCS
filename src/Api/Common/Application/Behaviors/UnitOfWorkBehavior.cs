@@ -34,6 +34,6 @@ public sealed class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork unitOfWo
     /// <returns>Returns true if it is a command.</returns>
     private static bool IsCommand()
     {
-        return typeof(TRequest).Name.EndsWith("Command");
+        return typeof(TRequest).Name.EndsWith("Command", StringComparison.InvariantCulture);
     }
 }

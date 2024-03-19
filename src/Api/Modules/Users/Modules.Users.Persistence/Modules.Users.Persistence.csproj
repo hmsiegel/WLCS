@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum.EFCore" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Persistence\Persistence.csproj" />
+    <ProjectReference Include="..\Modules.Users.Domain\Modules.Users.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 

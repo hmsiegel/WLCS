@@ -18,12 +18,12 @@ public sealed class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork unitOfWo
     {
         if (!IsCommand())
         {
-            return await next();
+            return await next().ConfigureAwait(false);
         }
 
-        var response = await next();
+        var response = await next().ConfigureAwait(false);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return response;
     }

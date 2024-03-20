@@ -35,8 +35,8 @@ internal sealed class PermissionService : IPermissionService
             async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_options.CacheTimeInMinutes);
-                return await GetPermissionsInternalAsync(identityProviderId, cancellationToken);
-            });
+                return await GetPermissionsInternalAsync(identityProviderId, cancellationToken).ConfigureAwait(false);
+            }).ConfigureAwait(false);
     }
 
     private async Task<HashSet<string>> GetPermissionsInternalAsync(string identityProviderId, CancellationToken cancellationToken)
@@ -51,7 +51,7 @@ internal sealed class PermissionService : IPermissionService
             UserIdentityProviderId = identityProviderId,
         };
 
-        var response = await _requestClient.GetResponse<IUserPermissionsResponse>(request, cancellationToken);
+        var response = await _requestClient.GetResponse<IUserPermissionsResponse>(request, cancellationToken).ConfigureAwait(false);
 
         return response.Message.Permissions;
     }

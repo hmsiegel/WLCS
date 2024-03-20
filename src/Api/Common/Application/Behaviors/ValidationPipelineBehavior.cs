@@ -6,10 +6,10 @@
 /// <typeparam name="TRequest">The request type.</typeparam>
 /// <typeparam name="TResponse">The response type.</typeparam>
 /// <summary>
-/// Initializes a new instance of the <see cref="ValidationBehavior{TRequest,TResponse}"/> class.
+/// Initializes a new instance of the <see cref="ValidationPipelineBehavior{TRequest,TResponse}"/> class.
 /// </summary>
 /// <param name="validator">The validators for the given request.</param>
-public sealed class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest> validator)
+public sealed class ValidationPipelineBehavior<TRequest, TResponse>(IValidator<TRequest> validator)
     : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
         where TResponse : IErrorOr

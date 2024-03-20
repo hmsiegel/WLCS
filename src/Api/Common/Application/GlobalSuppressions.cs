@@ -1,3 +1,4 @@
 ﻿[assembly: SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates", Justification = "Reviewed", Scope = "member", Target = "~M:Application.Extensions.LoggerExtensions.LogError(Microsoft.Extensions.Logging.ILogger,Domain.Primitives.IDomainEvent,ErrorOr.Error)")]
 [assembly: SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates", Justification = "Reviewed", Scope = "member", Target = "~M:Application.Extensions.LoggerExtensions.LogError(Microsoft.Extensions.Logging.ILogger,Application.EventBus.IIntegrationEvent,ErrorOr.Error)")]
 [assembly: SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Reviewed", Scope = "member", Target = "~M:Application.Behaviors.UnitOfWorkBehavior`2.Handle(`0,MediatR.RequestHandlerDelegate{`1},System.Threading.CancellationToken)~System.Threading.Tasks.Task{`1}")]
+[assembly: SuppressMessage("Design", "CA1040:Avoid empty interfaces", Justification = "Reviewed")]

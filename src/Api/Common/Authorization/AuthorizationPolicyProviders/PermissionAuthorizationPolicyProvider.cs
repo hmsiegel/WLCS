@@ -13,7 +13,7 @@ internal sealed class PermissionAuthorizationPolicyProvider(IOptions<Authorizati
     /// <inheritdoc/>
     public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        var authorizationPolicy = await base.GetPolicyAsync(policyName);
+        var authorizationPolicy = await base.GetPolicyAsync(policyName).ConfigureAwait(false);
 
         if (authorizationPolicy is not null)
         {

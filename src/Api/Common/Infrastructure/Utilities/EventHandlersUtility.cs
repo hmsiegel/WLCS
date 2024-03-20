@@ -47,7 +47,7 @@ public static class EventHandlersUtility
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns>True is the specified type inherits from <see cref="INotificationHandler{TNotification}"/>, otherwise false.</returns>
-    private static bool IsNotificationHandler(Type type) =>
+    public static bool IsNotificationHandler(Type type) =>
         type.IsGenericType &&
         type.Name.StartsWith(_notificationEventHandlerType.Name, StringComparison.InvariantCulture);
 
@@ -56,7 +56,7 @@ public static class EventHandlersUtility
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns>True is the specified type inherits from <see cref="IDomainEventHandler{TEvent}"/>, otherwise false.</returns>
-    private static bool IsDomainEventHandler(Type type) =>
+    public static bool IsDomainEventHandler(Type type) =>
         type.IsGenericType &&
         type.Name.StartsWith(_domainEventHandlerType.Name, StringComparison.InvariantCulture);
 
@@ -65,7 +65,7 @@ public static class EventHandlersUtility
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns>True is the specified type inherits from <see cref="IIntegrationEventHandler{TIntegrationEvent}"/>, otherwise false.</returns>
-    private static bool IsIntegrationEventHandler(Type type) =>
+    public static bool IsIntegrationEventHandler(Type type) =>
         type.IsGenericType &&
         type.Name.StartsWith(_integrationEventHandlerType.Name, StringComparison.InvariantCulture);
 }

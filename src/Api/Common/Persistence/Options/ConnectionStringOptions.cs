@@ -23,4 +23,13 @@ public sealed class ConnectionStringOptions
 
         return connectionString.Value;
     }
+
+    /// <summary>
+    /// Converts the connection string to a string.
+    /// </summary>
+    /// <returns>The connection string.</returns>
+    public override string ToString()
+    {
+        return Value;
+    }
 }

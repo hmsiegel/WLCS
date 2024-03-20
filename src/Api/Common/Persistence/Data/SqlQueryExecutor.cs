@@ -8,12 +8,12 @@ internal sealed class SqlQueryExecutor(ISqlConnectionFactory sqlConnectionFactor
 {
     /// <inheritdoc/>
     public async Task ExecuteAsync(string sql, object? parameters = null) =>
-        await sqlConnectionFactory.GetOpenConnection().ExecuteAsync(sql, parameters);
+        await sqlConnectionFactory.GetOpenConnection().ExecuteAsync(sql, parameters).ConfigureAwait(false);
 
     /// <inheritdoc/>
     public async Task<T> ExecuteScalarAsync<T>(string sql, object? parameters = null)
     {
-        var sqlExecution = await sqlConnectionFactory.GetOpenConnection().ExecuteScalarAsync<T>(sql, parameters);
+        var sqlExecution = await sqlConnectionFactory.GetOpenConnection().ExecuteScalarAsync<T>(sql, parameters).ConfigureAwait(false);
         return sqlExecution!;
     }
 
@@ -23,7 +23,7 @@ internal sealed class SqlQueryExecutor(ISqlConnectionFactory sqlConnectionFactor
 
     /// <inheritdoc/>
     public async Task<IEnumerable<T>> QueryAsync<T>(string sql, object? parameters = null) =>
-        await sqlConnectionFactory.GetOpenConnection().QueryAsync<T>(sql, parameters);
+        await sqlConnectionFactory.GetOpenConnection().QueryAsync<T>(sql, parameters).ConfigureAwait(false);
 
     /// <inheritdoc/>
     public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, TResult>(
@@ -31,5 +31,5 @@ internal sealed class SqlQueryExecutor(ISqlConnectionFactory sqlConnectionFactor
         Func<T1, T2, TResult> map,
         object? parameters = null,
         string splitOn = "Id") =>
-        await sqlConnectionFactory.GetOpenConnection().QueryAsync(sql, map, parameters, splitOn: splitOn);
+        await sqlConnectionFactory.GetOpenConnection().QueryAsync(sql, map, parameters, splitOn: splitOn).ConfigureAwait(false);
 }

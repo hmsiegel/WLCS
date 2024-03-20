@@ -14,12 +14,14 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
     {
         builder.ToTable(TableNames._permissions);
 
-        builder.HasKey(permission => permission.Value);
+        builder.HasKey(permission => permission.Id);
 
-        builder.Property(permission => permission.Value).ValueGeneratedNever();
+        builder.Property(permission => permission.Id).ValueGeneratedNever();
 
         builder.Property(permission => permission.Name).HasMaxLength(100);
 
-        builder.HasData(Permission.List.Select(permission => permission.Name));
+        builder.Property(permission => permission.Description).HasMaxLength(500);
+
+        builder.HasData(Permission.GetValues());
     }
 }

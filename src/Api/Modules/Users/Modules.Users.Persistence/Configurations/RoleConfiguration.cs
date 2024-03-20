@@ -14,12 +14,12 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         builder.ToTable(TableNames._roles);
 
-        builder.HasKey(role => role.Value);
+        builder.HasKey(role => role.Id);
 
-        builder.Property(role => role.Value).ValueGeneratedNever();
+        builder.Property(role => role.Id).ValueGeneratedNever();
 
         builder.Property(role => role.Name).HasMaxLength(100);
 
-        builder.HasData(Role.List.Select(role => role.Name));
+        builder.HasData(Role.GetValues());
     }
 }

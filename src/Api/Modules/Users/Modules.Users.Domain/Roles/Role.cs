@@ -3,22 +3,34 @@
 /// <summary>
 /// Represents the role enumeration.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="Role"/> class.
-/// </remarks>
-/// <param name="name">The name.</param>
-/// <param name="value">The value.</param>
-public sealed class Role(string name, int value) : SmartEnum<Role>(name, value)
+public sealed class Role : Enumeration<Role>
 {
     /// <summary>
     /// Registered.
     /// </summary>
-    public static readonly Role Registered = new (nameof(Registered), 0);
+    public static readonly Role Registered = new (1, "Registered");
 
     /// <summary>
     /// Administrator.
     /// </summary>
-    public static readonly Role Administrator = new (nameof(Administrator), 100);
+    public static readonly Role Administrator = new (100, "Administrator");
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Role"/> class.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <param name="name">The name.</param>
+    private Role(int id, string name)
+        : base(id, name)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Role"/> class.
+    /// </summary>
+    private Role()
+    {
+    }
 
     /// <summary>
     /// Gets the users.

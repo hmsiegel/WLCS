@@ -22,8 +22,8 @@ public sealed class RolePermission
             ArgumentNullException.ThrowIfNull(permission);
         }
 
-        RoleId = role.Value;
-        PermissionId = permission.Value;
+        RoleId = role.Id;
+        PermissionId = permission.Id;
     }
 
     /// <summary>

@@ -7,7 +7,10 @@ LoggingUtility.Run(() =>
         builder.Configuration,
         App.AssemblyReference.Assembly,
         Authorization.AssemblyReference.Assembly,
-        Persistence.AssemblyReference.Assembly);
+        Persistence.AssemblyReference.Assembly)
+    .InstallModulesFromAssemblies(
+        builder.Configuration,
+        Modules.Users.Infrastructure.AssemblyReference.Assembly);
 
     builder.Host.UseSerilogWihtConfiguration();
 

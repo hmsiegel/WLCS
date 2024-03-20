@@ -1,4 +1,5 @@
 ﻿global using App.Extensions;
+global using App.StartupTasks;
 global using App.Utility;
 
 global using Infrastructure.BackgroundJobs;
@@ -10,9 +11,12 @@ global using MassTransit;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Options;
 global using Microsoft.Net.Http.Headers;
 global using Microsoft.OpenApi.Models;
+
+global using Modules.Users.Persistence;
 
 global using Quartz;
 

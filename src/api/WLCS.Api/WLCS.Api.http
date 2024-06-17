@@ -1,6 +1,0 @@
-@WLCS.Api_HostAddress = http://localhost:5246
-
-GET {{WLCS.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

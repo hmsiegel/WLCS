@@ -3,18 +3,22 @@
 // </copyright>
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
-  app.UseSwaggerUI();
+  builder.Services.AddEndpointsApiExplorer();
+  builder.Services.AddSwaggerGen();
+  builder.Services.AddCompetitionModule(builder.Configuration);
 }
 
-app.UseHttpsRedirection();
+var app = builder.Build();
+{
+  if (app.Environment.IsDevelopment())
+  {
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.ApplyMigrations();
+  }
 
-app.Run();
+  CompetitionModule.MapEndpoints(app);
+
+  app.Run();
+}

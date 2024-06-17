@@ -21,7 +21,30 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Common.Presentation", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C8D84849-06C2-480B-AAD4-56FB595F71F1}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5D260CE9-281D-4E68-BB58-8C3FD86F4B87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{2C7C49DB-2447-442A-8F7E-6CF66C8C55DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Competition", "Competition", "{5092E560-FE11-4FC5-B220-96E3EDAB1D86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competition.Api", "src\modules\Competition\WLCS.Modules.Competition.Api\WLCS.Modules.Competition.Api.csproj", "{6450BC56-5165-48DE-8383-D8C4E99EBD47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{970DC74A-723E-4FFB-BA88-082F92F92BDA}"
+	ProjectSection(SolutionItems) = preProject
+		requests\http-client.env.json = requests\http-client.env.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Competitions", "Competitions", "{DC6E5739-1CC5-41C0-85FD-EAB9B0CFFE38}"
+	ProjectSection(SolutionItems) = preProject
+		requests\Competitions\CreateMeet.http = requests\Competitions\CreateMeet.http
+		requests\Competitions\GetMeet.http = requests\Competitions\GetMeet.http
 	EndProjectSection
 EndProject
 Global
@@ -50,6 +73,14 @@ Global
 		{0794E75B-111A-44E0-B23F-520C4B1C1584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0794E75B-111A-44E0-B23F-520C4B1C1584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0794E75B-111A-44E0-B23F-520C4B1C1584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D260CE9-281D-4E68-BB58-8C3FD86F4B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D260CE9-281D-4E68-BB58-8C3FD86F4B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D260CE9-281D-4E68-BB58-8C3FD86F4B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D260CE9-281D-4E68-BB58-8C3FD86F4B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6450BC56-5165-48DE-8383-D8C4E99EBD47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6450BC56-5165-48DE-8383-D8C4E99EBD47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6450BC56-5165-48DE-8383-D8C4E99EBD47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6450BC56-5165-48DE-8383-D8C4E99EBD47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +93,10 @@ Global
 		{6EFE8298-E75F-499B-B137-9C3E174F5A73} = {107004BC-2EA6-4FE7-9D75-09138D45AD60}
 		{7D9127C2-AABF-46BC-887D-EAFC1A8D12FD} = {107004BC-2EA6-4FE7-9D75-09138D45AD60}
 		{0794E75B-111A-44E0-B23F-520C4B1C1584} = {107004BC-2EA6-4FE7-9D75-09138D45AD60}
+		{2C7C49DB-2447-442A-8F7E-6CF66C8C55DE} = {89F4955E-12E9-406B-A518-22841997978A}
+		{5092E560-FE11-4FC5-B220-96E3EDAB1D86} = {2C7C49DB-2447-442A-8F7E-6CF66C8C55DE}
+		{6450BC56-5165-48DE-8383-D8C4E99EBD47} = {5092E560-FE11-4FC5-B220-96E3EDAB1D86}
+		{DC6E5739-1CC5-41C0-85FD-EAB9B0CFFE38} = {970DC74A-723E-4FFB-BA88-082F92F92BDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {192892C5-BCB1-45D1-B153-239900D043FF}

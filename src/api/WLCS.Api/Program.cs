@@ -2,10 +2,17 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using FastEndpoints.Swagger;
+
 var builder = WebApplication.CreateBuilder(args);
 {
   builder.Services.AddEndpointsApiExplorer();
-  builder.Services.AddSwaggerGen();
+  builder
+    .Services.AddFastEndpoints(o => o.Assemblies =
+      [
+        WLCS.Modules.Competition.Presentation.AssemblyReference.Presentation,
+      ])
+    .AddSwaggerGen();
   builder.Services.AddCompetitionModule(builder.Configuration);
 }
 
@@ -18,7 +25,9 @@ var app = builder.Build();
     app.ApplyMigrations();
   }
 
-  CompetitionModule.MapEndpoints(app);
+  app
+    .UseFastEndpoints()
+    .UseSwaggerGen();
 
   app.Run();
 }

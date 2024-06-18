@@ -126,6 +126,19 @@ csharp_style_pattern_local_over_anonymous_function = true:suggestion
 csharp_style_inlined_variable_declaration = true:suggestion
 # Namespaces
 csharp_style_namespace_declarations = file_scoped:warning
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1309: Field names should not begin with an underscore
+dotnet_diagnostic.SA1309.severity = none
+
+# CA1030: Use events where appropriate
+dotnet_diagnostic.CA1030.severity = none
+
+# CA1812: Avoid uninstantiated internal classes
+dotnet_diagnostic.CA1812.severity = none
+
 ###############################
 # C# Formatting Rules         #
 ###############################

@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastEndpoints" Version="5.26.0" />
+    <PackageReference Include="FastEndpoints.Swagger" Version="5.26.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\modules\Competition\WLCS.Modules.Competition.Api\WLCS.Modules.Competition.Api.csproj" />
+    <ProjectReference Include="..\..\modules\Competition\WLCS.Modules.Competition.Infrastructure\WLCS.Modules.Competition.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

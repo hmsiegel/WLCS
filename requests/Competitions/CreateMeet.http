@@ -1,10 +1,10 @@
-POST {{Host}}/competitions/meet
+POST {{Host}}/competitions/meets
 Content-Type: application/json
 
 {
-    "name": "2024 Ohio WSO Championship",
+    "name": "2024 American Open Series 1",
     "location": "Columbus, OH",
     "venue": "Greater Columbus Convention Center",
-    "startdate": "2024-08-31",
-    "enddate": "2024-09-01"
+    "startdate": "2024-02-29",
+    "enddate": "2024-03-03"
 }

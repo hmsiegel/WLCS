@@ -2,10 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Microsoft.EntityFrameworkCore;
-
-using WLCS.Modules.Competition.Api.Database;
-
 namespace WLCS.Api.Extensions;
 
 /// <summary>

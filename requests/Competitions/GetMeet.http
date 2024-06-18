@@ -1,7 +1,6 @@
 # Get Meet By Id
 
-@meetId=e9b59ed3-ee7f-4abe-bc02-6ae2e941bd69
+@meetId=c7fcde6f-396a-4ff0-8da8-2b3b904e34dc
 
 GET {{Host}}/competitions/meets/{{meetId}}
-Accept: application/json
 Content-Type: application/json

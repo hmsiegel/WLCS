@@ -2,9 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using System.Data.Common;
-using Dapper;
-
 namespace WLCS.Modules.Competition.Application.Meets.Queries.GetMeet;
 
 /// <summary>
@@ -14,7 +11,7 @@ namespace WLCS.Modules.Competition.Application.Meets.Queries.GetMeet;
 /// Initializes a new instance of the <see cref="GetMeetQueryHandler"/> class.
 /// </remarks>
 /// <param name="meetRepository">An instance of the meet repository.</param>
-internal sealed class GetMeetQueryHandler(IMeetRepository meetRepository) : IRequestHandler<GetMeetQuery, MeetResponse>
+internal sealed class GetMeetQueryHandler(IMeetRepository meetRepository) : IQueryHandler<GetMeetQuery, MeetResponse>
 {
   private readonly IMeetRepository _meetRepository = meetRepository;
 
@@ -25,7 +22,7 @@ internal sealed class GetMeetQueryHandler(IMeetRepository meetRepository) : IReq
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The meet.</returns>
   /// <exception cref="NullReferenceException">Thrown if the meet doesn not exist.</exception>
-  public async Task<MeetResponse> Handle(GetMeetQuery request, CancellationToken cancellationToken)
+  public async Task<Result<MeetResponse>> Handle(GetMeetQuery request, CancellationToken cancellationToken)
   {
     var meet = await _meetRepository.GetByIdAsync(request.MeetId, cancellationToken).ConfigureAwait(false);
 

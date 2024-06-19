@@ -15,7 +15,7 @@ namespace WLCS.Modules.Competition.Application.Meets.Command.CreateMeet;
 internal sealed class CreateMeetCommandHandler(
   IMeetRepository meetRepository,
   IUnitOfWork unitOfWork)
-   : IRequestHandler<CreateMeetCommand, Guid>
+   : ICommandHandler<CreateMeetCommand, Guid>
 {
   private readonly IMeetRepository _meetRepository = meetRepository;
   private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -26,7 +26,7 @@ internal sealed class CreateMeetCommandHandler(
   /// <param name="request">The <see cref="CreateMeetCommand"/>.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The unique identifier of the meet.</returns>
-  public async Task<Guid> Handle(CreateMeetCommand request, CancellationToken cancellationToken)
+  public async Task<Result<Guid>> Handle(CreateMeetCommand request, CancellationToken cancellationToken)
   {
     var meet = Meet.Create(
       request.Name,

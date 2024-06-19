@@ -16,13 +16,6 @@ public static class CompetitionModule
   /// <returns>Services.</returns>
   public static IServiceCollection AddCompetitionModule(this IServiceCollection services, IConfiguration configuration)
   {
-    services.AddMediatR(config =>
-    {
-      config.RegisterServicesFromAssembly(Application.AssemblyReference.Application);
-    });
-
-    services.AddValidatorsFromAssembly(Application.AssemblyReference.Application, includeInternalTypes: true);
-
     services.AddInfrastructure(configuration);
 
     return services;
@@ -32,18 +25,14 @@ public static class CompetitionModule
   {
     var connecstionString = configuration.GetConnectionString("Database");
 
-    var npgsqlDataSource = new NpgsqlDataSourceBuilder(connecstionString).Build();
-    services.TryAddSingleton(npgsqlDataSource);
-
-    services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
-
     services.AddDbContext<CompetitionsDbContext>(options =>
       options
         .UseNpgsql(
           connecstionString,
           npgsqlOptions => npgsqlOptions
             .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Competitions))
-        .UseSnakeCaseNamingConvention());
+        .UseSnakeCaseNamingConvention()
+        .AddInterceptors());
 
     services.AddScoped<IMeetRepository, MeetRepository>();
 

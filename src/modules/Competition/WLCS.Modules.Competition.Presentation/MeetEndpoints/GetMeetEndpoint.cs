@@ -36,13 +36,19 @@ internal sealed class GetMeetEndpoint(ISender sender) : EndpointWithoutRequest<M
       .Send(query, ct)
       .ConfigureAwait(false);
 
+    if (result is null)
+    {
+      await SendNotFoundAsync(ct).ConfigureAwait(false);
+      return;
+    }
+
     var response = new MeetResponse(
-      result.Id,
-      result.Name,
-      result.Location,
-      result.Venue,
-      result.StartDate,
-      result.EndDate);
+      result.Value.Id,
+      result.Value.Name,
+      result.Value.Location,
+      result.Value.Venue,
+      result.Value.StartDate,
+      result.Value.EndDate);
 
     await SendOkAsync(response, ct).ConfigureAwait(false);
   }

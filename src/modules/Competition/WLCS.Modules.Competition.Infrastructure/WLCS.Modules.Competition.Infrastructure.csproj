@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Competition.Application\WLCS.Modules.Competition.Application.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Competition.Presentation\WLCS.Modules.Competition.Presentation.csproj" />
   </ItemGroup>

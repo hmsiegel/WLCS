@@ -2,4 +2,5 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-global using WLCS.Modules.Competition.Domain.Abstractions;
+global using WLCS.Common.Domain;
+global using WLCS.Modules.Competition.Domain.Meets.DomainEvents;

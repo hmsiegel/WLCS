@@ -2,10 +2,10 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competition.Infrastructure.Data;
+namespace WLCS.Common.Infrastructure.Data;
 
 /// <summary>
-/// The database connection factory.
+/// Represents a factory for creating database connections.
 /// </summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="DbConnectionFactory"/> class.

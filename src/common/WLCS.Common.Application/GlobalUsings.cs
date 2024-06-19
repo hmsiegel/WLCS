@@ -2,6 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+global using System.Data.Common;
 global using System.Reflection;
 
 global using Ardalis.Result;
@@ -10,6 +11,6 @@ global using FluentValidation;
 
 global using MediatR;
 
-global using WLCS.Common.Application.Messages;
-global using WLCS.Modules.Competition.Application.Abstractions.Data;
-global using WLCS.Modules.Competition.Domain.Meets;
+global using Microsoft.Extensions.DependencyInjection;
+
+global using static System.Runtime.InteropServices.JavaScript.JSType;

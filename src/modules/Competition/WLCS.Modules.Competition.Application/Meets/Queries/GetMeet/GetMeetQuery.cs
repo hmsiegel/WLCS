@@ -8,4 +8,4 @@ namespace WLCS.Modules.Competition.Application.Meets.Queries.GetMeet;
 /// The get meet query.
 /// </summary>
 /// <param name="MeetId">The unique identifier of the meet.</param>
-public sealed record GetMeetQuery(Guid MeetId) : IRequest<MeetResponse>;
+public sealed record GetMeetQuery(Guid MeetId) : IQuery<MeetResponse>;

@@ -2,9 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using System.Data.Common;
-
-namespace WLCS.Modules.Competition.Application.Abstractions.Data;
+namespace WLCS.Common.Application.Data;
 
 /// <summary>
 /// Represents the database connection factory.

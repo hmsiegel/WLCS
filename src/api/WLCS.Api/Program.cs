@@ -2,16 +2,29 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using FastEndpoints.Swagger;
-
 var builder = WebApplication.CreateBuilder(args);
 {
   builder.Services.AddEndpointsApiExplorer();
+
+  Assembly[] applicationAssemblies = [
+      WLCS.Modules.Competition.Application.AssemblyReference.Application,
+    ];
+
+  builder.Services.AddApplication(applicationAssemblies);
+
+  builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
+
+  string[] configurations = ["competition"];
+
+  builder.Configuration.AddModuleConfiguration(configurations);
+
+  Assembly[] presentationAssemblies = [
+      WLCS.Modules.Competition.Presentation.AssemblyReference.Presentation,
+    ];
+
   builder
     .Services.AddFastEndpoints(o => o.Assemblies =
-      [
-        WLCS.Modules.Competition.Presentation.AssemblyReference.Presentation,
-      ])
+      presentationAssemblies)
     .AddSwaggerGen();
   builder.Services.AddCompetitionModule(builder.Configuration);
 }

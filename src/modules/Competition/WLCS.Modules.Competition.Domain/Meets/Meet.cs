@@ -2,9 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using WLCS.Modules.Competition.Domain.Abstractions;
-using WLCS.Modules.Competition.Domain.Meets.DomainEvents;
-
 namespace WLCS.Modules.Competition.Domain.Meets;
 
 /// <summary>

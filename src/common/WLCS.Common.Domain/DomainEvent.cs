@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competition.Domain.Abstractions;
+namespace WLCS.Common.Domain;
 
 /// <summary>
 /// Represents a domain event.

@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using MediatR;
-
 namespace WLCS.Modules.Competition.Application.Meets.Command.CreateMeet;
 
 /// <summary>
@@ -20,4 +18,4 @@ public sealed record CreateMeetCommand(
   string Venue,
   DateOnly StartDate,
   DateOnly EndDate)
-  : IRequest<Guid>;
+  : ICommand<Guid>;

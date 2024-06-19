@@ -2,10 +2,15 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+global using System.Reflection;
+
 global using FastEndpoints;
+global using FastEndpoints.Swagger;
 
 global using Microsoft.EntityFrameworkCore;
 
 global using WLCS.Api.Extensions;
+global using WLCS.Common.Application;
+global using WLCS.Common.Infrastructure;
 global using WLCS.Modules.Competition.Infrastructure;
 global using WLCS.Modules.Competition.Infrastructure.Database;

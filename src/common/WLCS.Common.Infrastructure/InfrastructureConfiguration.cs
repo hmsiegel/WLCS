@@ -14,10 +14,12 @@ public static class InfrastructureConfiguration
   /// </summary>
   /// <param name="services">The services.</param>
   /// <param name="databaseConnectionString">The database connection string.</param>
+  /// <param name="redisConnectionString">The cache connection string.</param>
   /// <returns>The IServiceCollection instance.</returns>
   public static IServiceCollection AddInfrastructure(
     this IServiceCollection services,
-    string databaseConnectionString)
+    string databaseConnectionString,
+    string redisConnectionString)
   {
     var npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnectionString).Build();
     services.TryAddSingleton(npgsqlDataSource);
@@ -25,6 +27,14 @@ public static class InfrastructureConfiguration
     services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
     services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+    IConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+    services.TryAddSingleton(connectionMultiplexer);
+
+    services.AddStackExchangeRedisCache(options =>
+      options.ConnectionMultiplexerFactory = () => Task.FromResult(connectionMultiplexer));
+
+    services.TryAddSingleton<ICacheService, CacheService>();
 
     return services;
   }

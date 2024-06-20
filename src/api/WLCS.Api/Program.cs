@@ -21,7 +21,9 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddApplication(applicationAssemblies);
 
-  builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
+  builder.Services.AddInfrastructure(
+    builder.Configuration.GetConnectionString("Database")!,
+    builder.Configuration.GetConnectionString("Cache")!);
 
   string[] configurations = ["competition"];
 

@@ -1,9 +1,18 @@
 ﻿// <copyright file="Program.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+var logger = Log.Logger = new LoggerConfiguration()
+  .Enrich.FromLogContext()
+  .WriteTo.Console(formatProvider: CultureInfo.InvariantCulture)
+  .CreateLogger();
+
+logger.Information("Starting application.");
 
 var builder = WebApplication.CreateBuilder(args);
 {
+  builder.Host.UseSerilog((context, loggerConfig) =>
+    loggerConfig.ReadFrom.Configuration(context.Configuration));
+
   builder.Services.AddEndpointsApiExplorer();
 
   Assembly[] applicationAssemblies = [
@@ -26,7 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
     .Services.AddFastEndpoints(o => o.Assemblies =
       presentationAssemblies)
     .AddSwaggerGen();
-  builder.Services.AddCompetitionModule(builder.Configuration);
+  builder.Services.AddCompetitionModule(builder.Configuration, logger);
 }
 
 var app = builder.Build();

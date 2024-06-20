@@ -12,5 +12,10 @@ global using FluentValidation;
 global using MediatR;
 
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+
+global using Serilog.Context;
+
+global using WLCS.Common.Application.Behaviors;
 
 global using static System.Runtime.InteropServices.JavaScript.JSType;

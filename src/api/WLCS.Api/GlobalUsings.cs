@@ -2,12 +2,15 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+global using System.Globalization;
 global using System.Reflection;
 
 global using FastEndpoints;
 global using FastEndpoints.Swagger;
 
 global using Microsoft.EntityFrameworkCore;
+
+global using Serilog;
 
 global using WLCS.Api.Extensions;
 global using WLCS.Common.Application;

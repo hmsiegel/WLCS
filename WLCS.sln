@@ -51,7 +51,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competition.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competition.Infrastructure", "src\modules\Competition\WLCS.Modules.Competition.Infrastructure\WLCS.Modules.Competition.Infrastructure.csproj", "{CFAD8713-0F65-4B94-AC76-E248EA303BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Competition.Presentation", "src\modules\Competition\WLCS.Modules.Competition.Presentation\WLCS.Modules.Competition.Presentation.csproj", "{2A2DDDBC-4837-4A78-AA2F-D4F5DB170C18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competition.Presentation", "src\modules\Competition\WLCS.Modules.Competition.Presentation\WLCS.Modules.Competition.Presentation.csproj", "{2A2DDDBC-4837-4A78-AA2F-D4F5DB170C18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Health", "Health", "{055610AE-D831-45A6-896B-823FC4906EC8}"
+	ProjectSection(SolutionItems) = preProject
+		requests\Health\GetHealth.http = requests\Health\GetHealth.http
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,6 +123,7 @@ Global
 		{24EC9AA3-71A7-4CE6-9149-F1693DC447C7} = {5092E560-FE11-4FC5-B220-96E3EDAB1D86}
 		{CFAD8713-0F65-4B94-AC76-E248EA303BF0} = {5092E560-FE11-4FC5-B220-96E3EDAB1D86}
 		{2A2DDDBC-4837-4A78-AA2F-D4F5DB170C18} = {5092E560-FE11-4FC5-B220-96E3EDAB1D86}
+		{055610AE-D831-45A6-896B-823FC4906EC8} = {970DC74A-723E-4FFB-BA88-082F92F92BDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {192892C5-BCB1-45D1-B153-239900D043FF}

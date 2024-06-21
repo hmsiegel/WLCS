@@ -13,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Host.UseSerilog((context, loggerConfig) =>
     loggerConfig.ReadFrom.Configuration(context.Configuration));
 
+  builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+  builder.Services.AddProblemDetails();
+
   builder.Services.AddEndpointsApiExplorer();
 
   Assembly[] applicationAssemblies = [
@@ -21,9 +24,12 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddApplication(applicationAssemblies);
 
+  var databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
+  var redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+
   builder.Services.AddInfrastructure(
-    builder.Configuration.GetConnectionString("Database")!,
-    builder.Configuration.GetConnectionString("Cache")!);
+    databaseConnectionString,
+    redisConnectionString);
 
   string[] configurations = ["competition"];
 
@@ -37,6 +43,11 @@ var builder = WebApplication.CreateBuilder(args);
     .Services.AddFastEndpoints(o => o.Assemblies =
       presentationAssemblies)
     .AddSwaggerGen();
+
+  builder.Services.AddHealthChecks()
+    .AddNpgSql(databaseConnectionString)
+    .AddRedis(redisConnectionString);
+
   builder.Services.AddCompetitionModule(builder.Configuration, logger);
 }
 
@@ -52,6 +63,15 @@ var app = builder.Build();
   app
     .UseFastEndpoints()
     .UseSwaggerGen();
+
+  app.MapHealthChecks("health", new HealthCheckOptions
+  {
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+  });
+
+  app.UseSerilogRequestLogging();
+
+  app.UseExceptionHandler();
 
   app.Run();
 }

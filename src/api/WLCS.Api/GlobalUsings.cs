@@ -20,5 +20,7 @@ global using WLCS.Api.Extensions;
 global using WLCS.Api.Middleware;
 global using WLCS.Common.Application;
 global using WLCS.Common.Infrastructure;
+global using WLCS.Modules.Administration.Infrastructure;
+global using WLCS.Modules.Administration.Infrastructure.Database;
 global using WLCS.Modules.Competition.Infrastructure;
 global using WLCS.Modules.Competition.Infrastructure.Database;

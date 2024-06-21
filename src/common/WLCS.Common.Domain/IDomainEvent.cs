@@ -7,7 +7,7 @@ namespace WLCS.Common.Domain;
 /// <summary>
 /// Represents a domain event.
 /// </summary>
-public interface IDomainEvent
+public interface IDomainEvent : INotification
 {
   /// <summary>
   /// Gets the unique identifier of the domain event.

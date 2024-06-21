@@ -1,0 +1,12 @@
+# Register User
+
+POST {{Host}}/users/register
+Accept: application/json
+Content-Type : application/json
+
+{
+    "email": "hmsiegel@gmail.com",
+    "firstName" : "Harlan",
+    "lastName" : "Siegel",
+    "password" : "password"
+}

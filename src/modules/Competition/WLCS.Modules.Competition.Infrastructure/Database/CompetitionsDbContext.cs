@@ -8,7 +8,7 @@ namespace WLCS.Modules.Competition.Infrastructure.Database;
 /// Initializes a new instance of the <see cref="CompetitionsDbContext"/> class.
 /// </summary>
 /// <param name="options">Represents the options to use.</param>
-public sealed class CompetitionsDbContext(DbContextOptions options)
+public sealed class CompetitionsDbContext(DbContextOptions<CompetitionsDbContext> options)
   : DbContext(options), IUnitOfWork
 {
   /// <summary>

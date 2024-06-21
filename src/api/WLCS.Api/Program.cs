@@ -20,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
   Assembly[] applicationAssemblies = [
       WLCS.Modules.Competition.Application.AssemblyReference.Application,
+      WLCS.Modules.Administration.Application.AssemblyReference.Application,
     ];
 
   builder.Services.AddApplication(applicationAssemblies);
@@ -31,12 +32,13 @@ var builder = WebApplication.CreateBuilder(args);
     databaseConnectionString,
     redisConnectionString);
 
-  string[] configurations = ["competition"];
+  string[] configurations = ["competition", "administration"];
 
   builder.Configuration.AddModuleConfiguration(configurations);
 
   Assembly[] presentationAssemblies = [
       WLCS.Modules.Competition.Presentation.AssemblyReference.Presentation,
+      WLCS.Modules.Administration.Presentation.AssemblyReference.Presentation,
     ];
 
   builder
@@ -48,6 +50,7 @@ var builder = WebApplication.CreateBuilder(args);
     .AddNpgSql(databaseConnectionString)
     .AddRedis(redisConnectionString);
 
+  builder.Services.AddAdministrationModule(builder.Configuration, logger);
   builder.Services.AddCompetitionModule(builder.Configuration, logger);
 }
 

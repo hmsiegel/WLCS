@@ -142,6 +142,9 @@ dotnet_diagnostic.CA1812.severity = none
 # CA1040: Avoid empty interfaces
 dotnet_diagnostic.CA1040.severity = none
 
+#CA1711: Identifiers should not have incorrect suffix
+dotnet_diagnostic.CA1711.severity = none
+
 ###############################
 # C# Formatting Rules         #
 ###############################

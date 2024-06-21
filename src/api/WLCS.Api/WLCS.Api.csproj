@@ -24,6 +24,20 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\modules\Competition\WLCS.Modules.Competition.Infrastructure\WLCS.Modules.Competition.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\Administration\WLCS.Modules.Administration.Infrastructure\WLCS.Modules.Administration.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="modules.Administration.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="modules.Administration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

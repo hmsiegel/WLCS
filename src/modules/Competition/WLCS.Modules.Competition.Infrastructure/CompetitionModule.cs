@@ -1,8 +1,6 @@
 ﻿// <copyright file="CompetitionModule.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
-using Serilog;
-
 namespace WLCS.Modules.Competition.Infrastructure;
 
 /// <summary>
@@ -19,7 +17,10 @@ public static class CompetitionModule
   /// <param name="configuration">The configuration.</param>
   /// <param name="logger">The logger.</param>
   /// <returns>Services.</returns>
-  public static IServiceCollection AddCompetitionModule(this IServiceCollection services, IConfiguration configuration, ILogger logger)
+  public static IServiceCollection AddCompetitionModule(
+    this IServiceCollection services,
+    IConfiguration configuration,
+    ILogger logger)
   {
     services.AddInfrastructure(configuration);
 
@@ -32,16 +33,16 @@ public static class CompetitionModule
 
   private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
   {
-    var connecstionString = configuration.GetConnectionString("Database");
+    var connectionString = configuration.GetConnectionString("Database");
 
-    services.AddDbContext<CompetitionsDbContext>(options =>
+    services.AddDbContext<CompetitionsDbContext>((sp, options) =>
       options
         .UseNpgsql(
-          connecstionString,
+          connectionString,
           npgsqlOptions => npgsqlOptions
             .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Competitions))
         .UseSnakeCaseNamingConvention()
-        .AddInterceptors());
+        .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
 
     services.AddScoped<IMeetRepository, MeetRepository>();
 

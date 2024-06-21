@@ -15,14 +15,17 @@ internal static class MigrationExtensions
   /// <param name="app">The IApplicationBuilder instatnce.</param>
   internal static void ApplyMigrations(this IApplicationBuilder app)
   {
-    using var scope = app.ApplicationServices.CreateScope();
+    using IServiceScope scope = app.ApplicationServices.CreateScope();
+
+    ApplyMigration<AdministrationDbContext>(scope);
     ApplyMigration<CompetitionsDbContext>(scope);
   }
 
-  private static void ApplyMigration<T>(IServiceScope scope)
-    where T : DbContext
+  private static void ApplyMigration<TDbContext>(IServiceScope scope)
+    where TDbContext : DbContext
   {
-    using var context = scope.ServiceProvider.GetRequiredService<T>();
+    using TDbContext context = scope.ServiceProvider.GetRequiredService<TDbContext>();
+
     context.Database.Migrate();
   }
 }

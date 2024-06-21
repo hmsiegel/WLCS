@@ -10,4 +10,8 @@
     <PackageReference Include="Serilog" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WLCS.Common.Domain\WLCS.Common.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

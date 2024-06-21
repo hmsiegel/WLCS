@@ -13,6 +13,10 @@ COPY ["src/api/WLCS.Modules.Competition.Infrastructure/WLCS.Modules.Competition.
 COPY ["src/api/WLCS.Modules.Competition.Application/WLCS.Modules.Competition.Application.csproj", "src/api/WLCS.Api/"]
 COPY ["src/api/WLCS.Modules.Competition.Domain/WLCS.Modules.Competition.Domain.csproj", "src/api/WLCS.Api/"]
 COPY ["src/api/WLCS.Modules.Competition.Presentation/WLCS.Modules.Competition.Presentation.csproj", "src/api/WLCS.Api/"]
+COPY ["src/api/WLCS.Modules.Administration.Infrastructure/WLCS.Modules.Administration.Infrastructure.csproj", "src/api/WLCS.Api/"]
+COPY ["src/api/WLCS.Modules.Administration.Application/WLCS.Modules.Administration.Application.csproj", "src/api/WLCS.Api/"]
+COPY ["src/api/WLCS.Modules.Administration.Domain/WLCS.Modules.Administration.Domain.csproj", "src/api/WLCS.Api/"]
+COPY ["src/api/WLCS.Modules.Administration.Presentation/WLCS.Modules.Administration.Presentation.csproj", "src/api/WLCS.Api/"]
 RUN dotnet restore "./src/api/WLCS.Api/WLCS.Api.csproj"
 COPY . .
 WORKDIR "/src/src/api/WLCS.Api"

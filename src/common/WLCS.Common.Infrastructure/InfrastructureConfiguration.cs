@@ -26,13 +26,24 @@ public static class InfrastructureConfiguration
 
     services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
+    services.TryAddSingleton<PublishDomainEventsInterceptor>();
+
     services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 
-    IConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
-    services.TryAddSingleton(connectionMultiplexer);
+#pragma warning disable CA1031 // Do not catch general exception types
+    try
+    {
+      IConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+      services.TryAddSingleton(connectionMultiplexer);
 
-    services.AddStackExchangeRedisCache(options =>
-      options.ConnectionMultiplexerFactory = () => Task.FromResult(connectionMultiplexer));
+      services.AddStackExchangeRedisCache(options =>
+        options.ConnectionMultiplexerFactory = () => Task.FromResult(connectionMultiplexer));
+    }
+    catch
+    {
+      services.AddDistributedMemoryCache();
+    }
+#pragma warning restore CA1031 // Do not catch general exception types
 
     services.TryAddSingleton<ICacheService, CacheService>();
 

@@ -9,11 +9,18 @@ namespace WLCS.Common.Application.Behaviors;
 /// </summary>
 /// <typeparam name="TRequest">The request.</typeparam>
 /// <typeparam name="TResponse">The response.</typeparam>
-internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>
+/// <remarks>
+/// Initializes a new instance of the <see cref="RequestLoggingPipelineBehavior{TRequest, TResponse}"/> class.
+/// </remarks>
+/// <param name="logger">An instance of ILogger.</param>
+internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>(
+  ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> logger)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : class
     where TResponse : Result
 {
+  private readonly ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> _logger = logger;
+
   /// <inheritdoc/>
   public async Task<TResponse> Handle(
       TRequest request,
@@ -25,28 +32,25 @@ internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>
 
     using (LogContext.PushProperty("Module", moduleName))
     {
-      LoggerMessage.Define<string>(
-          LogLevel.Information,
-          new EventId(1, "Request"),
-          $"Processing request {requestName}");
+#pragma warning disable CA1848 // Use the LoggerMessage delegates
+      _logger.LogInformation("Processing request {RequestName}", requestName);
+#pragma warning restore CA1848 // Use the LoggerMessage delegates
 
       var result = await next().ConfigureAwait(false);
 
       if (result.IsSuccess)
       {
-        LoggerMessage.Define<string>(
-            LogLevel.Information,
-            new EventId(2, "Request"),
-            $"Completed request {requestName}");
+#pragma warning disable CA1848 // Use the LoggerMessage delegates
+        _logger.LogInformation("Completed request {RequestName}", requestName);
+#pragma warning restore CA1848 // Use the LoggerMessage delegates
       }
       else
       {
         using (LogContext.PushProperty("Error", result, true))
         {
-          LoggerMessage.Define<string>(
-              LogLevel.Error,
-              new EventId(3, "Request"),
-              $"Completed request {requestName} with error");
+#pragma warning disable CA1848 // Use the LoggerMessage delegates
+          _logger.LogError("Completed request {RequestName} with error", requestName);
+#pragma warning restore CA1848 // Use the LoggerMessage delegates
         }
       }
 

@@ -1,5 +1,11 @@
 {
   "Administration": {
-
+    "KeyCloak": {
+      "AdminUrl": "",
+      "TokenUrl": "",
+      "ConfidentialClientId": "",
+      "ConfidentialClientSecret": "",
+      "PublicClientId": ""
+    }
   }
 }

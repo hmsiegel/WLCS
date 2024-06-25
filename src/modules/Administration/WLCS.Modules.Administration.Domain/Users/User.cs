@@ -13,12 +13,14 @@ public sealed class User : Entity
     string email,
     string firstName,
     string lastName,
+    string identityId,
     Guid? id = null)
   {
     Id = id ?? Guid.NewGuid();
     Email = email;
     FirstName = firstName;
     LastName = lastName;
+    IdentityId = identityId;
   }
 
   private User()
@@ -46,21 +48,29 @@ public sealed class User : Entity
   public string LastName { get; private set; } = string.Empty;
 
   /// <summary>
+  /// Gets the user's identity identifier.
+  /// </summary>
+  public string IdentityId { get; private set; } = string.Empty;
+
+  /// <summary>
   /// Creates a new user.
   /// </summary>
   /// <param name="email">The user's email.</param>
   /// <param name="firstName">The user's first name.</param>
   /// <param name="lastName">The user's last name.</param>
+  /// <param name="identityId">The identity identifier of the user.</param>
   /// <returns>An instance of the user.</returns>
   public static User Create(
     string email,
     string firstName,
-    string lastName)
+    string lastName,
+    string identityId)
   {
     var user = new User(
       email,
       firstName,
-      lastName);
+      lastName,
+      identityId);
 
     user.Raise(new UserRegisteredDomainEvent(user.Id));
 

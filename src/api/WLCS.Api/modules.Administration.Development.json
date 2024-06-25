@@ -1,5 +1,11 @@
 {
   "Administration": {
-
+    "KeyCloak": {
+      "AdminUrl": "http://wlcs.identity:8080/admin/realms/wlcs/",
+      "TokenUrl": "http://wlcs.identity:8080/realms/wlcs/protocol/openid-connect/token",
+      "ConfidentialClientId": "wlcs-confidential-client",
+      "ConfidentialClientSecret": "cJBSqKDzIBAERbclr8NOUZoNozir8eKD",
+      "PublicClientId": "wlcs-public-client"
+    }
   }
 }

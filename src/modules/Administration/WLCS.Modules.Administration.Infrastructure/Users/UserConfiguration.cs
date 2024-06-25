@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 namespace WLCS.Modules.Administration.Infrastructure.Users;
 
 /// <summary>
@@ -30,5 +28,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
     builder.HasIndex(builder => builder.Email)
       .IsUnique();
+
+    builder.HasIndex(u => u.IdentityId).IsUnique();
   }
 }

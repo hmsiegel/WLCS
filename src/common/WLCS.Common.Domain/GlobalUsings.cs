@@ -2,4 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+global using System.Diagnostics.CodeAnalysis;
+
 global using MediatR;

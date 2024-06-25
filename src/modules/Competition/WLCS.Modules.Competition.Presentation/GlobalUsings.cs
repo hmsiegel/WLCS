@@ -8,6 +8,8 @@ global using FastEndpoints;
 
 global using MediatR;
 
+global using Microsoft.AspNetCore.Http;
+
+global using WLCS.Common.Presentation.Results;
 global using WLCS.Modules.Competition.Application.Meets.Command.CreateMeet;
 global using WLCS.Modules.Competition.Application.Meets.Queries.GetMeet;
-global using WLCS.Modules.Competition.Presentation.MeetEndpoints;

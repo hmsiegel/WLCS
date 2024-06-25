@@ -21,6 +21,8 @@ public static class InfrastructureConfiguration
     string databaseConnectionString,
     string redisConnectionString)
   {
+    services.AddAuthenticationInternal();
+
     var npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnectionString).Build();
     services.TryAddSingleton(npgsqlDataSource);
 
@@ -47,6 +49,21 @@ public static class InfrastructureConfiguration
 
     services.TryAddSingleton<ICacheService, CacheService>();
 
+    services.TryAddSingleton<IEventBus, EventBus.EventBus>();
+
+    services.AddMassTransit(configure =>
+    {
+      // foreach (var configureConsumer in moduleConfigureConsumers)
+      // {
+      //   configureConsumer(configure);
+      // }
+      configure.SetKebabCaseEndpointNameFormatter();
+
+      configure.UsingInMemory((context, cfg) =>
+      {
+        cfg.ConfigureEndpoints(context);
+      });
+    });
     return services;
   }
 }

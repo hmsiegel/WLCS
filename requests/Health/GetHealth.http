@@ -3,3 +3,11 @@
 
 GET {{Host}}/health
 Content-Type: application/json
+
+###
+
+# Check Key Cloak Health
+
+GET http://localhost:18080/health
+Content-Type: application/json
+

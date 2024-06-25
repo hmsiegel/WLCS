@@ -18,9 +18,9 @@ internal sealed class Register(ISender sender) : Endpoint<RegisterUserRequest, G
   /// <inheritdoc/>
   public override void Configure()
   {
-    Post("/users/register");
+    Post("users/register");
     AllowAnonymous();
-    Tags(Presentation.Tags.Administration);
+    Options(x => x.WithTags(Presentation.Tags.Administration));
   }
 
   /// <inheritdoc/>
@@ -35,13 +35,7 @@ internal sealed class Register(ISender sender) : Endpoint<RegisterUserRequest, G
     var result = await _sender.Send(command, cancellationToken)
       .ConfigureAwait(false);
 
-    if (!result.IsSuccess)
-    {
-      await SendResultAsync(result.ToMinimalApiResult())
-        .ConfigureAwait(false);
-    }
-
-    await SendOkAsync(result.Value, cancellationToken)
-        .ConfigureAwait(false);
+    await SendResultAsync(result.Match(Results.Ok, ApiResults.Problem))
+      .ConfigureAwait(false);
   }
 }

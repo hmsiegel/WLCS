@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="5.26.0" />
+    <PackageReference Include="FastEndpoints.Security" Version="5.26.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Competition.Application\WLCS.Modules.Competition.Application.csproj" />
   </ItemGroup>
 

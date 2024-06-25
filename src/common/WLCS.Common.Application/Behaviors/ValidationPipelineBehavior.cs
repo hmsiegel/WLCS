@@ -21,41 +21,63 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
   private readonly IEnumerable<IValidator<TRequest>> _validators = validators;
 
   /// <inheritdoc/>
-  public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+  public async Task<TResponse> Handle(
+    TRequest request,
+    RequestHandlerDelegate<TResponse> next,
+    CancellationToken cancellationToken)
   {
-    if (_validators.Any())
+    ValidationFailure[] validationFailures = await ValidateAsync(request)
+      .ConfigureAwait(false);
+
+    if (validationFailures.Length == 0)
     {
-      var context = new ValidationContext<TRequest>(request);
-
-      var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken))).ConfigureAwait(false);
-      var resultErrors = validationResults.SelectMany(r => r.AsErrors()).ToList();
-      var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
-
-      if (failures.Count != 0)
-      {
-        if (typeof(TResponse).IsGenericType && typeof(TResponse).GetGenericTypeDefinition() == typeof(Result<>))
-        {
-          var resultType = typeof(TResponse).GetGenericArguments()[0];
-          var invalidMethod = typeof(Result<>)
-              .MakeGenericType(resultType)
-              .GetMethod(nameof(Result<int>.Invalid), [typeof(List<ValidationError>)]);
-
-          if (invalidMethod != null)
-          {
-            return (TResponse)invalidMethod.Invoke(null, [resultErrors])!;
-          }
-        }
-        else if (typeof(TResponse) == typeof(Result))
-        {
-          return (TResponse)(object)Result.Invalid(resultErrors);
-        }
-        else
-        {
-          throw new ValidationException(failures);
-        }
-      }
+      return await next()
+        .ConfigureAwait(false);
     }
 
-    return await next().ConfigureAwait(false);
+    if (typeof(TResponse).IsGenericType &&
+        typeof(TResponse).GetGenericTypeDefinition() == typeof(Result<>))
+    {
+      Type resultType = typeof(TResponse).GetGenericArguments()[0];
+
+      MethodInfo? failureMethod = typeof(Result<>)
+          .MakeGenericType(resultType)
+          .GetMethod(nameof(Result<object>.ValidationFailure));
+
+      if (failureMethod is not null)
+      {
+        return (TResponse)failureMethod.Invoke(null, [CreateValidationError(validationFailures)])!;
+      }
+    }
+    else if (typeof(TResponse) == typeof(Result))
+    {
+      return (TResponse)(object)Result.Failure(CreateValidationError(validationFailures));
+    }
+
+    throw new ValidationException(validationFailures);
+  }
+
+  private static ValidationError CreateValidationError(ValidationFailure[] validationFailures) =>
+      new(validationFailures.Select(f => Error.Problem(f.ErrorCode, f.ErrorMessage)).ToArray());
+
+  private async Task<ValidationFailure[]> ValidateAsync(TRequest request)
+  {
+    if (!_validators.Any())
+    {
+      return [];
+    }
+
+    var context = new ValidationContext<TRequest>(request);
+
+    ValidationResult[] validationResults = await Task.WhenAll(
+        _validators.Select(validator => validator.ValidateAsync(context)))
+      .ConfigureAwait(false);
+
+    ValidationFailure[] validationFailures = validationResults
+        .Where(validationResult => !validationResult.IsValid)
+        .SelectMany(validationResult => validationResult.Errors)
+        .ToArray();
+
+    return validationFailures;
   }
 }

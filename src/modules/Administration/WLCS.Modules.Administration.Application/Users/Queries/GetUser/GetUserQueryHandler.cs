@@ -38,7 +38,7 @@ internal sealed class GetUserQueryHandler(IDbConnectionFactory dbConnectionFacto
 
     if (user is null)
     {
-      return Result.NotFound("User is not found.");
+      return Result.Failure<UserResponse>(UserErrors.NotFound(query.UserId));
     }
 
     return user;

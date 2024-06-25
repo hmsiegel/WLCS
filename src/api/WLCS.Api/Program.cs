@@ -1,6 +1,8 @@
 ﻿// <copyright file="Program.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+using FastEndpoints.Security;
+
 var logger = Log.Logger = new LoggerConfiguration()
   .Enrich.FromLogContext()
   .WriteTo.Console(formatProvider: CultureInfo.InvariantCulture)
@@ -16,8 +18,6 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
   builder.Services.AddProblemDetails();
 
-  builder.Services.AddEndpointsApiExplorer();
-
   Assembly[] applicationAssemblies = [
       WLCS.Modules.Competition.Application.AssemblyReference.Application,
       WLCS.Modules.Administration.Application.AssemblyReference.Application,
@@ -32,10 +32,6 @@ var builder = WebApplication.CreateBuilder(args);
     databaseConnectionString,
     redisConnectionString);
 
-  string[] configurations = ["competition", "administration"];
-
-  builder.Configuration.AddModuleConfiguration(configurations);
-
   Assembly[] presentationAssemblies = [
       WLCS.Modules.Competition.Presentation.AssemblyReference.Presentation,
       WLCS.Modules.Administration.Presentation.AssemblyReference.Presentation,
@@ -44,7 +40,12 @@ var builder = WebApplication.CreateBuilder(args);
   builder
     .Services.AddFastEndpoints(o => o.Assemblies =
       presentationAssemblies)
+    .AddEndpointsApiExplorer()
     .AddSwaggerGen();
+
+  string[] configurations = ["competition", "administration"];
+
+  builder.Configuration.AddModuleConfiguration(configurations);
 
   builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
@@ -63,18 +64,20 @@ var app = builder.Build();
     app.ApplyMigrations();
   }
 
-  app
-    .UseFastEndpoints()
-    .UseSwaggerGen();
-
   app.MapHealthChecks("health", new HealthCheckOptions
   {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
   });
 
   app.UseSerilogRequestLogging();
-
   app.UseExceptionHandler();
+
+  app.UseAuthentication()
+    .UseAuthorization();
+
+  app
+    .UseFastEndpoints()
+    .UseSwaggerGen();
 
   app.Run();
 }

@@ -21,8 +21,7 @@ internal sealed class GetMeetEndpoint(ISender sender) : EndpointWithoutRequest<M
   public override void Configure()
   {
     Get("competitions/meets/{Id}");
-    AllowAnonymous();
-    Tags(Presentation.Tags.Competition);
+    Options(x => x.WithTags(Presentation.Tags.Competition));
   }
 
   /// <inheritdoc/>

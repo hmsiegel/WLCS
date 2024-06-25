@@ -28,7 +28,7 @@ internal sealed class UpdateUserCommandHandler(
 
     if (user is null)
     {
-      return Result.NotFound("User not found");
+      return Result.Failure(UserErrors.NotFound(command.UserId));
     }
 
     user.Update(command.FirstName, command.LastName);

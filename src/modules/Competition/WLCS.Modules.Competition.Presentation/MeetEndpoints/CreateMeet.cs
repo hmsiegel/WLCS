@@ -20,23 +20,24 @@ internal sealed class CreateMeet(ISender sender) : Endpoint<CreateMeetRequest, G
   {
     Post("competitions/meets");
     AllowAnonymous();
-    Tags(Presentation.Tags.Competition);
+    Options(x => x.WithTags(Presentation.Tags.Competition));
   }
 
   /// <inheritdoc/>
-  public override async Task HandleAsync(CreateMeetRequest req, CancellationToken ct)
+  public override async Task HandleAsync(CreateMeetRequest request, CancellationToken cancellationToken)
   {
-    ArgumentNullException.ThrowIfNull(req);
+    ArgumentNullException.ThrowIfNull(request);
 
     var command = new CreateMeetCommand(
-      req.Name,
-      req.Location,
-      req.Venue,
-      req.StartDate,
-      req.EndDate);
+      request.Name,
+      request.Location,
+      request.Venue,
+      request.StartDate,
+      request.EndDate);
 
-    var result = await _sender.Send(command, ct).ConfigureAwait(false);
+    var result = await _sender.Send(command, cancellationToken).ConfigureAwait(false);
 
-    await SendOkAsync(result, ct).ConfigureAwait(false);
+    await SendResultAsync(result.Match(Results.Ok, ApiResults.Problem))
+      .ConfigureAwait(false);
   }
 }

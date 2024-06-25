@@ -5,10 +5,8 @@
 global using System.Data.Common;
 global using System.Reflection;
 
-global using Ardalis.Result;
-global using Ardalis.Result.FluentValidation;
-
 global using FluentValidation;
+global using FluentValidation.Results;
 
 global using MediatR;
 
@@ -21,5 +19,3 @@ global using WLCS.Common.Application.Behaviors;
 global using WLCS.Common.Application.Exceptions;
 global using WLCS.Common.Application.Messages;
 global using WLCS.Common.Domain;
-
-global using static System.Runtime.InteropServices.JavaScript.JSType;

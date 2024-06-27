@@ -5,10 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastEndpoints" Version="5.26.0" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Administration.Application\WLCS.Modules.Administration.Application.csproj" />
   </ItemGroup>

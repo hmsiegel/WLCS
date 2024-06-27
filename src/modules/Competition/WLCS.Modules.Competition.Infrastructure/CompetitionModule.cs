@@ -23,6 +23,7 @@ public static class CompetitionModule
     ILogger logger)
   {
     services.AddInfrastructure(configuration);
+    services.AddEndpoints(Presentation.AssemblyReference.Presentation);
 
     ArgumentNullException.ThrowIfNull(logger);
 

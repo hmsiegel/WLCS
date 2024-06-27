@@ -145,6 +145,9 @@ dotnet_diagnostic.CA1040.severity = none
 #CA1711: Identifiers should not have incorrect suffix
 dotnet_diagnostic.CA1711.severity = none
 
+#CA2007: Do not directly await a Task
+dotnet_diagnostic.CA2007.severity = none
+
 ###############################
 # C# Formatting Rules         #
 ###############################

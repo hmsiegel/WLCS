@@ -68,13 +68,18 @@ public sealed class Meet : Entity
   /// <param name="startDate">The first date of the meet in local time.</param>
   /// <param name="endDate">The last date of the meet in local time.</param>
   /// <returns>A new meet.</returns>
-  public static Meet Create(
+  public static Result<Meet> Create(
     string name,
     string location,
     string venue,
     DateOnly startDate,
     DateOnly endDate)
   {
+    if (endDate < startDate)
+    {
+      return Result.Failure<Meet>(MeetErrors.EndDatePrecedesStartDate);
+    }
+
     var meet = new Meet(
       name,
       startDate,

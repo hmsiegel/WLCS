@@ -3,7 +3,7 @@
 POST http://localhost:18080/realms/wlcs/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&client_id=wlcs-public-client&scope=email openid&username=test@test.com&password=123
+grant_type=password&client_id=wlcs-public-client&scope=email openid&username=hmsiegel@test.com&password=password
 
 ###
 

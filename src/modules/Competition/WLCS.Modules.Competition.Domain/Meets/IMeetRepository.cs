@@ -22,4 +22,11 @@ public interface IMeetRepository
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The meet.</returns>
   Task<Meet?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+  /// <summary>
+  /// Gets all meets.
+  /// </summary>
+  /// <param name="cancellationToken">The cancellation token.</param>
+  /// <returns>A list of all of the meets..</returns>
+  Task<List<Meet>> GetAll(CancellationToken cancellationToken = default);
 }

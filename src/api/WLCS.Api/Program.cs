@@ -1,8 +1,6 @@
 ﻿// <copyright file="Program.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
-using FastEndpoints.Security;
-
 var logger = Log.Logger = new LoggerConfiguration()
   .Enrich.FromLogContext()
   .WriteTo.Console(formatProvider: CultureInfo.InvariantCulture)
@@ -17,6 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
   builder.Services.AddProblemDetails();
+  builder.Services.AddEndpointsApiExplorer();
+  builder.Services.AddSwaggerGen(options =>
+  {
+    options.CustomSchemaIds(t => t.FullName?.Replace("+", ".", StringComparison.InvariantCultureIgnoreCase));
+  });
 
   Assembly[] applicationAssemblies = [
       WLCS.Modules.Competition.Application.AssemblyReference.Application,
@@ -32,24 +35,14 @@ var builder = WebApplication.CreateBuilder(args);
     databaseConnectionString,
     redisConnectionString);
 
-  Assembly[] presentationAssemblies = [
-      WLCS.Modules.Competition.Presentation.AssemblyReference.Presentation,
-      WLCS.Modules.Administration.Presentation.AssemblyReference.Presentation,
-    ];
-
-  builder
-    .Services.AddFastEndpoints(o => o.Assemblies =
-      presentationAssemblies)
-    .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
-
   string[] configurations = ["competition", "administration"];
 
   builder.Configuration.AddModuleConfiguration(configurations);
 
   builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
-    .AddRedis(redisConnectionString);
+    .AddRedis(redisConnectionString)
+    .AddUrlGroup(new Uri(builder.Configuration.GetValue<string>("KeyCloak:HealthUrl")!), HttpMethod.Get, "keycloak");
 
   builder.Services.AddAdministrationModule(builder.Configuration, logger);
   builder.Services.AddCompetitionModule(builder.Configuration, logger);
@@ -64,6 +57,8 @@ var app = builder.Build();
     app.ApplyMigrations();
   }
 
+  app.MapEndpoints();
+
   app.MapHealthChecks("health", new HealthCheckOptions
   {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
@@ -74,10 +69,6 @@ var app = builder.Build();
 
   app.UseAuthentication()
     .UseAuthorization();
-
-  app
-    .UseFastEndpoints()
-    .UseSwaggerGen();
 
   app.Run();
 }

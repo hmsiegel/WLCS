@@ -23,6 +23,135 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.Property<string>("PermissionCode")
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("permission_code");
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("role_name");
+
+                    b.HasKey("PermissionCode", "RoleName")
+                        .HasName("pk_role_permissions");
+
+                    b.HasIndex("RoleName")
+                        .HasDatabaseName("ix_role_permissions_role_name");
+
+                    b.ToTable("role_permissions", "administration");
+
+                    b.HasData(
+                        new
+                        {
+                            PermissionCode = "users:read",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:create",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "users:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:read",
+                            RoleName = "CompetitionDirector"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:create",
+                            RoleName = "CompetitionDirector"
+                        },
+                        new
+                        {
+                            PermissionCode = "users:read",
+                            RoleName = "CompetitionDirector"
+                        });
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<string>("RolesName")
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("role_name");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("RolesName", "UserId")
+                        .HasName("pk_user_roles");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_user_roles_user_id");
+
+                    b.ToTable("user_roles", "administration");
+                });
+
+            modelBuilder.Entity("WLCS.Modules.Administration.Domain.Users.Permission", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("code");
+
+                    b.HasKey("Code")
+                        .HasName("pk_permissions");
+
+                    b.ToTable("permissions", "administration");
+
+                    b.HasData(
+                        new
+                        {
+                            Code = "meets:read"
+                        },
+                        new
+                        {
+                            Code = "meets:create"
+                        },
+                        new
+                        {
+                            Code = "users:read"
+                        });
+                });
+
+            modelBuilder.Entity("WLCS.Modules.Administration.Domain.Users.Role", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Name")
+                        .HasName("pk_roles");
+
+                    b.ToTable("roles", "administration");
+
+                    b.HasData(
+                        new
+                        {
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Name = "Administrator"
+                        },
+                        new
+                        {
+                            Name = "CompetitionDirector"
+                        });
+                });
+
             modelBuilder.Entity("WLCS.Modules.Administration.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -65,6 +194,40 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
                         .HasDatabaseName("ix_users_identity_id");
 
                     b.ToTable("users", "administration");
+                });
+
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.HasOne("WLCS.Modules.Administration.Domain.Users.Permission", null)
+                        .WithMany()
+                        .HasForeignKey("PermissionCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_role_permissions_permissions_permission_code");
+
+                    b.HasOne("WLCS.Modules.Administration.Domain.Users.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_role_permissions_roles_role_name");
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("WLCS.Modules.Administration.Domain.Users.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_roles_roles_roles_name");
+
+                    b.HasOne("WLCS.Modules.Administration.Domain.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_roles_users_user_id");
                 });
 #pragma warning restore 612, 618
         }

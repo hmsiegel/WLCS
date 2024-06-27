@@ -70,10 +70,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Administration
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{695CCFD1-CB0F-4B1A-898F-6653A79A8496}"
 	ProjectSection(SolutionItems) = preProject
+		requests\Users\GetUserProfile.http = requests\Users\GetUserProfile.http
 		requests\Users\RegisterUser.http = requests\Users\RegisterUser.http
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.IntegrationEvents", "src\modules\Administration\WLCS.Modules.Administration.IntegrationEvents\WLCS.Modules.Administration.IntegrationEvents.csproj", "{A8594ACA-054B-4F04-8696-07119C5AE238}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Administration.IntegrationEvents", "src\modules\Administration\WLCS.Modules.Administration.IntegrationEvents\WLCS.Modules.Administration.IntegrationEvents.csproj", "{A8594ACA-054B-4F04-8696-07119C5AE238}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{B047FF41-F114-4B1D-9B7E-B01CCA1AB981}"
 	ProjectSection(SolutionItems) = preProject

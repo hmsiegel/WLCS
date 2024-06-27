@@ -22,8 +22,14 @@ internal sealed class MeetRepository(CompetitionsDbContext dbContext) : IMeetRep
   }
 
   /// <inheritdoc/>
+  public async Task<List<Meet>> GetAll(CancellationToken cancellationToken = default)
+  {
+    return await _dbContext.Meets.ToListAsync(cancellationToken);
+  }
+
+  /// <inheritdoc/>
   public async Task<Meet?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
   {
-    return await _dbContext.Meets.SingleOrDefaultAsync(x => x.Id == id, cancellationToken).ConfigureAwait(false);
+    return await _dbContext.Meets.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
   }
 }

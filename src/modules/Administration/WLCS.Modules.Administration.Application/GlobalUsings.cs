@@ -2,6 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+global using System.Data.Common;
 global using System.Reflection;
 
 global using Dapper;
@@ -10,6 +11,7 @@ global using FluentValidation;
 
 global using MediatR;
 
+global using WLCS.Common.Application.Authorization;
 global using WLCS.Common.Application.Data;
 global using WLCS.Common.Application.EventBus;
 global using WLCS.Common.Application.Exceptions;

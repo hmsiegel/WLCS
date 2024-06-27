@@ -29,6 +29,8 @@ public static class AdministrationModule
 
     services.AddInfrastructure(configuration);
 
+    services.AddEndpoints(Presentation.AssemblyReference.Presentation);
+
     ArgumentNullException.ThrowIfNull(logger);
 
     logger.Information("{module} module added.", ModuleName);
@@ -39,6 +41,8 @@ public static class AdministrationModule
   private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
   {
     var connecstionString = configuration.GetConnectionString("Database");
+
+    services.AddScoped<IPermissionService, PermissionService>();
 
     services.Configure<KeyCloakOptions>(configuration.GetSection("Administration:KeyCloak"));
 

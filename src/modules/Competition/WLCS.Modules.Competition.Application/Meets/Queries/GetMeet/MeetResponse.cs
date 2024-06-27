@@ -16,7 +16,22 @@ namespace WLCS.Modules.Competition.Application.Meets.Queries.GetMeet;
 public sealed record MeetResponse(
   Guid Id,
   string Name,
-  string Location,
-  string Venue,
   DateOnly StartDate,
-  DateOnly EndDate);
+  DateOnly EndDate,
+  string Location,
+  string Venue)
+{
+  /// <summary>
+  /// Initializes a new instance of the <see cref="MeetResponse"/> class.
+  /// </summary>
+  public MeetResponse()
+    : this(
+        Guid.Empty,
+        string.Empty,
+        DateOnly.MinValue,
+        DateOnly.MinValue,
+        string.Empty,
+        string.Empty)
+  {
+  }
+}

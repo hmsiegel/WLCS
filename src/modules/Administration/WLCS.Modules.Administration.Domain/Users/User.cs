@@ -9,6 +9,8 @@ namespace WLCS.Modules.Administration.Domain.Users;
 /// </summary>
 public sealed class User : Entity
 {
+  private readonly List<Role> _roles = [];
+
   private User(
     string email,
     string firstName,
@@ -53,6 +55,11 @@ public sealed class User : Entity
   public string IdentityId { get; private set; } = string.Empty;
 
   /// <summary>
+  /// Gets the user's roles.
+  /// </summary>
+  public IReadOnlyCollection<Role> Roles => _roles.AsReadOnly();
+
+  /// <summary>
   /// Creates a new user.
   /// </summary>
   /// <param name="email">The user's email.</param>
@@ -71,6 +78,8 @@ public sealed class User : Entity
       firstName,
       lastName,
       identityId);
+
+    user._roles.Add(Role.User);
 
     user.Raise(new UserRegisteredDomainEvent(user.Id));
 

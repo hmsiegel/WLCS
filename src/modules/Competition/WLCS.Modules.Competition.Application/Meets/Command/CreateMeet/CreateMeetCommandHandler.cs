@@ -35,9 +35,9 @@ internal sealed class CreateMeetCommandHandler(
       request.StartDate,
       request.EndDate);
 
-    _meetRepository.Add(meet);
+    _meetRepository.Add(meet.Value);
     await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(true);
 
-    return meet.Id;
+    return meet.Value.Id;
   }
 }

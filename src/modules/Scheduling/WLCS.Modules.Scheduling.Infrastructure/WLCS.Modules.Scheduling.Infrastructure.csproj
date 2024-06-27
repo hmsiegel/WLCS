@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Scheduling.Application\WLCS.Modules.Scheduling.Application.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Scheduling.Presentation\WLCS.Modules.Scheduling.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -24,6 +24,10 @@ var builder = WebApplication.CreateBuilder(args);
   Assembly[] applicationAssemblies = [
       WLCS.Modules.Competition.Application.AssemblyReference.Application,
       WLCS.Modules.Administration.Application.AssemblyReference.Application,
+      WLCS.Modules.Scheduling.Application.AssemblyReference.Application,
+      WLCS.Modules.Results.Application.AssemblyReference.Application,
+      WLCS.Modules.Communication.Application.AssemblyReference.Application,
+      WLCS.Modules.Athletes.Application.AssemblyReference.Application,
     ];
 
   builder.Services.AddApplication(applicationAssemblies);
@@ -35,7 +39,7 @@ var builder = WebApplication.CreateBuilder(args);
     databaseConnectionString,
     redisConnectionString);
 
-  string[] configurations = ["competition", "administration"];
+  string[] configurations = ["competition", "administration", "athletes", "communication", "results", "scheduling"];
 
   builder.Configuration.AddModuleConfiguration(configurations);
 
@@ -46,6 +50,10 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddAdministrationModule(builder.Configuration, logger);
   builder.Services.AddCompetitionModule(builder.Configuration, logger);
+  builder.Services.AddAthletesModule(builder.Configuration, logger);
+  builder.Services.AddCommunicationModule(builder.Configuration, logger);
+  builder.Services.AddResultsModule(builder.Configuration, logger);
+  builder.Services.AddSchedulingModule(builder.Configuration, logger);
 }
 
 var app = builder.Build();

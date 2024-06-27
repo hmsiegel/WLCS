@@ -24,9 +24,23 @@
   <ItemGroup>
     <ProjectReference Include="..\..\modules\Competition\WLCS.Modules.Competition.Infrastructure\WLCS.Modules.Competition.Infrastructure.csproj" />
     <ProjectReference Include="..\..\modules\Administration\WLCS.Modules.Administration.Infrastructure\WLCS.Modules.Administration.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\Athletes\WLCS.Modules.Athletes.Infrastructure\WLCS.Modules.Athletes.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\Communication\WLCS.Modules.Communication.Infrastructure\WLCS.Modules.Communication.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\Results\WLCS.Modules.Results.Infrastructure\WLCS.Modules.Results.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\modules\Scheduling\WLCS.Modules.Scheduling.Infrastructure\WLCS.Modules.Scheduling.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="modules.Athletes.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="modules.Athletes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="modules.Administration.Development.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>

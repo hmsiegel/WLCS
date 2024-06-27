@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Athletes.Application\WLCS.Modules.Athletes.Application.csproj" />
+  </ItemGroup>
+
+</Project>

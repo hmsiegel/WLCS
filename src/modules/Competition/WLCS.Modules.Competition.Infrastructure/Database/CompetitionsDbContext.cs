@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using WLCS.Modules.Competition.Application.Abstractions.Data;
+
 namespace WLCS.Modules.Competition.Infrastructure.Database;
 
 /// <summary>

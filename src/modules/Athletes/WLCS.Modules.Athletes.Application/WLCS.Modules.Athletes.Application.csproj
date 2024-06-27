@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Application\WLCS.Common.Application.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Athletes.Domain\WLCS.Modules.Athletes.Domain.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Athletes.IntegrationEvents\WLCS.Modules.Athletes.IntegrationEvents.csproj" />
+  </ItemGroup>
+
+</Project>

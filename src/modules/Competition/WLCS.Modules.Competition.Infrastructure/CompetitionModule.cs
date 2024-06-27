@@ -1,6 +1,7 @@
 ﻿// <copyright file="CompetitionModule.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+
 namespace WLCS.Modules.Competition.Infrastructure;
 
 /// <summary>

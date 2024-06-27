@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Application\WLCS.Common.Application.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Results.Domain\WLCS.Modules.Results.Domain.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Results.Application\WLCS.Modules.Results.Application.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Results.Presentation\WLCS.Modules.Results.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>

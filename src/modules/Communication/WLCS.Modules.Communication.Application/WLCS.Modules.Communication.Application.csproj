@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\WLCS.Common.Application\WLCS.Common.Application.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Communication.Domain\WLCS.Modules.Communication.Domain.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Communication.IntegrationEvents\WLCS.Modules.Communication.IntegrationEvents.csproj" />
+  </ItemGroup>
+
+</Project>

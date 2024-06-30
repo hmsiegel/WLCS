@@ -23,8 +23,7 @@ internal sealed class UpdateUserCommandHandler(
   /// <inheritdoc/>
   public async Task<Result> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
   {
-    var user = await _userRepository.GetAsync(command.UserId, cancellationToken)
-      .ConfigureAwait(false);
+    var user = await _userRepository.GetAsync(command.UserId, cancellationToken);
 
     if (user is null)
     {
@@ -33,8 +32,7 @@ internal sealed class UpdateUserCommandHandler(
 
     user.Update(command.FirstName, command.LastName);
 
-    await _unitOfWork.SaveChangesAsync(cancellationToken)
-      .ConfigureAwait(false);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return Result.Success();
   }

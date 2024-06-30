@@ -9,16 +9,19 @@ namespace WLCS.Modules.Administration.Application.Users.Commands.RegisterUser;
 /// </summary>
 /// <param name="sender">An implemenation of ISender.</param>
 /// <param name="eventBus">An implemenation of IEventBus.</param>
-internal sealed class UserRegisteredDomainEventHandler(ISender sender, IEventBus eventBus) : IDomainEventHandler<UserRegisteredDomainEvent>
+internal sealed class UserRegisteredDomainEventHandler(ISender sender, IEventBus eventBus)
+  : DomainEventHandler<UserRegisteredDomainEvent>
 {
   private readonly ISender _sender = sender;
   private readonly IEventBus _eventBus = eventBus;
 
   /// <inheritdoc/>
-  public async Task Handle(UserRegisteredDomainEvent notification, CancellationToken cancellationToken)
+  public override async Task Handle(
+    UserRegisteredDomainEvent domainEvent,
+    CancellationToken cancellationToken)
   {
     var result = await _sender.Send(
-      new GetUserQuery(notification.UserId),
+      new GetUserQuery(domainEvent.UserId),
       cancellationToken)
       .ConfigureAwait(false);
 
@@ -33,8 +36,8 @@ internal sealed class UserRegisteredDomainEventHandler(ISender sender, IEventBus
         result.Value.Email,
         result.Value.FirstName,
         result.Value.LastName,
-        notification.Id,
-        notification.OccurredOnUtc),
+        domainEvent.Id,
+        domainEvent.OccurredOnUtc),
       cancellationToken)
       .ConfigureAwait(false);
   }

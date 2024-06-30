@@ -32,8 +32,7 @@ internal sealed class RegisterUserCommandHandler(
         command.Password,
         command.FirstName,
         command.LastName),
-      cancellationToken)
-      .ConfigureAwait(false);
+      cancellationToken);
 
     if (result.IsFailure)
     {
@@ -48,8 +47,7 @@ internal sealed class RegisterUserCommandHandler(
 
     _userRepository.Add(user);
 
-    await _unitOfWork.SaveChangesAsync(cancellationToken)
-      .ConfigureAwait(false);
+    await _unitOfWork.SaveChangesAsync(cancellationToken);
 
     return user.Id;
   }

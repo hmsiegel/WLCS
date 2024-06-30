@@ -10,4 +10,8 @@
     <ProjectReference Include="..\WLCS.Modules.Administration.Application\WLCS.Modules.Administration.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="WLCS.Modules.Administration.IntegrationTests"/>
+  </ItemGroup>
+
 </Project>

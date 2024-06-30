@@ -37,7 +37,6 @@ services:
     ports:
       - 18080:8080
  
-
   wlcs.seq:
     image: datalust/seq:latest
     container_name: WLCS.Seq

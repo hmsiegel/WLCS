@@ -17,5 +17,5 @@ global using Serilog.Context;
 
 global using WLCS.Common.Application.Behaviors;
 global using WLCS.Common.Application.Exceptions;
-global using WLCS.Common.Application.Messages;
+global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;

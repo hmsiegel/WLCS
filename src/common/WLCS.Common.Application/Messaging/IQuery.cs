@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Common.Application.Messages;
+namespace WLCS.Common.Application.Messaging;
 
 /// <summary>
 /// Represents a query.

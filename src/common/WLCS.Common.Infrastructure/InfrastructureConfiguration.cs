@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using Quartz;
+
 namespace WLCS.Common.Infrastructure;
 
 /// <summary>
@@ -29,6 +31,13 @@ public static class InfrastructureConfiguration
     services.TryAddSingleton(npgsqlDataSource);
 
     services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+
+    services.AddQuartz(configurator =>
+    {
+      var scheduler = Guid.NewGuid();
+      configurator.SchedulerId = $"default-id-{scheduler}";
+      configurator.SchedulerName = $"default-name-{scheduler}";
+    });
 
     services.TryAddSingleton<PublishDomainEventsInterceptor>();
 

@@ -17,5 +17,5 @@ public interface IEventBus
   /// <param name="cancellationToken">The Cancellation Token.</param>
   /// <returns>A task.</returns>
   Task PublishAsync<T>(T integrationEvent, CancellationToken cancellationToken = default)
-    where T : IntegrationEvent;
+    where T : IIntegrationEvent;
 }

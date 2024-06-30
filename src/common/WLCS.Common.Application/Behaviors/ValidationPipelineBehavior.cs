@@ -26,13 +26,11 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
     RequestHandlerDelegate<TResponse> next,
     CancellationToken cancellationToken)
   {
-    ValidationFailure[] validationFailures = await ValidateAsync(request)
-      .ConfigureAwait(false);
+    ValidationFailure[] validationFailures = await ValidateAsync(request);
 
     if (validationFailures.Length == 0)
     {
-      return await next()
-        .ConfigureAwait(false);
+      return await next();
     }
 
     if (typeof(TResponse).IsGenericType &&
@@ -70,8 +68,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
     var context = new ValidationContext<TRequest>(request);
 
     ValidationResult[] validationResults = await Task.WhenAll(
-        _validators.Select(validator => validator.ValidateAsync(context)))
-      .ConfigureAwait(false);
+        _validators.Select(validator => validator.ValidateAsync(context)));
 
     ValidationFailure[] validationFailures = validationResults
         .Where(validationResult => !validationResult.IsValid)

@@ -80,3 +80,8 @@ var app = builder.Build();
 
   app.Run();
 }
+
+/// <summary>
+/// Used for testing.
+/// </summary>
+public partial class Program;

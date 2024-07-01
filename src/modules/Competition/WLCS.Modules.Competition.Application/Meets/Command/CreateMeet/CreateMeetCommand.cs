@@ -16,6 +16,6 @@ public sealed record CreateMeetCommand(
   string Name,
   string Location,
   string Venue,
-  DateOnly StartDate,
-  DateOnly EndDate)
+  LocalDate StartDate,
+  LocalDate EndDate)
   : ICommand<Guid>;

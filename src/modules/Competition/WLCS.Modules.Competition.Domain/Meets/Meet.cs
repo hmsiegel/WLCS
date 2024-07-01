@@ -11,8 +11,8 @@ public sealed class Meet : Entity
 {
   private Meet(
     string name,
-    DateOnly startDate,
-    DateOnly endDate,
+    LocalDate startDate,
+    LocalDate endDate,
     string location,
     string venue,
     Guid? id = null)
@@ -42,12 +42,12 @@ public sealed class Meet : Entity
   /// <summary>
   /// Gets the start date of the meet.
   /// </summary>
-  public DateOnly StartDate { get; private set; }
+  public LocalDate StartDate { get; private set; }
 
   /// <summary>
   /// Gets the end date of the meet.
   /// </summary>
-  public DateOnly EndDate { get; private set; }
+  public LocalDate EndDate { get; private set; }
 
   /// <summary>
   /// Gets the location of the meet.
@@ -72,8 +72,8 @@ public sealed class Meet : Entity
     string name,
     string location,
     string venue,
-    DateOnly startDate,
-    DateOnly endDate)
+    LocalDate startDate,
+    LocalDate endDate)
   {
     if (endDate < startDate)
     {

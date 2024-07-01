@@ -16,8 +16,8 @@ namespace WLCS.Modules.Competition.Application.Meets.Queries.GetMeet;
 public sealed record MeetResponse(
   Guid Id,
   string Name,
-  DateOnly StartDate,
-  DateOnly EndDate,
+  LocalDate StartDate,
+  LocalDate EndDate,
   string Location,
   string Venue)
 {
@@ -28,8 +28,8 @@ public sealed record MeetResponse(
     : this(
         Guid.Empty,
         string.Empty,
-        DateOnly.MinValue,
-        DateOnly.MinValue,
+        LocalDate.MinIsoValue,
+        LocalDate.MinIsoValue,
         string.Empty,
         string.Empty)
   {

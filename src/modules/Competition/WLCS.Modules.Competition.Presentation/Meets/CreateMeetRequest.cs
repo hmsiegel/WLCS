@@ -11,5 +11,5 @@ public sealed record CreateMeetRequest(
   string Name,
   string Location,
   string Venue,
-  DateOnly StartDate,
-  DateOnly EndDate);
+  LocalDate StartDate,
+  LocalDate EndDate);

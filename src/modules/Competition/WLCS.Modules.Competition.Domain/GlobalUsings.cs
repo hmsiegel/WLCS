@@ -2,5 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+global using NodaTime;
+
 global using WLCS.Common.Domain;
 global using WLCS.Modules.Competition.Domain.Meets.DomainEvents;

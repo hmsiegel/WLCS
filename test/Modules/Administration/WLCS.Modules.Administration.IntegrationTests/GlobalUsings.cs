@@ -32,4 +32,5 @@ global using WLCS.Modules.Administration.Application.Users.Queries.GetUserPermis
 global using WLCS.Modules.Administration.Domain.Users;
 global using WLCS.Modules.Administration.Infrastructure.Database;
 global using WLCS.Modules.Administration.Infrastructure.Identity;
+global using WLCS.Modules.Administration.IntegrationTests.Abstractions;
 global using WLCS.Modules.Administration.Presentation.Users;

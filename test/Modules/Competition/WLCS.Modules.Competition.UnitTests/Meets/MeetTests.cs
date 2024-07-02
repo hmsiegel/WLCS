@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using WLCS.Modules.Competition.UnitTests.Abstractions;
-
 namespace WLCS.Modules.Competition.UnitTests.Meets;
 
 /// <summary>

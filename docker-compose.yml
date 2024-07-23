@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  wlcs.api:
+    image: ${DOCKER_REGISTRY-}wlcsapi
+    container_name: wlcs.api
+    build:
+      context: .
+      dockerfile: src/API/WLCS.Api/Dockerfile
+    ports:
+      - 5000:8080
+      - 5001:8081 
+
+  wlcs.database:
+    image: postgres:latest
+    container_name: wlcs.database
+    environment:
+      - POSTGRES_DB=wlcs
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

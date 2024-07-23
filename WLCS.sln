@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{142B79A5-8ACE-441D-BC24-3B74E1E7EF56}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+		README.md = README.md
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{114F5F65-F01A-4365-BA1F-D123113DA145}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{7B062C9E-6D22-4E41-852B-A9F6930B729A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{801132F8-151D-4FBB-869C-2598B654DE82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{841E6B1F-55EC-42F8-9C74-07C46EE65945}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{D0F13AD0-0F43-44CE-B0B7-66F1B394E084}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{491D0B33-75B2-40B8-B087-F0A7FB083181}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Api", "src\API\WLCS.Api\WLCS.Api.csproj", "{BD0B4D19-CC17-42EC-B068-82C4C6044295}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Competitions", "Competitions", "{471B188E-439D-465B-A674-E859579B21DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competitions.Api", "src\Modules\Competitions\WLCS.Modules.Competitions.Api\WLCS.Modules.Competitions.Api.csproj", "{3A6819A4-8DDF-4307-90C5-DB9DAA5810CE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1D617317-ACAA-4DD5-9E45-7203AF27D6DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD0B4D19-CC17-42EC-B068-82C4C6044295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0B4D19-CC17-42EC-B068-82C4C6044295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0B4D19-CC17-42EC-B068-82C4C6044295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0B4D19-CC17-42EC-B068-82C4C6044295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6819A4-8DDF-4307-90C5-DB9DAA5810CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6819A4-8DDF-4307-90C5-DB9DAA5810CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6819A4-8DDF-4307-90C5-DB9DAA5810CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6819A4-8DDF-4307-90C5-DB9DAA5810CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D617317-ACAA-4DD5-9E45-7203AF27D6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D617317-ACAA-4DD5-9E45-7203AF27D6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D617317-ACAA-4DD5-9E45-7203AF27D6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D617317-ACAA-4DD5-9E45-7203AF27D6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{841E6B1F-55EC-42F8-9C74-07C46EE65945} = {114F5F65-F01A-4365-BA1F-D123113DA145}
+		{D0F13AD0-0F43-44CE-B0B7-66F1B394E084} = {114F5F65-F01A-4365-BA1F-D123113DA145}
+		{491D0B33-75B2-40B8-B087-F0A7FB083181} = {114F5F65-F01A-4365-BA1F-D123113DA145}
+		{BD0B4D19-CC17-42EC-B068-82C4C6044295} = {841E6B1F-55EC-42F8-9C74-07C46EE65945}
+		{471B188E-439D-465B-A674-E859579B21DB} = {D0F13AD0-0F43-44CE-B0B7-66F1B394E084}
+		{3A6819A4-8DDF-4307-90C5-DB9DAA5810CE} = {471B188E-439D-465B-A674-E859579B21DB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58193C77-D538-4269-B7B4-388AB5B0BCB4}
+	EndGlobalSection
+EndGlobal

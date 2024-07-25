@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Modules\Competitions\WLCS.Modules.Competitions.Api\WLCS.Modules.Competitions.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Competitions\WLCS.Modules.Competitions.Infrastructure\WLCS.Modules.Competitions.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

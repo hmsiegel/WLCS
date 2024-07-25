@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Api;
+namespace WLCS.Modules.Competitions.Presentation;
 
 internal static class Tags
 {

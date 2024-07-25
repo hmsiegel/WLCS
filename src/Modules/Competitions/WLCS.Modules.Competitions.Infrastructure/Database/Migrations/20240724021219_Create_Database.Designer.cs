@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WLCS.Modules.Competitions.Api.Database;
+using WLCS.Modules.Competitions.Infrastructure.Database;
 
 #nullable disable
 
-namespace WLCS.Modules.Competitions.Api.Database.Migrations
+namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CompetitionsDbContext))]
-    [Migration("20240722120756_Create_Database")]
+    [Migration("20240724021219_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -26,7 +26,7 @@ namespace WLCS.Modules.Competitions.Api.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("WLCS.Modules.Competitions.Api.Meets.Meet", b =>
+            modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Meets.Meet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

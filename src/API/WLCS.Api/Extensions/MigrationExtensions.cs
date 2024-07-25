@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using WLCS.Modules.Competitions.Api.Database;
-
 namespace WLCS.Api.Extensions;
 
 internal static class MigrationExtensions

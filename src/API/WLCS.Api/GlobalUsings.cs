@@ -4,5 +4,5 @@
 global using Microsoft.EntityFrameworkCore;
 
 global using WLCS.Api.Extensions;
-global using WLCS.Modules.Competitions.Api;
-global using WLCS.Modules.Competitions.Api.Database;
+global using WLCS.Modules.Competitions.Infrastructure;
+global using WLCS.Modules.Competitions.Infrastructure.Database;

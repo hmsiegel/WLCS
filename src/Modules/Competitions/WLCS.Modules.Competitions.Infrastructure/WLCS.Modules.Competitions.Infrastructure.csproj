@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="..\WLCS.Modules.Competitions.Application\WLCS.Modules.Competitions.Application.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Competitions.Presentation\WLCS.Modules.Competitions.Presentation.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Ulid" Version="1.3.3" />
   </ItemGroup>
+
 </Project>

@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Api.Database;
+namespace WLCS.Modules.Competitions.Infrastructure.Database;
 
 internal static class Schemas
 {

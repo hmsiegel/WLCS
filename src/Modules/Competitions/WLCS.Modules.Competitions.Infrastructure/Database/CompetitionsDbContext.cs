@@ -2,10 +2,10 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Api.Database;
+namespace WLCS.Modules.Competitions.Infrastructure.Database;
 
 public class CompetitionsDbContext(DbContextOptions<CompetitionsDbContext> options)
-  : DbContext(options)
+  : DbContext(options), IUnitOfWork
 {
   internal DbSet<Meet> Meets { get; set; } = null!;
 

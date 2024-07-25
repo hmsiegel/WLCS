@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using WLCS.Api.Extensions;
+using WLCS.Modules.Competitions.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {

@@ -10,5 +10,9 @@ global using FluentValidation;
 
 global using MediatR;
 
+global using WLCS.Modules.Competitions.Application.Abstractions.Clock;
 global using WLCS.Modules.Competitions.Application.Abstractions.Data;
+global using WLCS.Modules.Competitions.Application.Abstractions.Messaging;
+global using WLCS.Modules.Competitions.Domain.Abstractions;
+global using WLCS.Modules.Competitions.Domain.Competitions;
 global using WLCS.Modules.Competitions.Domain.Meets;

@@ -1,9 +1,4 @@
-﻿// <copyright file="Meet.cs" company="WLCS">
-// Copyright (c) WLCS. All rights reserved.
-// </copyright>
-
-
-// <copyright file="Meet.cs" company="WLCS">
+﻿// <copyright file="Entity.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 

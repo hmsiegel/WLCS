@@ -2,12 +2,13 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using WLCS.Modules.Competitions.Infrastructure;
-
 var builder = WebApplication.CreateBuilder(args);
 {
   builder.Services.AddEndpointsApiExplorer();
-  builder.Services.AddSwaggerGen();
+  builder.Services.AddSwaggerGen(options =>
+  {
+    options.CustomSchemaIds(t => t.FullName?.Replace("+", ".", StringComparison.InvariantCulture));
+  });
 
   builder.Services.AddCompetitionModule(builder.Configuration);
 }

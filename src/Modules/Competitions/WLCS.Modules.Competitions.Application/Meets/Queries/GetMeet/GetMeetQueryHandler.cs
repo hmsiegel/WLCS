@@ -4,30 +4,28 @@
 
 namespace WLCS.Modules.Competitions.Application.Meets.Queries.GetMeet;
 
-internal sealed class GetMeetQueryHandler(IDbConnectionFactory dbConnectionFactory)
-  : IRequestHandler<GetMeetQuery, MeetResponse>
+internal sealed class GetMeetQueryHandler(IMeetRepository meetRepository)
+  : IQueryHandler<GetMeetQuery, MeetResponse>
 {
-  private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
+  private readonly IMeetRepository _meetRepository = meetRepository;
 
-  public async Task<MeetResponse> Handle(GetMeetQuery request, CancellationToken cancellationToken)
+  public async Task<Result<MeetResponse>> Handle(GetMeetQuery request, CancellationToken cancellationToken)
   {
-    await using var connection = await _dbConnectionFactory.OpenConnectionAsync();
+    var meet = await _meetRepository.GetAsync(request.Id, cancellationToken);
 
-    const string sql =
-      $"""
-      SELECT
-        id AS {nameof(MeetResponse.Id)},
-        name AS {nameof(MeetResponse.Name)},
-        location AS {nameof(MeetResponse.Location)},
-        venue AS {nameof(MeetResponse.Venue)},
-        start_date AS {nameof(MeetResponse.StartDate)},
-        end_date AS {nameof(MeetResponse.EndDate)}
-      FROM meets.competitions
-      WHERE id = @Id
-      """;
+    if (meet is null)
+    {
+      return Result.Failure<MeetResponse>(MeetErrors.NotFound(request.Id));
+    }
 
-    MeetResponse? meet = await connection.QuerySingleOrDefaultAsync(sql, request);
+    var result = new MeetResponse(
+      meet.Id,
+      meet.Name,
+      meet.Location,
+      meet.Venue,
+      meet.StartDate,
+      meet.EndDate);
 
-    return meet!;
+    return result;
   }
 }

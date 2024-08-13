@@ -6,6 +6,8 @@ namespace WLCS.Modules.Competitions.Domain.Meets;
 
 public sealed class Meet : Entity
 {
+  private readonly List<Competition> _competitions = [];
+
   private Meet(
     string name,
     string location,
@@ -40,13 +42,20 @@ public sealed class Meet : Entity
 
   public bool IsActive { get; private set; } = true;
 
-  public static Meet Create(
+  public IReadOnlyCollection<Competition> Competitions => [.. _competitions];
+
+  public static Result<Meet> Create(
     string name,
     string location,
     string venue,
     DateOnly startDate,
     DateOnly endDate)
   {
+    if (endDate < startDate)
+    {
+      return Result.Failure<Meet>(MeetErrors.EndDatePrecedesStartDate);
+    }
+
     var meet = new Meet(
       name,
       location,
@@ -57,5 +66,44 @@ public sealed class Meet : Entity
     meet.Raise(new MeetCreatedDomainEvent(meet.Id));
 
     return meet;
+  }
+
+  public void ArchiveMeet()
+  {
+    IsActive = false;
+
+    Raise(new MeetArchivedDomainEvent(Id));
+  }
+
+  public void UpdateMeet(
+    string name,
+    string location,
+    string venue,
+    DateOnly startDate,
+    DateOnly endDate)
+  {
+    Name = Guard.Against.NullOrWhiteSpace(name);
+    Location = Guard.Against.NullOrWhiteSpace(location);
+    Venue = Guard.Against.NullOrWhiteSpace(venue);
+    StartDate = Guard.Against.Default(startDate);
+    EndDate = Guard.Against.Default(endDate);
+
+    Raise(new MeetUpdatedDomainEvent(Id));
+  }
+
+  public Result AddCompetition(Competition competition)
+  {
+    ArgumentNullException.ThrowIfNull(competition);
+
+    if (Competitions.Contains(competition))
+    {
+      return Result.Failure(MeetErrors.CompetitionAlreadyAdded);
+    }
+
+    _competitions.Add(competition);
+
+    Raise(new CompetitionAddedToMeetDomainEvent(Id, competition.Id));
+
+    return Result.Success();
   }
 }

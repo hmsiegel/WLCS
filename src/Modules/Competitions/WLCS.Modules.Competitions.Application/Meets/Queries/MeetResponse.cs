@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Application.Meets.Queries.GetMeet;
+namespace WLCS.Modules.Competitions.Application.Meets.Queries;
 
 public sealed record MeetResponse(
   Guid Id,

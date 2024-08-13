@@ -1,4 +1,4 @@
-﻿// <copyright file="Meet.cs" company="WLCS">
+﻿// <copyright file="IDomainEvent.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 

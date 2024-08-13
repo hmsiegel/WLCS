@@ -17,9 +17,11 @@ internal static class CreateMeet
         request.StartDate,
         request.EndDate);
 
-      var meetId = await sender.Send(command);
+      var result = await sender.Send(command);
 
-      return Results.Ok(meetId);
+      return result.Match(
+        () => Results.Ok(result.Value),
+        ApiResult.Problem);
     })
     .WithTags(Tags.Competitions);
   }

@@ -9,8 +9,15 @@ public class CompetitionsDbContext(DbContextOptions<CompetitionsDbContext> optio
 {
   internal DbSet<Meet> Meets { get; set; } = null!;
 
+  internal DbSet<Competition> Competitions { get; set; } = null!;
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.HasDefaultSchema("competitions");
+  }
+
+  protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+  {
+    configurationBuilder.ConfigureSmartEnum();
   }
 }

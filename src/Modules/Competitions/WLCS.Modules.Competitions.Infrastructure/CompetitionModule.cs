@@ -9,6 +9,7 @@ public static class CompetitionModule
   public static void MapEndpoints(IEndpointRouteBuilder app)
   {
     MeetEndpoints.MapEndpoints(app);
+    CompetitionEndpoints.MapEndpoints(app);
   }
 
   public static IServiceCollection AddCompetitionModule(
@@ -17,10 +18,10 @@ public static class CompetitionModule
   {
     services.AddMediatR(config =>
     {
-      config.RegisterServicesFromAssembly(Application.AssemblyReference.Application);
+      config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly);
     });
 
-    services.AddValidatorsFromAssembly(Application.AssemblyReference.Application, includeInternalTypes: true);
+    services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly, includeInternalTypes: true);
 
     services.AddInfrastructure(configuration);
 
@@ -37,6 +38,7 @@ public static class CompetitionModule
     services.TryAddSingleton(npgsqlDataSource);
 
     services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+    services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 
     services.AddDbContext<CompetitionsDbContext>(options =>
     {
@@ -48,6 +50,7 @@ public static class CompetitionModule
     });
 
     services.AddScoped<IMeetRepository, MeetRepository>();
+    services.AddScoped<ICompetitionRespository, CompetitionRepository>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CompetitionsDbContext>());
   }

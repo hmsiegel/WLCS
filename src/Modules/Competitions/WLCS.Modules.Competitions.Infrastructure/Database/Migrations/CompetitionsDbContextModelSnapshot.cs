@@ -23,6 +23,43 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Competitions.Competition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AgeDivision")
+                        .HasColumnType("integer")
+                        .HasColumnName("age_division");
+
+                    b.Property<int>("CompetitionType")
+                        .HasColumnType("integer")
+                        .HasColumnName("competition_type");
+
+                    b.Property<Guid>("MeetId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("meet_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Scope")
+                        .HasColumnType("integer")
+                        .HasColumnName("scope");
+
+                    b.HasKey("Id")
+                        .HasName("pk_competitions");
+
+                    b.HasIndex("MeetId")
+                        .HasDatabaseName("ix_competitions_meet_id");
+
+                    b.ToTable("competitions", "competitions");
+                });
+
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Meets.Meet", b =>
                 {
                     b.Property<Guid>("Id")
@@ -61,6 +98,21 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .HasName("pk_meets");
 
                     b.ToTable("meets", "competitions");
+                });
+
+            modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Competitions.Competition", b =>
+                {
+                    b.HasOne("WLCS.Modules.Competitions.Domain.Meets.Meet", null)
+                        .WithMany("Competitions")
+                        .HasForeignKey("MeetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_competitions_meets_meet_id");
+                });
+
+            modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Meets.Meet", b =>
+                {
+                    b.Navigation("Competitions");
                 });
 #pragma warning restore 612, 618
         }

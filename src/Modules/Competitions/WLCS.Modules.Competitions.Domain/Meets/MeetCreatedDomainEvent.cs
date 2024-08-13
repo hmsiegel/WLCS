@@ -1,8 +1,6 @@
-﻿// <copyright file="Meet.cs" company="WLCS">
+﻿// <copyright file="MeetCreatedDomainEvent.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
-
-using WLCS.Modules.Competitions.Domain.Abstractions;
 
 namespace WLCS.Modules.Competitions.Domain.Meets;
 

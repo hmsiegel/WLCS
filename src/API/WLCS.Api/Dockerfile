@@ -7,7 +7,12 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["Directory.Build.props", "."]
 COPY ["src/API/WLCS.Api/WLCS.Api.csproj", "src/API/WLCS.Api/"]
+COPY ["src/Modules/Competitions/WLCS.Modules.Competitions.Infrastructure/WLCS.Modules.Competitions.Infrastructure.csproj", "src/Modules/Competitions/WLCS.Modules.Competitions.Infrastructure/"]
+COPY ["src/Modules/Competitions/WLCS.Modules.Competitions.Application/WLCS.Modules.Competitions.Application.csproj", "src/Modules/Competitions/WLCS.Modules.Competitions.Application/"]
+COPY ["src/Modules/Competitions/WLCS.Modules.Competitions.Domain/WLCS.Modules.Competitions.Domain.csproj", "src/Modules/Competitions/WLCS.Modules.Competitions.Domain/"]
+COPY ["src/Modules/Competitions/WLCS.Modules.Competitions.Presentation/WLCS.Modules.Competitions.Presentation.csproj", "src/Modules/Competitions/WLCS.Modules.Competitions.Presentation/"]
 RUN dotnet restore "./src/API/WLCS.Api/WLCS.Api.csproj"
 COPY . .
 WORKDIR "/src/src/API/WLCS.Api"

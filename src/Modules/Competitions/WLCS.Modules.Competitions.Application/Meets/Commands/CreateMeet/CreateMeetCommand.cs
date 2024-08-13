@@ -9,4 +9,4 @@ public sealed record CreateMeetCommand(
   string Location,
   string Venue,
   DateOnly StartDate,
-  DateOnly EndDate) : IRequest<Guid>;
+  DateOnly EndDate) : ICommand<Guid>;

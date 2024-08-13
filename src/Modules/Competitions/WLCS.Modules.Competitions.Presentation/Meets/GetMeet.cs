@@ -14,9 +14,9 @@ internal static class GetMeet
 
       var meet = await sender.Send(query);
 
-      return meet is null
-        ? Results.NotFound()
-        : Results.Ok(meet);
+      return meet.Match(
+        Results.Ok,
+        ApiResult.Problem);
     })
     .WithTags(Tags.Competitions);
   }

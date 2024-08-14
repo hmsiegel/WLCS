@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Application.Abstractions.Data;
+namespace WLCS.Common.Application.Data;
 
 public interface IDbConnectionFactory
 {

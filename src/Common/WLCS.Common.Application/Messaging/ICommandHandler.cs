@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Application.Abstractions.Messaging;
+namespace WLCS.Common.Application.Messaging;
 
 public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand, Result>
     where TCommand : ICommand;

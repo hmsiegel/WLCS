@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Infrastructure.Clock;
+namespace WLCS.Common.Infrastructure.Clock;
 
 internal sealed class DateTimeProvider : IDateTimeProvider
 {

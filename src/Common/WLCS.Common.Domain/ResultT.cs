@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Domain.Abstractions;
+namespace WLCS.Common.Domain;
 
 public class Result<TValue> : Result
 {

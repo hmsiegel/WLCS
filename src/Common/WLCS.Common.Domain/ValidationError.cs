@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace Evently.Modules.Events.Domain.Abstractions;
+namespace WLCS.Common.Domain;
 
 public sealed record ValidationError : Error
 {

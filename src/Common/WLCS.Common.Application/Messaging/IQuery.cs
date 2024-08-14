@@ -2,6 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Application.Abstractions.Messaging;
+namespace WLCS.Common.Application.Messaging;
 
 public interface IQuery<TResponse> : IRequest<Result<TResponse>>;

@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Application.Abstractions.Exceptions;
+namespace WLCS.Common.Application.Exceptions;
 
 public sealed class WlcsException(
   string requestName,

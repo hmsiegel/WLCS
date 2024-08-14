@@ -13,7 +13,9 @@ public class CompetitionsDbContext(DbContextOptions<CompetitionsDbContext> optio
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    modelBuilder.HasDefaultSchema("competitions");
+    ArgumentNullException.ThrowIfNull(modelBuilder);
+    modelBuilder.HasDefaultSchema(Schemas.Competitions);
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(CompetitionModule).Assembly);
   }
 
   protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

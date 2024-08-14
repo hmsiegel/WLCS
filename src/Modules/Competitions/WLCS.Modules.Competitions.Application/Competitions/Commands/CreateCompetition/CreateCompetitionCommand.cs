@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using WLCS.Common.Application.Messaging;
+
 namespace WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 
 public sealed record CreateCompetitionCommand(

@@ -16,13 +16,6 @@ public static class CompetitionModule
     this IServiceCollection services,
     IConfiguration configuration)
   {
-    services.AddMediatR(config =>
-    {
-      config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly);
-    });
-
-    services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly, includeInternalTypes: true);
-
     services.AddInfrastructure(configuration);
 
     return services;
@@ -33,12 +26,6 @@ public static class CompetitionModule
     IConfiguration configuration)
   {
     var connectionString = configuration.GetConnectionString("Database");
-
-    var npgsqlDataSource = new NpgsqlDataSourceBuilder(connectionString).Build();
-    services.TryAddSingleton(npgsqlDataSource);
-
-    services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
-    services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 
     services.AddDbContext<CompetitionsDbContext>(options =>
     {

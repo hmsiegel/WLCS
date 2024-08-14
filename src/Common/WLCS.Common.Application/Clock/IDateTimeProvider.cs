@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Application.Abstractions.Clock;
+namespace WLCS.Common.Application.Clock;
 
 public interface IDateTimeProvider
 {

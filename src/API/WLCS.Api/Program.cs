@@ -7,8 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Services.AddEndpointsApiExplorer();
   builder.Services.AddSwaggerGen(options =>
   {
-    options.CustomSchemaIds(t => t.FullName?.Replace("+", ".", StringComparison.InvariantCulture));
+    options.CustomSchemaIds(t => t.FullName?.Replace(
+      "+",
+      ".",
+      StringComparison.InvariantCulture));
   });
+
+  builder.Services.AddApplication([WLCS.Modules.Competitions.Application.AssemblyReference.Assembly]);
+  builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
 }

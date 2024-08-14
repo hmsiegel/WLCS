@@ -3,6 +3,8 @@
 // </copyright>
 global using Microsoft.EntityFrameworkCore;
 
+global using Serilog;
+
 global using WLCS.Api.Extensions;
 global using WLCS.Common.Application;
 global using WLCS.Common.Infrastructure;

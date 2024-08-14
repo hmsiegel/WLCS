@@ -2,8 +2,13 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 {
+  builder.Host.UseSerilog((context, loggerConfiguration)
+    => loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+
   builder.Services.AddEndpointsApiExplorer();
   builder.Services.AddSwaggerGen(options =>
   {
@@ -15,6 +20,8 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddApplication([WLCS.Modules.Competitions.Application.AssemblyReference.Assembly]);
   builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
+
+  builder.Configuration.AddModuleConfiguration(["competitions"]);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
 }
@@ -30,6 +37,8 @@ var app = builder.Build();
   }
 
   CompetitionModule.MapEndpoints(app);
+
+  app.UseSerilogRequestLogging();
 
   app.Run();
 }

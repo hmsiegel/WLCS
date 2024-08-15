@@ -15,7 +15,10 @@ public static class InfrastructureConfiguration
     services.TryAddSingleton(npgsqlDataSource);
 
     services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+
     services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+    services.TryAddSingleton<PublishDomainEventsInterceptor>();
 
     IConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
     services.TryAddSingleton(connectionMultiplexer);

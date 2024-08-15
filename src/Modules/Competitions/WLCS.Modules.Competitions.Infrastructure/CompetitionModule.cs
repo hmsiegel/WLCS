@@ -21,13 +21,14 @@ public static class CompetitionModule
   {
     var connectionString = configuration.GetConnectionString("Database");
 
-    services.AddDbContext<CompetitionsDbContext>(options =>
+    services.AddDbContext<CompetitionsDbContext>((sp, options) =>
     {
       options.UseNpgsql(
         connectionString,
         npgsqlOptions => npgsqlOptions
           .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Competitions))
-      .UseSnakeCaseNamingConvention();
+      .UseSnakeCaseNamingConvention()
+      .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>());
     });
 
     services.AddScoped<IMeetRepository, MeetRepository>();

@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Domain", "src\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Infrastructure", "src\Common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj", "{27719841-69DF-436E-B644-2049652D24C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Presentation", "src\Common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj", "{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{27719841-69DF-436E-B644-2049652D24C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27719841-69DF-436E-B644-2049652D24C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27719841-69DF-436E-B644-2049652D24C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{19C307B4-E39F-471F-AC46-A35B6D1DF44D} = {491D0B33-75B2-40B8-B087-F0A7FB083181}
 		{66D1CF2E-8C33-41F2-A963-24392E3E76D6} = {491D0B33-75B2-40B8-B087-F0A7FB083181}
 		{27719841-69DF-436E-B644-2049652D24C9} = {491D0B33-75B2-40B8-B087-F0A7FB083181}
+		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14} = {491D0B33-75B2-40B8-B087-F0A7FB083181}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58193C77-D538-4269-B7B4-388AB5B0BCB4}

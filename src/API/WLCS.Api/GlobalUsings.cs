@@ -1,7 +1,12 @@
 ﻿// <copyright file="GlobalUsings.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+global using FastEndpoints;
+
+global using HealthChecks.UI.Client;
+
 global using Microsoft.AspNetCore.Diagnostics;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 

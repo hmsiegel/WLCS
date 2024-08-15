@@ -4,7 +4,8 @@
 
 namespace WLCS.Modules.Competitions.Presentation;
 
-internal static class Tags
+internal static class SwaggerTags
 {
   internal const string Competitions = "competitions";
+  internal const string Meets = "meets";
 }

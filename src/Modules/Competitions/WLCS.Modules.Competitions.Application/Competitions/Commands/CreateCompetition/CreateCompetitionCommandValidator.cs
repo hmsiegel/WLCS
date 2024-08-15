@@ -10,8 +10,8 @@ internal sealed class CreateCompetitionCommandValidator : AbstractValidator<Crea
   {
     RuleFor(x => x.MeetId).NotEmpty();
     RuleFor(x => x.Name).NotEmpty();
-    RuleFor(x => x.Scope).IsInEnum();
-    RuleFor(x => x.CompetitionType).IsInEnum();
-    RuleFor(x => x.AgeDivision).IsInEnum();
+    RuleFor(x => x.Scope).NotEmpty();
+    RuleFor(x => x.CompetitionType).NotEmpty();
+    RuleFor(x => x.AgeDivision).NotEmpty();
   }
 }

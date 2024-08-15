@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Presentation.ApiResults;
+namespace WLCS.Common.Presentation.ApiResults;
 
 public static class ApiResult
 {

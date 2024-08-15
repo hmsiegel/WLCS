@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
+
 namespace WLCS.Api.Middleware;
 
 internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)

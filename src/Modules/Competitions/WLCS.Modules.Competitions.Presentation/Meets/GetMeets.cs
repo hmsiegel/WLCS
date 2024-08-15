@@ -4,32 +4,42 @@
 
 namespace WLCS.Modules.Competitions.Presentation.Meets;
 
-internal static class GetMeets
+internal sealed class GetMeets(
+  ISender sender,
+  ICacheService cacheService)
+  : EndpointWithoutRequest<IReadOnlyCollection<MeetResponse>>
 {
-  public static void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+  private readonly ICacheService _cacheService = cacheService;
+
+  public override void Configure()
   {
-    app.MapGet("meets", async (ISender sender, ICacheService cacheService) =>
+    Get("meets");
+    AllowAnonymous();
+    Tags(SwaggerTags.Meets);
+  }
+
+  public override async Task HandleAsync(CancellationToken ct)
+  {
+    var meetResponses = await _cacheService.GetAsync<IReadOnlyCollection<MeetResponse>>("meets", cancellationToken: ct);
+
+    if (meetResponses is not null)
     {
-      var meetResponses = await cacheService.GetAsync<IReadOnlyCollection<MeetResponse>>("meets");
+      await SendAsync(meetResponses, statusCode: StatusCodes.Status200OK, ct);
+    }
 
-      if (meetResponses is not null)
-      {
-        return Results.Ok(meetResponses);
-      }
+    var query = new GetMeetsQuery();
 
-      var query = new GetMeetsQuery();
+    var result = await _sender.Send(query, ct);
 
-      var result = await sender.Send(query);
-
-      if (result.IsSuccess)
-      {
-        await cacheService.SetAsync("meets", result.Value);
-      }
-
-      return result.Match(
-        Results.Ok,
-        ApiResult.Problem);
-    })
-    .WithTags(Tags.Competitions);
+    if (result.IsSuccess)
+    {
+      await _cacheService.SetAsync("meets", result.Value, cancellationToken: ct);
+      await SendAsync(result.Value, statusCode: StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResult.Problem(result));
+    }
   }
 }

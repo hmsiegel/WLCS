@@ -6,12 +6,6 @@ namespace WLCS.Modules.Competitions.Infrastructure;
 
 public static class CompetitionModule
 {
-  public static void MapEndpoints(IEndpointRouteBuilder app)
-  {
-    MeetEndpoints.MapEndpoints(app);
-    CompetitionEndpoints.MapEndpoints(app);
-  }
-
   public static IServiceCollection AddCompetitionModule(
     this IServiceCollection services,
     IConfiguration configuration)

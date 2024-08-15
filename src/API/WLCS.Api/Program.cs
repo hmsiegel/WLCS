@@ -20,11 +20,23 @@ var builder = WebApplication.CreateBuilder(args);
   });
 
   builder.Services.AddApplication([WLCS.Modules.Competitions.Application.AssemblyReference.Assembly]);
+  builder.Services.AddFastEndpoints(opt =>
+    {
+      opt.Assemblies = [WLCS.Modules.Competitions.Presentation.AssemblyReference.Assembly];
+    });
+
+  var databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
+  var redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+
   builder.Services.AddInfrastructure(
-    builder.Configuration.GetConnectionString("Database")!,
-    builder.Configuration.GetConnectionString("Cache")!);
+    databaseConnectionString,
+    redisConnectionString);
 
   builder.Configuration.AddModuleConfiguration(["competitions"]);
+
+  builder.Services.AddHealthChecks()
+    .AddNpgSql(databaseConnectionString)
+    .AddRedis(redisConnectionString);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
 }
@@ -39,7 +51,12 @@ var app = builder.Build();
     app.ApplyMigrations();
   }
 
-  CompetitionModule.MapEndpoints(app);
+  app.UseFastEndpoints();
+
+  app.MapHealthChecks("health", new HealthCheckOptions
+  {
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+  });
 
   app.UseSerilogRequestLogging();
 

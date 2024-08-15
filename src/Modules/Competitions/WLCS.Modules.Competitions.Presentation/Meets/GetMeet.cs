@@ -4,20 +4,32 @@
 
 namespace WLCS.Modules.Competitions.Presentation.Meets;
 
-internal static class GetMeet
+internal sealed class GetMeet(ISender sender) : EndpointWithoutRequest<MeetResponse>
 {
-  public static void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+
+  public override void Configure()
   {
-    app.MapGet("meets/{id}", async (Guid id, ISender sender) =>
+    Get("meets/{id}");
+    AllowAnonymous();
+    Tags(SwaggerTags.Meets);
+  }
+
+  public override async Task HandleAsync(CancellationToken ct)
+  {
+    var id = Route<Guid>("id");
+
+    var query = new GetMeetQuery(id);
+
+    var meet = await _sender.Send(query, ct);
+
+    if (meet.IsSuccess)
     {
-      var query = new GetMeetQuery(id);
-
-      var meet = await sender.Send(query);
-
-      return meet.Match(
-        Results.Ok,
-        ApiResult.Problem);
-    })
-    .WithTags(Tags.Competitions);
+      await SendAsync(meet.Value, statusCode: StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResult.Problem(meet));
+    }
   }
 }

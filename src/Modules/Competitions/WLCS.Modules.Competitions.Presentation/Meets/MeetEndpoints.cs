@@ -10,5 +10,6 @@ public static class MeetEndpoints
   {
     CreateMeet.MapEndpoint(app);
     GetMeet.MapEndpoint(app);
+    GetMeets.MapEndpoint(app);
   }
 }

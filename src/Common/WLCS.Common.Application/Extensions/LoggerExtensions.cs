@@ -4,11 +4,13 @@
 
 namespace WLCS.Common.Application.Extensions;
 
-internal static class LoggerExtensions
+public static class LoggerExtensions
 {
   private static readonly Action<ILogger, string, DateTime, Exception> _processingRequst = InitializeRequestProcessingLogger();
   private static readonly Action<ILogger, string, DateTime, Exception> _completedRequest = InitializeRequestCompletedLogger();
   private static readonly Action<ILogger, string, Error, Exception> _requestErrors = InitializeRequstErrorLogger();
+  private static readonly Action<ILogger, string, Exception> _exceptionLogger = InitializeExceptionLogger();
+  private static readonly Action<ILogger, Exception> _globalException = InitializeGlobalExceptionLogger();
 
   public static Action<ILogger, string, DateTime, Exception> InitializeRequestProcessingLogger()
   {
@@ -34,6 +36,22 @@ internal static class LoggerExtensions
       "Completed request {RequstName} with error {Error}");
   }
 
+  public static Action<ILogger, string, Exception> InitializeExceptionLogger()
+  {
+    return LoggerMessage.Define<string>(
+      LogLevel.Error,
+      new EventId(4, nameof(Exception)),
+      "Unhandled exception for {RequestName}");
+  }
+
+  public static Action<ILogger, Exception> InitializeGlobalExceptionLogger()
+  {
+    return LoggerMessage.Define(
+      LogLevel.Critical,
+      new EventId(5, nameof(Exception)),
+      "Unhandled exception occurred");
+  }
+
   public static void ProcessingRequest(this ILogger logger, string requestName, DateTime time)
     => _processingRequst(logger, requestName, time, default!);
 
@@ -42,4 +60,10 @@ internal static class LoggerExtensions
 
   public static void RequestErrors(this ILogger logger, string requestName, Error error)
     => _requestErrors(logger, requestName, error, default!);
+
+  public static void LogException(this ILogger logger, string requestName, Exception exception)
+    => _exceptionLogger(logger, requestName, exception);
+
+  public static void LogGlobalException(this ILogger logger, Exception exception)
+    => _globalException(logger, exception);
 }

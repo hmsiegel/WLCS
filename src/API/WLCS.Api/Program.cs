@@ -16,13 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
   Assembly[] applicationAssemblies =
   [
     WLCS.Modules.Competitions.Application.AssemblyReference.Assembly,
-    WLCS.Modules.Administration.Application.AssemblyReference.Assembly
+    WLCS.Modules.Administration.Application.AssemblyReference.Assembly,
+    WLCS.Modules.Athletes.Application.AssemblyReference.Assembly
   ];
 
   Assembly[] presentationAssemblies =
   [
     WLCS.Modules.Competitions.Presentation.AssemblyReference.Assembly,
-    WLCS.Modules.Administration.Presentation.AssemblyReference.Assembly
+    WLCS.Modules.Administration.Presentation.AssemblyReference.Assembly,
+    WLCS.Modules.Athletes.Presentation.AssemblyReference.Assembly
   ];
 
   builder.Services.AddApplication(applicationAssemblies);
@@ -38,7 +40,7 @@ var builder = WebApplication.CreateBuilder(args);
     databaseConnectionString,
     redisConnectionString);
 
-  builder.Configuration.AddModuleConfiguration(["competitions"]);
+  builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes"]);
 
   builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
@@ -46,6 +48,7 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
   builder.Services.AddAdministrationModule(builder.Configuration);
+  builder.Services.AddAthletesModules(builder.Configuration);
 }
 
 var app = builder.Build();

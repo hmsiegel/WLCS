@@ -11,18 +11,24 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Services.AddProblemDetails();
 
   builder.Services.AddEndpointsApiExplorer();
-  builder.Services.AddSwaggerGen(options =>
-  {
-    options.CustomSchemaIds(t => t.FullName?.Replace(
-      "+",
-      ".",
-      StringComparison.InvariantCulture));
-  });
+  builder.Services.AddSwaggerDocument();
 
-  builder.Services.AddApplication([WLCS.Modules.Competitions.Application.AssemblyReference.Assembly]);
+  Assembly[] applicationAssemblies =
+  [
+    WLCS.Modules.Competitions.Application.AssemblyReference.Assembly,
+    WLCS.Modules.Administration.Application.AssemblyReference.Assembly
+  ];
+
+  Assembly[] presentationAssemblies =
+  [
+    WLCS.Modules.Competitions.Presentation.AssemblyReference.Assembly,
+    WLCS.Modules.Administration.Presentation.AssemblyReference.Assembly
+  ];
+
+  builder.Services.AddApplication(applicationAssemblies);
   builder.Services.AddFastEndpoints(opt =>
     {
-      opt.Assemblies = [WLCS.Modules.Competitions.Presentation.AssemblyReference.Assembly];
+      opt.Assemblies = presentationAssemblies;
     });
 
   var databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
@@ -39,6 +45,7 @@ var builder = WebApplication.CreateBuilder(args);
     .AddRedis(redisConnectionString);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
+  builder.Services.AddAdministrationModule(builder.Configuration);
 }
 
 var app = builder.Build();
@@ -51,7 +58,8 @@ var app = builder.Build();
     app.ApplyMigrations();
   }
 
-  app.UseFastEndpoints();
+  app.UseFastEndpoints()
+     .UseSwaggerGen();
 
   app.MapHealthChecks("health", new HealthCheckOptions
   {

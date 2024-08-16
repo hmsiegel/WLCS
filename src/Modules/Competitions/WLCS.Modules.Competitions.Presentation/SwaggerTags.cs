@@ -1,4 +1,4 @@
-﻿// <copyright file="Tags.cs" company="WLCS">
+﻿// <copyright file="SwaggerTags.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 

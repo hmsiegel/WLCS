@@ -11,6 +11,7 @@ internal static class MigrationExtensions
     using IServiceScope scope = app.ApplicationServices.CreateScope();
 
     ApplyMigration<CompetitionsDbContext>(scope);
+    ApplyMigration<AdministrationDbContext>(scope);
   }
 
   private static void ApplyMigration<TDbContext>(IServiceScope scope)

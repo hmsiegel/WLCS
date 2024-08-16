@@ -8,12 +8,9 @@ global using FastEndpoints;
 
 global using MediatR;
 
-global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Http;
-global using Microsoft.AspNetCore.Routing;
 
 global using WLCS.Common.Application.Caching;
-global using WLCS.Common.Domain;
 global using WLCS.Common.Presentation.ApiResults;
 global using WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 global using WLCS.Modules.Competitions.Application.Meets.Commands.CreateMeet;

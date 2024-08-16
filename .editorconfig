@@ -206,6 +206,9 @@ dotnet_diagnostic.CA1000.severity = none
 # CA1030: Use events where appropriate
 dotnet_diagnostic.CA1030.severity = none
 
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = none
+
 # CA1032: Implement standard exception constructors
 dotnet_diagnostic.CA1032.severity = none
 

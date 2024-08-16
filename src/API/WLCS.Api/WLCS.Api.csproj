@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
+    <PackageReference Include="FastEndpoints.Swagger" Version="5.28.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Modules\Administration\WLCS.Modules.Administration.Infrastructure\WLCS.Modules.Administration.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Competitions\WLCS.Modules.Competitions.Infrastructure\WLCS.Modules.Competitions.Infrastructure.csproj" />
   </ItemGroup>
 

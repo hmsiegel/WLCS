@@ -48,6 +48,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Presentation", "src\Common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj", "{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Administration", "Administration", "{76105C06-D503-4E23-BE93-89F0D8EA6E83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Application", "src\Modules\Administration\WLCS.Modules.Administration.Application\WLCS.Modules.Administration.Application.csproj", "{2CEA10C3-4D8F-4C9E-8481-DC582114122F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Domain", "src\Modules\Administration\WLCS.Modules.Administration.Domain\WLCS.Modules.Administration.Domain.csproj", "{29B6EA17-9676-4E58-A773-1490D606FA5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Infrastructure", "src\Modules\Administration\WLCS.Modules.Administration.Infrastructure\WLCS.Modules.Administration.Infrastructure.csproj", "{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Presentation", "src\Modules\Administration\WLCS.Modules.Administration.Presentation\WLCS.Modules.Administration.Presentation.csproj", "{759DE13F-FC56-41DF-ACA1-412055550D33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +104,22 @@ Global
 		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CEA10C3-4D8F-4C9E-8481-DC582114122F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CEA10C3-4D8F-4C9E-8481-DC582114122F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CEA10C3-4D8F-4C9E-8481-DC582114122F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CEA10C3-4D8F-4C9E-8481-DC582114122F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29B6EA17-9676-4E58-A773-1490D606FA5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29B6EA17-9676-4E58-A773-1490D606FA5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29B6EA17-9676-4E58-A773-1490D606FA5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29B6EA17-9676-4E58-A773-1490D606FA5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{759DE13F-FC56-41DF-ACA1-412055550D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{759DE13F-FC56-41DF-ACA1-412055550D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{759DE13F-FC56-41DF-ACA1-412055550D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{759DE13F-FC56-41DF-ACA1-412055550D33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +138,11 @@ Global
 		{66D1CF2E-8C33-41F2-A963-24392E3E76D6} = {491D0B33-75B2-40B8-B087-F0A7FB083181}
 		{27719841-69DF-436E-B644-2049652D24C9} = {491D0B33-75B2-40B8-B087-F0A7FB083181}
 		{0EDF43DB-9B25-4169-BE64-662B0C6BCF14} = {491D0B33-75B2-40B8-B087-F0A7FB083181}
+		{76105C06-D503-4E23-BE93-89F0D8EA6E83} = {D0F13AD0-0F43-44CE-B0B7-66F1B394E084}
+		{2CEA10C3-4D8F-4C9E-8481-DC582114122F} = {76105C06-D503-4E23-BE93-89F0D8EA6E83}
+		{29B6EA17-9676-4E58-A773-1490D606FA5E} = {76105C06-D503-4E23-BE93-89F0D8EA6E83}
+		{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C} = {76105C06-D503-4E23-BE93-89F0D8EA6E83}
+		{759DE13F-FC56-41DF-ACA1-412055550D33} = {76105C06-D503-4E23-BE93-89F0D8EA6E83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58193C77-D538-4269-B7B4-388AB5B0BCB4}

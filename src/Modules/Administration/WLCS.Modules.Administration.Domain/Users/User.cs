@@ -2,60 +2,56 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Ardalis.GuardClauses;
-
 namespace WLCS.Modules.Administration.Domain.Users;
 
-public sealed class User : Entity
+public sealed class User : Entity<UserId>
 {
   private User(
-    string email,
-    string firstName,
-    string lastName,
-    Guid? id = null)
+    Email email,
+    FirstName firstName,
+    LastName lastName,
+    UserId? id = null)
   {
-    Id = id ?? Guid.NewGuid();
-    Email = Guard.Against.NullOrWhiteSpace(email);
-    FirstName = Guard.Against.NullOrWhiteSpace(firstName);
-    LastName = Guard.Against.NullOrWhiteSpace(lastName);
+    Id = id ?? UserId.CreateUnique();
+    Email = Guard.Against.Default(email);
+    FirstName = Guard.Against.Default(firstName);
+    LastName = Guard.Against.Default(lastName);
   }
 
   private User()
   {
   }
 
-  public Guid Id { get; private set; }
+  public Email Email { get; private set; } = default!;
 
-  public string Email { get; private set; } = string.Empty;
+  public FirstName FirstName { get; private set; } = default!;
 
-  public string FirstName { get; private set; } = string.Empty;
-
-  public string LastName { get; private set; } = string.Empty;
+  public LastName LastName { get; private set; } = default!;
 
   public static User Create(
-    string email,
-    string firstName,
-    string lastName)
+    Email email,
+    FirstName firstName,
+    LastName lastName)
   {
     var user = new User(email, firstName, lastName);
 
-    user.Raise(new UserRegisteredDomainEvent(user.Id));
+    user.Raise(new UserRegisteredDomainEvent(user.Id.Value));
 
     return user;
   }
 
   public void Update(
-    string firstName,
-    string lastName)
+    FirstName firstName,
+    LastName lastName)
   {
     if (FirstName == firstName && LastName == lastName)
     {
       return;
     }
 
-    FirstName = Guard.Against.NullOrWhiteSpace(firstName);
-    LastName = Guard.Against.NullOrWhiteSpace(lastName);
+    FirstName = Guard.Against.Default(firstName);
+    LastName = Guard.Against.Default(lastName);
 
-    Raise(new UserUpdatedDomainEvent(Id));
+    Raise(new UserUpdatedDomainEvent(Id.Value));
   }
 }

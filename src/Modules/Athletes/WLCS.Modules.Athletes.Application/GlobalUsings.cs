@@ -2,3 +2,12 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 global using System.Reflection;
+
+global using FluentValidation;
+
+global using WLCS.Common.Application.Messaging;
+global using WLCS.Common.Domain;
+global using WLCS.Modules.Athletes.Application.Abstractions.Data;
+global using WLCS.Modules.Athletes.Domain.Athletes;
+global using WLCS.Modules.Athletes.Domain.Athletes.Errors;
+global using WLCS.Modules.Athletes.Domain.Athletes.ValueObjects;

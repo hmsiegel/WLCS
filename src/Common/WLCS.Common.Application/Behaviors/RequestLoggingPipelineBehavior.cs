@@ -34,9 +34,9 @@ internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>(
       }
       else
       {
-        using (LogContext.PushProperty("Error", result.Error, true))
+        using (LogContext.PushProperty("Error", result.Errors.FirstOrDefault(), true))
         {
-          _logger.RequestErrors(requestName, result.Error!);
+          _logger.RequestErrors(requestName, result.Errors.FirstOrDefault()!);
         }
       }
 

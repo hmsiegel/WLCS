@@ -16,10 +16,10 @@ public static class ApiResult
     }
 
     return Results.Problem(
-        title: GetTitle(result.Error),
-        detail: GetDetail(result.Error),
-        type: GetType(result.Error.Type),
-        statusCode: GetStatusCode(result.Error.Type),
+        title: GetTitle(result.Errors.FirstOrDefault()!),
+        detail: GetDetail(result.Errors.FirstOrDefault()!),
+        type: GetType(result.Errors.FirstOrDefault()!.Type),
+        statusCode: GetStatusCode(result.Errors.FirstOrDefault()!.Type),
         extensions: GetErrors(result));
 
     static string GetTitle(Error error) =>
@@ -64,7 +64,7 @@ public static class ApiResult
 
     static Dictionary<string, object?>? GetErrors(Result result)
     {
-      if (result.Error is not ValidationError validationError)
+      if (result.Errors.FirstOrDefault() is not ValidationError validationError)
       {
         return null;
       }

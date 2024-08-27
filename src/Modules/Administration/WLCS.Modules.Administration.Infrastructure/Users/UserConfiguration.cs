@@ -11,16 +11,28 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
     builder.HasKey(x => x.Id);
 
     builder.Property(x => x.Id)
-      .ValueGeneratedOnAdd();
+      .ValueGeneratedOnAdd()
+      .HasConversion(
+      id => id.Value,
+      value => UserId.Create(value));
 
     builder.Property(x => x.FirstName)
-      .HasMaxLength(200);
+      .HasMaxLength(FirstName.MaxLength)
+      .HasConversion(
+      firstName => firstName.Value,
+      value => FirstName.Create(value).Value);
 
     builder.Property(x => x.LastName)
-      .HasMaxLength(200);
+      .HasMaxLength(LastName.MaxLength)
+      .HasConversion(
+      lastName => lastName.Value,
+      value => LastName.Create(value).Value);
 
     builder.Property(x => x.Email)
-      .HasMaxLength(200);
+      .HasMaxLength(256)
+      .HasConversion(
+      email => email.Value,
+      value => Email.Create(value).Value);
 
     builder.HasIndex(x => x.Email)
       .IsUnique();

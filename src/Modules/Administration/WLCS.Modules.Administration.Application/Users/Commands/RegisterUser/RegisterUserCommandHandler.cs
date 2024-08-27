@@ -14,15 +14,30 @@ internal sealed class RegisterUserCommandHandler(
 
   public async Task<Result<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
   {
+    var emailResult = Email.Create(request.Email);
+
+    if (emailResult.IsFailure)
+    {
+      return Result.Failure<Guid>(emailResult.Errors);
+    }
+
+    var firstNameResult = FirstName.Create(request.FirstName);
+    var lastNameResult = LastName.Create(request.LastName);
+
+    if (!await _userRepository.IsEmailUniqueAsync(emailResult.Value, cancellationToken))
+    {
+      return Result.Failure<Guid>(UserErrors.EmailAlreadyInUse);
+    }
+
     var user = User.Create(
-        request.Email,
-        request.FirstName,
-        request.LastName);
+        emailResult.Value,
+        firstNameResult.Value,
+        lastNameResult.Value);
 
     _userRepository.Add(user);
 
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-    return user.Id;
+    return user.Id.Value;
   }
 }

@@ -31,6 +31,8 @@ public static class AthletesModule
       .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>());
     });
 
+    services.AddScoped<IAthleteRepository, AthleteRepository>();
+
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AthletesDbContext>());
   }
 }

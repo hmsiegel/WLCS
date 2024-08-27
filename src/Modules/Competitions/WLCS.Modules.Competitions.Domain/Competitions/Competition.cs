@@ -2,21 +2,23 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using Name = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.Name;
+
 namespace WLCS.Modules.Competitions.Domain.Competitions;
 
-public sealed class Competition : Entity
+public sealed class Competition : Entity<CompetitionId>
 {
   private Competition(
-    Guid meetId,
-    string name,
+    MeetId meetId,
+    Name name,
     Scope scope,
     CompetitionType competitionType,
     AgeDivision ageDivisions,
-    Guid? id = null)
+    CompetitionId? id = null)
   {
-    MeetId = meetId;
-    Id = id ?? Guid.NewGuid();
-    Name = Guard.Against.NullOrWhiteSpace(name);
+    MeetId = Guard.Against.Default(meetId);
+    Id = id ?? CompetitionId.CreateUnique();
+    Name = Guard.Against.Default(name);
     Scope = Guard.Against.Default(scope);
     CompetitionType = Guard.Against.Default(competitionType);
     AgeDivision = Guard.Against.Default(ageDivisions);
@@ -26,11 +28,9 @@ public sealed class Competition : Entity
   {
   }
 
-  public Guid Id { get; private set; }
+  public MeetId MeetId { get; private set; } = default!;
 
-  public Guid MeetId { get; private set; }
-
-  public string Name { get; private set; } = string.Empty;
+  public Name Name { get; private set; } = default!;
 
   public Scope Scope { get; private set; } = Scope.IWF;
 
@@ -39,8 +39,8 @@ public sealed class Competition : Entity
   public AgeDivision AgeDivision { get; private set; } = AgeDivision.Senior;
 
   public static Competition Create(
-    Guid meetId,
-    string name,
+    MeetId meetId,
+    Name name,
     Scope scope,
     CompetitionType competitionType,
     AgeDivision ageDivisions)
@@ -52,7 +52,7 @@ public sealed class Competition : Entity
       competitionType,
       ageDivisions);
 
-    competition.Raise(new CompetitionCreatedDomainEvent(competition.Id));
+    competition.Raise(new CompetitionCreatedDomainEvent(competition.Id.Value, meetId.Value));
 
     return competition;
   }

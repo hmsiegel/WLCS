@@ -7,6 +7,8 @@ namespace WLCS.Modules.Athletes.Infrastructure.Database;
 public class AthletesDbContext(DbContextOptions<AthletesDbContext> options)
   : DbContext(options), IUnitOfWork
 {
+  internal DbSet<Athlete> Athletes { get; set; } = default!;
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     ArgumentNullException.ThrowIfNull(modelBuilder);

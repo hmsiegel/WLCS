@@ -36,9 +36,9 @@ internal sealed class SearchMeetsQueryHandler(IDbConnectionFactory dbConnectionF
       SELECT
         id AS {nameof(MeetResponse.Id)},
         name AS {nameof(MeetResponse.Name)},
-        location AS {nameof(MeetResponse.Location)},
+        city AS {nameof(MeetResponse.City)},
+        state AS {nameof(MeetResponse.State)},
         venue AS {nameof(MeetResponse.Venue)},
-        location AS {nameof(MeetResponse.Location)},
         start_date AS {nameof(MeetResponse.StartDate)},
         end_date AS {nameof(MeetResponse.EndDate)}
       FROM
@@ -79,7 +79,7 @@ internal sealed class SearchMeetsQueryHandler(IDbConnectionFactory dbConnectionF
 
   private sealed record SearchMeetsParameters(
     bool IsArchived,
-    Guid? CompetitionId,
+    CompetitionId? CompetitionId,
     DateOnly? StartDate,
     DateOnly? EndDate,
     int Take,

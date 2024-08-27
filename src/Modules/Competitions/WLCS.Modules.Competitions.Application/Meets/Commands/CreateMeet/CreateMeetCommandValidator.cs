@@ -12,9 +12,13 @@ internal sealed class CreateMeetCommandValidator : AbstractValidator<CreateMeetC
       .NotEmpty()
       .MaximumLength(100);
 
-    RuleFor(x => x.Location)
+    RuleFor(x => x.City)
       .NotEmpty()
       .MaximumLength(100);
+
+    RuleFor(x => x.State)
+      .NotEmpty()
+      .MaximumLength(2);
 
     RuleFor(x => x.Venue)
       .NotEmpty()

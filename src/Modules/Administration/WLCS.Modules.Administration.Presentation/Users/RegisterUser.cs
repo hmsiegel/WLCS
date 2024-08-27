@@ -14,7 +14,7 @@ internal sealed class RegisterUser(ISender sender) : Endpoint<Request>
   {
     Post("users/register");
     AllowAnonymous();
-    Tags(SwaggerTags.Users);
+    Options(x => x.WithTags(SwaggerTags.Users));
   }
 
   public override async Task HandleAsync(Request req, CancellationToken ct)

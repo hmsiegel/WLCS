@@ -1,25 +1,26 @@
 ﻿// <copyright file="Meet.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
 
 namespace WLCS.Modules.Competitions.Domain.Meets;
 
-public sealed class Meet : Entity
+public sealed class Meet : Entity<MeetId>
 {
-  private readonly List<Competition> _competitions = [];
+  private readonly List<Guid> _competitions = [];
 
   private Meet(
-    string name,
-    string location,
-    string venue,
+    Name name,
+    Location location,
+    Venue venue,
     DateOnly startDate,
     DateOnly endDate,
-    Guid? id = null)
+    MeetId? id = null)
   {
-    Id = id ?? Guid.NewGuid();
-    Name = Guard.Against.NullOrWhiteSpace(name);
-    Location = Guard.Against.NullOrWhiteSpace(location);
-    Venue = Guard.Against.NullOrWhiteSpace(venue);
+    Id = id ?? MeetId.CreateUnique();
+    Name = Guard.Against.Default(name);
+    Location = Guard.Against.Default(location);
+    Venue = Guard.Against.Default(venue);
     StartDate = Guard.Against.Default(startDate);
     EndDate = Guard.Against.Default(endDate);
   }
@@ -28,13 +29,11 @@ public sealed class Meet : Entity
   {
   }
 
-  public Guid Id { get; private set; }
+  public Name Name { get; private set; } = default!;
 
-  public string Name { get; private set; } = string.Empty;
+  public Location Location { get; private set; } = default!;
 
-  public string Location { get; private set; } = string.Empty;
-
-  public string Venue { get; private set; } = string.Empty;
+  public Venue Venue { get; private set; } = default!;
 
   public DateOnly StartDate { get; private set; }
 
@@ -42,12 +41,12 @@ public sealed class Meet : Entity
 
   public bool IsActive { get; private set; } = true;
 
-  public IReadOnlyCollection<Competition> Competitions => [.. _competitions];
+  public IReadOnlyCollection<Guid> Competitions => [.. _competitions];
 
   public static Result<Meet> Create(
-    string name,
-    string location,
-    string venue,
+    Name name,
+    Location location,
+    Venue venue,
     DateOnly startDate,
     DateOnly endDate)
   {
@@ -63,7 +62,7 @@ public sealed class Meet : Entity
       startDate,
       endDate);
 
-    meet.Raise(new MeetCreatedDomainEvent(meet.Id));
+    meet.Raise(new MeetCreatedDomainEvent(meet.Id.Value));
 
     return meet;
   }
@@ -72,37 +71,37 @@ public sealed class Meet : Entity
   {
     IsActive = false;
 
-    Raise(new MeetArchivedDomainEvent(Id));
+    Raise(new MeetArchivedDomainEvent(Id.Value));
   }
 
   public void UpdateMeet(
-    string name,
-    string location,
-    string venue,
+    Name name,
+    Location location,
+    Venue venue,
     DateOnly startDate,
     DateOnly endDate)
   {
-    Name = Guard.Against.NullOrWhiteSpace(name);
-    Location = Guard.Against.NullOrWhiteSpace(location);
-    Venue = Guard.Against.NullOrWhiteSpace(venue);
+    Name = Guard.Against.Default(name);
+    Location = Guard.Against.Default(location);
+    Venue = Guard.Against.Default(venue);
     StartDate = Guard.Against.Default(startDate);
     EndDate = Guard.Against.Default(endDate);
 
-    Raise(new MeetUpdatedDomainEvent(Id));
+    Raise(new MeetUpdatedDomainEvent(Id.Value));
   }
 
   public Result AddCompetition(Competition competition)
   {
     ArgumentNullException.ThrowIfNull(competition);
 
-    if (Competitions.Contains(competition))
+    if (Competitions.Contains(competition.Id.Value))
     {
       return Result.Failure(MeetErrors.CompetitionAlreadyAdded);
     }
 
-    _competitions.Add(competition);
+    _competitions.Add(competition.Id.Value);
 
-    Raise(new CompetitionAddedToMeetDomainEvent(Id, competition.Id));
+    Raise(new CompetitionAddedToMeetDomainEvent(Id.Value, competition.Id.Value));
 
     return Result.Success();
   }

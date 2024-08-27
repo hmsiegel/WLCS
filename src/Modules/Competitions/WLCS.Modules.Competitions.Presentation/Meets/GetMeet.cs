@@ -12,7 +12,7 @@ internal sealed class GetMeet(ISender sender) : EndpointWithoutRequest<MeetRespo
   {
     Get("meets/{id}");
     AllowAnonymous();
-    Tags(SwaggerTags.Meets);
+    Options(x => x.WithTags(SwaggerTags.Meets));
   }
 
   public override async Task HandleAsync(CancellationToken ct)

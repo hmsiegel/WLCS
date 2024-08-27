@@ -5,7 +5,7 @@
 namespace WLCS.Modules.Competitions.Application.Meets.Queries.SearchMeets;
 
 public sealed record SearchMeetsQuery(
-  Guid? CompetitionId,
+  CompetitionId? CompetitionId,
   DateOnly? StartDate,
   DateOnly? EndDate,
   int Page,

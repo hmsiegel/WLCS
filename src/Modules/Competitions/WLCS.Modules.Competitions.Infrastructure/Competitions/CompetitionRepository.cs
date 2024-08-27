@@ -16,7 +16,7 @@ internal sealed class CompetitionRepository(CompetitionsDbContext context) : ICo
   public async Task<Competition?> GetAsync(Guid id, CancellationToken cancellationToken = default)
   {
     var competition = await _context.Competitions
-      .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+      .SingleOrDefaultAsync(x => x.Id.Value == id, cancellationToken);
 
     return competition;
   }

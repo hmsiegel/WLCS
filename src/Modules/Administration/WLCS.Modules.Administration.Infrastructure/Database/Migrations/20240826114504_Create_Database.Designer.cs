@@ -12,7 +12,7 @@ using WLCS.Modules.Administration.Infrastructure.Database;
 namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AdministrationDbContext))]
-    [Migration("20240816170837_Create_Database")]
+    [Migration("20240826114504_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -35,8 +35,8 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")

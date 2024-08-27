@@ -5,4 +5,6 @@
 global using System.Collections.ObjectModel;
 global using System.Diagnostics.CodeAnalysis;
 
+global using Ardalis.SmartEnum;
+
 global using MediatR;

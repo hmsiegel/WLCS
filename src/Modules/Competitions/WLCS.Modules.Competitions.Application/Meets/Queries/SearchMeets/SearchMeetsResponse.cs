@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using WLCS.Modules.Competitions.Application.Meets.Queries.GetMeets;
-
 namespace WLCS.Modules.Competitions.Application.Meets.Queries.SearchMeets;
 
 public sealed record SearchMeetsResponse(

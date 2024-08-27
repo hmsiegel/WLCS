@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using WLCS.Modules.Competitions.Infrastructure.Database;
 
 #nullable disable
 
 namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CompetitionsDbContext))]
-    [Migration("20240813194957_Create_Database")]
+    [Migration("20240826185356_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -20,7 +21,7 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("competitions")
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -28,7 +29,6 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Competitions.Competition", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -46,7 +46,8 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
                         .HasColumnName("name");
 
                     b.Property<int>("Scope")
@@ -65,7 +66,6 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Meets.Meet", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -77,14 +77,10 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_active");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("location");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
 
                     b.Property<DateOnly>("StartDate")
@@ -93,7 +89,8 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 
                     b.Property<string>("Venue")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
                         .HasColumnName("venue");
 
                     b.HasKey("Id")
@@ -105,7 +102,7 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Competitions.Competition", b =>
                 {
                     b.HasOne("WLCS.Modules.Competitions.Domain.Meets.Meet", null)
-                        .WithMany("Competitions")
+                        .WithMany()
                         .HasForeignKey("MeetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -114,7 +111,35 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Meets.Meet", b =>
                 {
-                    b.Navigation("Competitions");
+                    b.OwnsOne("WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Location", "Location", b1 =>
+                        {
+                            b1.Property<Guid>("MeetId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("city");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasMaxLength(2)
+                                .HasColumnType("character varying(2)")
+                                .HasColumnName("state");
+
+                            b1.HasKey("MeetId");
+
+                            b1.ToTable("meets", "competitions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MeetId")
+                                .HasConstraintName("fk_meets_meets_id");
+                        });
+
+                    b.Navigation("Location")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

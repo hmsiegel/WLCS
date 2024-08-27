@@ -21,9 +21,10 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    location = table.Column<string>(type: "text", nullable: false),
-                    venue = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    city = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    state = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false),
+                    venue = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     start_date = table.Column<DateOnly>(type: "date", nullable: false),
                     end_date = table.Column<DateOnly>(type: "date", nullable: false),
                     is_active = table.Column<bool>(type: "boolean", nullable: false)
@@ -40,7 +41,7 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     meet_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     scope = table.Column<int>(type: "integer", nullable: false),
                     competition_type = table.Column<int>(type: "integer", nullable: false),
                     age_division = table.Column<int>(type: "integer", nullable: false)

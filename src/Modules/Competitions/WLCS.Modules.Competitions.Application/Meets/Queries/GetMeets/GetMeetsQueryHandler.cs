@@ -16,10 +16,11 @@ internal sealed class GetMeetsQueryHandler(IMeetRepository meetRepository)
     var meets = await _meetRepository.GetAll(cancellationToken);
 
     var result = meets.Select(x => new MeetResponse(
-      x.Id,
-      x.Name,
-      x.Location,
-      x.Venue,
+      x.Id.Value,
+      x.Name.Value,
+      x.Location.City,
+      x.Location.State,
+      x.Venue.Value,
       x.StartDate,
       x.EndDate)).ToList();
 

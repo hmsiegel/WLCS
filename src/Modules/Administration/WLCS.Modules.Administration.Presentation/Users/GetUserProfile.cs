@@ -12,7 +12,7 @@ internal sealed class GetUserProfile(ISender sender) : EndpointWithoutRequest<Us
   {
     Get("users/{id}/profile");
     AllowAnonymous();
-    Tags(SwaggerTags.Users);
+    Options(o => o.WithTags(SwaggerTags.Users));
   }
 
   public override async Task HandleAsync(CancellationToken ct)

@@ -11,7 +11,11 @@ global using Microsoft.Extensions.DependencyInjection;
 global using SmartEnum.EFCore;
 
 global using WLCS.Common.Infrastructure.Interceptors;
+global using WLCS.Modules.Competitions.Application.Abstractions.Data;
 global using WLCS.Modules.Competitions.Domain.Competitions;
+global using WLCS.Modules.Competitions.Domain.Competitions.ValueObjects;
 global using WLCS.Modules.Competitions.Domain.Meets;
+global using WLCS.Modules.Competitions.Domain.Meets.ValueObjects;
 global using WLCS.Modules.Competitions.Infrastructure.Competitions;
+global using WLCS.Modules.Competitions.Infrastructure.Database;
 global using WLCS.Modules.Competitions.Infrastructure.Meets;

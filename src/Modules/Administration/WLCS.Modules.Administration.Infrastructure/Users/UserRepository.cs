@@ -15,6 +15,16 @@ internal sealed class UserRepository(AdministrationDbContext context) : IUserRep
 
   public async Task<User?> GetAsync(Guid id, CancellationToken cancellationToken = default)
   {
-    return await _context.Users.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+    return await _context.Users.SingleOrDefaultAsync(x => x.Id.Value == id, cancellationToken);
+  }
+
+  public async Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken = default)
+  {
+    return !await _context.Users.AnyAsync(x => x.Email == email, cancellationToken);
+  }
+
+  public void Update(User user)
+  {
+    _context.Users.Update(user);
   }
 }

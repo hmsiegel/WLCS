@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Domain.Meets;
+namespace WLCS.Modules.Competitions.Domain.Meets.DomainEvents;
 
 public sealed class MeetCreatedDomainEvent(Guid meetId) : DomainEvent
 {

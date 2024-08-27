@@ -8,5 +8,9 @@ public interface IUserRepository
 {
   Task<User?> GetAsync(Guid id, CancellationToken cancellationToken = default);
 
+  Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken = default);
+
   void Add(User user);
+
+  void Update(User user);
 }

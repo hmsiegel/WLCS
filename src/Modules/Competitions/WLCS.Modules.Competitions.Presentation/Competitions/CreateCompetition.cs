@@ -12,7 +12,7 @@ internal sealed partial class CreateCompetition(ISender sender) : Endpoint<Creat
   {
     Post("meets/{meetId}/competition");
     AllowAnonymous();
-    Tags(SwaggerTags.Competitions);
+    Options(x => x.WithTags(SwaggerTags.Competitions));
   }
 
   public override async Task HandleAsync(CreateCompetitionRequest req, CancellationToken ct)
@@ -20,9 +20,9 @@ internal sealed partial class CreateCompetition(ISender sender) : Endpoint<Creat
     var command = new CreateCompetitionCommand(
       req.MeetId,
       req.Name,
-      Scope.FromName(req.Scope),
-      CompetitionType.FromName(req.CompetitionType),
-      AgeDivision.FromName(req.AgeDivision));
+      req.Scope,
+      req.CompetitionType,
+      req.AgeDivision);
 
     var result = await _sender.Send(command, ct);
 

@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using Name = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.Name;
+
 namespace WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 
 internal sealed class CreateCompetitionCommandHandler(
@@ -28,12 +30,14 @@ internal sealed class CreateCompetitionCommandHandler(
       return Result.Failure<Guid>(MeetErrors.AlreadyArchived);
     }
 
+    var competitionNameResult = Name.Create(request.Name);
+
     var competition = Competition.Create(
       meet.Id,
-      request.Name,
-      request.Scope,
-      request.CompetitionType,
-      request.AgeDivision);
+      competitionNameResult.Value,
+      Scope.FromName(request.Scope),
+      CompetitionType.FromName(request.CompetitionType),
+      AgeDivision.FromName(request.AgeDivision));
 
     _competitionRepository.Add(competition);
 
@@ -41,6 +45,6 @@ internal sealed class CreateCompetitionCommandHandler(
 
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-    return Result.Success(competition.Id);
+    return Result.Success(competition.Id.Value);
   }
 }

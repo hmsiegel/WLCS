@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Administration.Domain.Users;
+namespace WLCS.Modules.Administration.Domain.Users.DomainEvents;
 
 public sealed class UserRegisteredDomainEvent(Guid userId) : DomainEvent
 {

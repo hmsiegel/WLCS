@@ -20,9 +20,8 @@ internal sealed class MeetRepository(CompetitionsDbContext context) : IMeetRepos
 
   public async Task<Meet?> GetAsync(Guid id, CancellationToken cancellationToken = default)
   {
-    var meet = await _context.Meets
-      .Include(x => x.Competitions)
-      .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+    var meets = await _context.Meets.ToListAsync(cancellationToken);
+    var meet = meets.Find(m => m.Id.Value == id);
 
     return meet;
   }

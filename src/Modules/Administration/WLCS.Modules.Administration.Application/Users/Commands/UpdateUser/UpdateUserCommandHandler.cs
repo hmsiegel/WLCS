@@ -21,9 +21,14 @@ internal sealed class UpdateUserCommandHandler(
       return Result.Failure(UserErrors.NotFoud(request.UserId));
     }
 
-    user.Update(request.FirstName, request.LastName);
+    var firstNameResult = FirstName.Create(request.FirstName);
+    var lastNameResult = LastName.Create(request.LastName);
+
+    user.Update(firstNameResult.Value, lastNameResult.Value);
 
     await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+    _userRepository.Update(user);
 
     return Result.Success();
   }

@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
+
 namespace WLCS.Modules.Competitions.Application.Meets.Commands.CreateMeet;
 
 internal sealed class CreateMeetCommandHandler(
@@ -21,22 +23,26 @@ internal sealed class CreateMeetCommandHandler(
       return Result.Failure<Guid>(MeetErrors.StartDateIsInThePast);
     }
 
+    var nameResult = Name.Create(request.Name);
+    var venueResult = Venue.Create(request.Venue);
+    var locationResult = Location.Create(request.City, request.State);
+
     var result = Meet.Create(
-      request.Name,
-      request.Location,
-      request.Venue,
+      nameResult.Value,
+      locationResult.Value,
+      venueResult.Value,
       request.StartDate,
       request.EndDate);
 
     if (result.IsFailure)
     {
-      return Result.Failure<Guid>(result.Error);
+      return Result.Failure<Guid>(result.Errors);
     }
 
     _meetRepository.Add(result.Value);
 
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-    return result.Value.Id;
+    return result.Value.Id.Value;
   }
 }

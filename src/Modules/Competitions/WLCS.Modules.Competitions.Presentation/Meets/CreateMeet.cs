@@ -12,14 +12,15 @@ internal sealed partial class CreateMeet(ISender sender) : Endpoint<MeetRequest>
   {
     Post("meets");
     AllowAnonymous();
-    Tags(SwaggerTags.Meets);
+    Options(x => x.WithTags(SwaggerTags.Meets));
   }
 
   public override async Task HandleAsync(MeetRequest request, CancellationToken ct)
   {
     var command = new CreateMeetCommand(
       request.Name,
-      request.Location,
+      request.City,
+      request.State,
       request.Venue,
       request.StartDate,
       request.EndDate);

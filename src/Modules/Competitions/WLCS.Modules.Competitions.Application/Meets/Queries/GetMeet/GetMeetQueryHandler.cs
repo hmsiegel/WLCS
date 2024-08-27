@@ -19,10 +19,11 @@ internal sealed class GetMeetQueryHandler(IMeetRepository meetRepository)
     }
 
     var result = new MeetResponse(
-      meet.Id,
-      meet.Name,
-      meet.Location,
-      meet.Venue,
+      meet.Id.Value,
+      meet.Name.Value,
+      meet.Location.City,
+      meet.Location.State,
+      meet.Venue.Value,
       meet.StartDate,
       meet.EndDate);
 

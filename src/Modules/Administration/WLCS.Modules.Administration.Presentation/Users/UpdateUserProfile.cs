@@ -14,7 +14,7 @@ internal sealed class UpdateUserProfile(ISender sender) : Endpoint<Request>
   {
     Put("users/{id}/profile");
     AllowAnonymous();
-    Tags(SwaggerTags.Users);
+    Options(x => x.WithTags(SwaggerTags.Users));
   }
 
   public override async Task HandleAsync(Request req, CancellationToken ct)

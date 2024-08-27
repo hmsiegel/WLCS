@@ -6,7 +6,8 @@ namespace WLCS.Modules.Competitions.Presentation.Meets;
 
 internal sealed record MeetRequest(
   string Name,
-  string Location,
+  string City,
+  string State,
   string Venue,
   DateOnly StartDate,
   DateOnly EndDate);

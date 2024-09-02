@@ -12,7 +12,7 @@ using WLCS.Modules.Competitions.Infrastructure.Database;
 namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CompetitionsDbContext))]
-    [Migration("20240826185356_Create_Database")]
+    [Migration("20240902012722_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -25,6 +25,75 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("AthleteCompetition", b =>
+                {
+                    b.Property<Guid>("AthletesId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("athletes_id");
+
+                    b.Property<Guid>("CompetitionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("competition_id");
+
+                    b.HasKey("AthletesId", "CompetitionId")
+                        .HasName("pk_athlete_competition");
+
+                    b.HasIndex("CompetitionId")
+                        .HasDatabaseName("ix_athlete_competition_competition_id");
+
+                    b.ToTable("athlete_competition", "competitions");
+                });
+
+            modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Athletes.Athlete", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Club")
+                        .HasColumnType("text")
+                        .HasColumnName("club");
+
+                    b.Property<string>("Coach")
+                        .HasColumnType("text")
+                        .HasColumnName("coach");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date")
+                        .HasColumnName("date_of_birth");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer")
+                        .HasColumnName("gender");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
+                    b.Property<Guid>("MeetId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("meet_id");
+
+                    b.Property<string>("Membership")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("membership");
+
+                    b.HasKey("Id")
+                        .HasName("pk_athletes");
+
+                    b.HasIndex("MeetId")
+                        .HasDatabaseName("ix_athletes_meet_id");
+
+                    b.ToTable("athletes", "competitions");
+                });
 
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Competitions.Competition", b =>
                 {
@@ -97,6 +166,33 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .HasName("pk_meets");
 
                     b.ToTable("meets", "competitions");
+                });
+
+            modelBuilder.Entity("AthleteCompetition", b =>
+                {
+                    b.HasOne("WLCS.Modules.Competitions.Domain.Athletes.Athlete", null)
+                        .WithMany()
+                        .HasForeignKey("AthletesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_athlete_competition_athletes_athletes_id");
+
+                    b.HasOne("WLCS.Modules.Competitions.Domain.Competitions.Competition", null)
+                        .WithMany()
+                        .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_athlete_competition_competitions_competition_id");
+                });
+
+            modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Athletes.Athlete", b =>
+                {
+                    b.HasOne("WLCS.Modules.Competitions.Domain.Meets.Meet", null)
+                        .WithMany()
+                        .HasForeignKey("MeetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_athletes_meets_meet_id");
                 });
 
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Competitions.Competition", b =>

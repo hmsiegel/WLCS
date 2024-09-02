@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using WLCS.Modules.Athletes.Infrastructure.PublicApi;
+
 namespace WLCS.Modules.Athletes.Infrastructure;
 
 public static class AthletesModule
@@ -34,5 +36,7 @@ public static class AthletesModule
     services.AddScoped<IAthleteRepository, AthleteRepository>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AthletesDbContext>());
+
+    services.AddScoped<IAthleteApi, AthletesApi>();
   }
 }

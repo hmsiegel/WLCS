@@ -5,8 +5,4 @@
     <ProjectReference Include="..\WLCS.Modules.Athletes.Domain\WLCS.Modules.Athletes.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Athletes\Queries\" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,8 @@
 ﻿// <copyright file="Meet.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+using WLCS.Modules.Competitions.Domain.Athletes;
+
 using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
 
 namespace WLCS.Modules.Competitions.Domain.Meets;
@@ -8,6 +10,7 @@ namespace WLCS.Modules.Competitions.Domain.Meets;
 public sealed class Meet : Entity<MeetId>
 {
   private readonly List<Guid> _competitions = [];
+  private readonly List<Guid> _athletes = [];
 
   private Meet(
     Name name,
@@ -42,6 +45,8 @@ public sealed class Meet : Entity<MeetId>
   public bool IsActive { get; private set; } = true;
 
   public IReadOnlyCollection<Guid> Competitions => [.. _competitions];
+
+  public IReadOnlyCollection<Guid> Athletes => [.. _athletes];
 
   public static Result<Meet> Create(
     Name name,
@@ -104,5 +109,33 @@ public sealed class Meet : Entity<MeetId>
     Raise(new CompetitionAddedToMeetDomainEvent(Id.Value, competition.Id.Value));
 
     return Result.Success();
+  }
+
+  public Result RemoveCompetition(Competition competition)
+  {
+    ArgumentNullException.ThrowIfNull(competition);
+
+    if (!Competitions.Contains(competition.Id.Value))
+    {
+      return Result.Failure(MeetErrors.CompetitionNotFound(competition.Id.Value));
+    }
+
+    _competitions.Remove(competition.Id.Value);
+
+    Raise(new CompetitionRemovedFromMeetDomainEvent(Id.Value, competition.Id.Value));
+
+    return Result.Success();
+  }
+
+  public void AddAthleteToMeet(Athlete athlete)
+  {
+    ArgumentNullException.ThrowIfNull(athlete);
+
+    if (!_athletes.Contains(athlete.Id))
+    {
+      _athletes.Add(athlete.Id);
+
+      Raise(new AthleteAddedToMeetDomainEvent(Id.Value, athlete.Id));
+    }
   }
 }

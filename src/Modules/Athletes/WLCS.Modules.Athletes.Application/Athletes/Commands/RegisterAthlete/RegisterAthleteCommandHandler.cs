@@ -14,7 +14,7 @@ internal sealed class RegisterAthleteCommandHandler(
 
   public async Task<Result<Guid>> Handle(RegisterAthleteCommand request, CancellationToken cancellationToken)
   {
-    if (!await _athleteRepository.AthleteExistsAsync(request.MembershipId, cancellationToken))
+    if (await _athleteRepository.AthleteExistsAsync(request.MembershipId, cancellationToken))
     {
       return Result.Failure<Guid>(AthleteErrors.AthleteAlreadExists(request.MembershipId));
     }
@@ -41,7 +41,7 @@ internal sealed class RegisterAthleteCommandHandler(
       lastNameResult.Value,
       request.DateOfBirth,
       emailResult.Value,
-      Gender.FromName(request.Gender));
+      Gender.FromName(request.Gender, ignoreCase: true));
 
     _athleteRepository.Add(athlete);
 

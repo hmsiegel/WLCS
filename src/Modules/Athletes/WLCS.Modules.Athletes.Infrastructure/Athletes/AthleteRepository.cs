@@ -25,7 +25,9 @@ internal sealed class AthleteRepository(AthletesDbContext dbContext) : IAthleteR
 
   public async Task<Athlete?> GetAsync(Guid id, CancellationToken cancellationToken = default)
   {
-    return await _dbContext.Athletes.SingleOrDefaultAsync(x => x.Id.Value == id, cancellationToken);
+    var athletes = await _dbContext.Athletes.ToListAsync(cancellationToken);
+    var athlete = athletes.Find(a => a.Id.Value == id);
+    return athlete;
   }
 
   public async Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken = default)

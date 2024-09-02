@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\WLCS.Common.Application\WLCS.Common.Application.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Competitions.Domain\WLCS.Modules.Competitions.Domain.csproj" />
+    <ProjectReference Include="..\..\Athletes\WLCS.Modules.Athletes.PublicApi\WLCS.Modules.Athletes.PublicApi.csproj" />
   </ItemGroup>
 
 </Project>

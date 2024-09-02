@@ -23,5 +23,8 @@ internal sealed class CompetitionConfiguration : IEntityTypeConfiguration<Compet
       .HasConversion(
       name => name.Value,
       value => new Name(value));
+
+    builder.HasMany(x => x.Athletes)
+      .WithMany();
   }
 }

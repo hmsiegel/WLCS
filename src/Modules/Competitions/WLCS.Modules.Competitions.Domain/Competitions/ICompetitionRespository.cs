@@ -8,5 +8,7 @@ public interface ICompetitionRespository
 {
   void Add(Competition competition);
 
+  void Update(Competition competition);
+
   Task<Competition?> GetAsync(Guid id, CancellationToken cancellationToken = default);
 }

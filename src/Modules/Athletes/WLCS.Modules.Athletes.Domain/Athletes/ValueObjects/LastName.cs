@@ -9,10 +9,9 @@ public sealed record LastName(string Value)
   public const int MaxLength = 200;
 
   public static Result<LastName> Create(string lastName) =>
-    Result.Create(lastName)
-      .Ensure(
-      lastName => !string.IsNullOrWhiteSpace(lastName), LastNameErrors.Empty)
-      .Ensure(
-        lastName => lastName.Length <= MaxLength, LastNameErrors.Length)
+    Result.Ensure(
+      lastName,
+      (lastName => !string.IsNullOrWhiteSpace(lastName), LastNameErrors.Empty),
+      (lastName => lastName.Length <= MaxLength, LastNameErrors.Length))
       .Map(lastName => new LastName(lastName));
 }

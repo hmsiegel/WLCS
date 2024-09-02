@@ -20,4 +20,9 @@ internal sealed class CompetitionRepository(CompetitionsDbContext context) : ICo
 
     return competition;
   }
+
+  public void Update(Competition competition)
+  {
+    _context.Competitions.Update(competition);
+  }
 }

@@ -22,6 +22,11 @@ public static class MeetErrors
     code: "Meets.CompetitionAlreadyAdded",
     description: "The competition has already been added to the meet.");
 
+  public static Error CompetitionNotFound(Guid competitionId) =>
+    Error.NotFound(
+      code: "Meets.CompetitionNotFound",
+      description: $"Competition with id {competitionId} was not found.");
+
   public static Error NotFound(Guid id) =>
     Error.NotFound(
       code: "Meets.NotFound",

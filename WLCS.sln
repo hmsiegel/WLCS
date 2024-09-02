@@ -40,33 +40,35 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competitions.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competitions.Presentation", "src\Modules\Competitions\WLCS.Modules.Competitions.Presentation\WLCS.Modules.Competitions.Presentation.csproj", "{6A7765D2-2111-4672-A497-CFAD45233529}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Application", "src\Common\WLCS.Common.Application\WLCS.Common.Application.csproj", "{19C307B4-E39F-471F-AC46-A35B6D1DF44D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Common.Application", "src\Common\WLCS.Common.Application\WLCS.Common.Application.csproj", "{19C307B4-E39F-471F-AC46-A35B6D1DF44D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Domain", "src\Common\WLCS.Common.Domain\WLCS.Common.Domain.csproj", "{66D1CF2E-8C33-41F2-A963-24392E3E76D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Common.Domain", "src\Common\WLCS.Common.Domain\WLCS.Common.Domain.csproj", "{66D1CF2E-8C33-41F2-A963-24392E3E76D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Infrastructure", "src\Common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj", "{27719841-69DF-436E-B644-2049652D24C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Common.Infrastructure", "src\Common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj", "{27719841-69DF-436E-B644-2049652D24C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Common.Presentation", "src\Common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj", "{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Common.Presentation", "src\Common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj", "{0EDF43DB-9B25-4169-BE64-662B0C6BCF14}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Administration", "Administration", "{76105C06-D503-4E23-BE93-89F0D8EA6E83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Application", "src\Modules\Administration\WLCS.Modules.Administration.Application\WLCS.Modules.Administration.Application.csproj", "{2CEA10C3-4D8F-4C9E-8481-DC582114122F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Administration.Application", "src\Modules\Administration\WLCS.Modules.Administration.Application\WLCS.Modules.Administration.Application.csproj", "{2CEA10C3-4D8F-4C9E-8481-DC582114122F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Domain", "src\Modules\Administration\WLCS.Modules.Administration.Domain\WLCS.Modules.Administration.Domain.csproj", "{29B6EA17-9676-4E58-A773-1490D606FA5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Administration.Domain", "src\Modules\Administration\WLCS.Modules.Administration.Domain\WLCS.Modules.Administration.Domain.csproj", "{29B6EA17-9676-4E58-A773-1490D606FA5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Infrastructure", "src\Modules\Administration\WLCS.Modules.Administration.Infrastructure\WLCS.Modules.Administration.Infrastructure.csproj", "{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Administration.Infrastructure", "src\Modules\Administration\WLCS.Modules.Administration.Infrastructure\WLCS.Modules.Administration.Infrastructure.csproj", "{50A2A6B0-63FA-46BC-B7AD-3D7EFC20FB6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.Presentation", "src\Modules\Administration\WLCS.Modules.Administration.Presentation\WLCS.Modules.Administration.Presentation.csproj", "{759DE13F-FC56-41DF-ACA1-412055550D33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Administration.Presentation", "src\Modules\Administration\WLCS.Modules.Administration.Presentation\WLCS.Modules.Administration.Presentation.csproj", "{759DE13F-FC56-41DF-ACA1-412055550D33}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Athletes", "Athletes", "{63101CA2-6B29-4547-B799-CE804310F9CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Athletes.Application", "src\Modules\Athletes\WLCS.Modules.Athletes.Application\WLCS.Modules.Athletes.Application.csproj", "{3019F6CD-F01A-4E1E-A39E-E8958BC08B01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Athletes.Application", "src\Modules\Athletes\WLCS.Modules.Athletes.Application\WLCS.Modules.Athletes.Application.csproj", "{3019F6CD-F01A-4E1E-A39E-E8958BC08B01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Athletes.Domain", "src\Modules\Athletes\WLCS.Modules.Athletes.Domain\WLCS.Modules.Athletes.Domain.csproj", "{08AC5977-E3E8-4AC0-B40F-FB7CE394A361}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Athletes.Domain", "src\Modules\Athletes\WLCS.Modules.Athletes.Domain\WLCS.Modules.Athletes.Domain.csproj", "{08AC5977-E3E8-4AC0-B40F-FB7CE394A361}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Athletes.Infrastructure", "src\Modules\Athletes\WLCS.Modules.Athletes.Infrastructure\WLCS.Modules.Athletes.Infrastructure.csproj", "{5E47B14C-1074-4D9C-B00E-CBC69F17F0FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Athletes.Infrastructure", "src\Modules\Athletes\WLCS.Modules.Athletes.Infrastructure\WLCS.Modules.Athletes.Infrastructure.csproj", "{5E47B14C-1074-4D9C-B00E-CBC69F17F0FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Athletes.Presentation", "src\Modules\Athletes\WLCS.Modules.Athletes.Presentation\WLCS.Modules.Athletes.Presentation.csproj", "{37E734AF-A29F-4E47-BB07-0C47C4E8B40D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Athletes.Presentation", "src\Modules\Athletes\WLCS.Modules.Athletes.Presentation\WLCS.Modules.Athletes.Presentation.csproj", "{37E734AF-A29F-4E47-BB07-0C47C4E8B40D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Athletes.PublicApi", "src\Modules\Athletes\WLCS.Modules.Athletes.PublicApi\WLCS.Modules.Athletes.PublicApi.csproj", "{D1D2ACDE-B4E9-498B-880D-33D1C997CAC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,6 +148,10 @@ Global
 		{37E734AF-A29F-4E47-BB07-0C47C4E8B40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37E734AF-A29F-4E47-BB07-0C47C4E8B40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37E734AF-A29F-4E47-BB07-0C47C4E8B40D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1D2ACDE-B4E9-498B-880D-33D1C997CAC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1D2ACDE-B4E9-498B-880D-33D1C997CAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1D2ACDE-B4E9-498B-880D-33D1C997CAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1D2ACDE-B4E9-498B-880D-33D1C997CAC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,6 +180,7 @@ Global
 		{08AC5977-E3E8-4AC0-B40F-FB7CE394A361} = {63101CA2-6B29-4547-B799-CE804310F9CB}
 		{5E47B14C-1074-4D9C-B00E-CBC69F17F0FD} = {63101CA2-6B29-4547-B799-CE804310F9CB}
 		{37E734AF-A29F-4E47-BB07-0C47C4E8B40D} = {63101CA2-6B29-4547-B799-CE804310F9CB}
+		{D1D2ACDE-B4E9-498B-880D-33D1C997CAC7} = {63101CA2-6B29-4547-B799-CE804310F9CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58193C77-D538-4269-B7B4-388AB5B0BCB4}

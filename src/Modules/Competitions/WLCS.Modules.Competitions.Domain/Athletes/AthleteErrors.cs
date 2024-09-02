@@ -2,17 +2,13 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Athletes.Domain.Athletes.Errors;
+namespace WLCS.Modules.Competitions.Domain.Athletes;
 
 public static class AthleteErrors
 {
-  public static Error EmailAlreadyInUse => Error.Conflict(
-    "Athlete.EmailAlreadyInUse",
-    "Email is already in use");
-
-  public static Error NotFound(Guid userId) => Error.NotFound(
+  public static Error NotFound(Guid athleteId) => Error.NotFound(
     "Athlete.NotFound",
-    $"User with id {userId} not found");
+    $"User with id {athleteId} not found");
 
   public static Error NotFound(string identitiyId) => Error.NotFound(
     "Athlete.NotFound",

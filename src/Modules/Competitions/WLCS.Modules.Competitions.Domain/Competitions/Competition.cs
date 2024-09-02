@@ -2,12 +2,16 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using WLCS.Modules.Competitions.Domain.Athletes;
+
 using Name = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.Name;
 
 namespace WLCS.Modules.Competitions.Domain.Competitions;
 
 public sealed class Competition : Entity<CompetitionId>
 {
+  private readonly List<Athlete> _athletes = [];
+
   private Competition(
     MeetId meetId,
     Name name,
@@ -38,6 +42,8 @@ public sealed class Competition : Entity<CompetitionId>
 
   public AgeDivision AgeDivision { get; private set; } = AgeDivision.Senior;
 
+  public IReadOnlyCollection<Athlete> Athletes => [.. _athletes];
+
   public static Competition Create(
     MeetId meetId,
     Name name,
@@ -55,5 +61,15 @@ public sealed class Competition : Entity<CompetitionId>
     competition.Raise(new CompetitionCreatedDomainEvent(competition.Id.Value, meetId.Value));
 
     return competition;
+  }
+
+  public void AddAthlete(Athlete athlete)
+  {
+    if (_athletes.Contains(athlete))
+    {
+      return;
+    }
+
+    _athletes.Add(athlete);
   }
 }

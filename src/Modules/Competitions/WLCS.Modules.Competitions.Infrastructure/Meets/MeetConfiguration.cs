@@ -55,5 +55,11 @@ internal sealed class MeetConfiguration : IEntityTypeConfiguration<Meet>
       .WithOne()
       .HasForeignKey(x => x.MeetId)
       .OnDelete(DeleteBehavior.Cascade);
+
+    builder
+      .HasMany<Athlete>()
+      .WithOne()
+      .HasForeignKey(x => x.MeetId)
+      .OnDelete(DeleteBehavior.Cascade);
   }
 }

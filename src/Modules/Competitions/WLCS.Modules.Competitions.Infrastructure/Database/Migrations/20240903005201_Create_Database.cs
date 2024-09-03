@@ -40,7 +40,7 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    meet_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    meet_id = table.Column<Guid>(type: "uuid", nullable: true),
                     membership = table.Column<string>(type: "text", nullable: false),
                     first_name = table.Column<string>(type: "text", nullable: false),
                     last_name = table.Column<string>(type: "text", nullable: false),

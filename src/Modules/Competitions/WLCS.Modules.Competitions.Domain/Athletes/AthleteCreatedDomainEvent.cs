@@ -4,9 +4,7 @@
 
 namespace WLCS.Modules.Competitions.Domain.Athletes;
 
-public sealed class AthleteCreatedDomainEvent(Guid athleteId, Guid meetId) : DomainEvent
+public sealed class AthleteCreatedDomainEvent(Guid athleteId) : DomainEvent
 {
   public Guid AthleteId { get; init; } = athleteId;
-
-  public Guid MeetId { get; } = meetId;
 }

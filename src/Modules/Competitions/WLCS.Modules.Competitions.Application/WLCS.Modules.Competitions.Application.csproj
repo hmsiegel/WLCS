@@ -6,4 +6,8 @@
     <ProjectReference Include="..\..\Athletes\WLCS.Modules.Athletes.PublicApi\WLCS.Modules.Athletes.PublicApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Athletes\Queries\" />
+  </ItemGroup>
+
 </Project>

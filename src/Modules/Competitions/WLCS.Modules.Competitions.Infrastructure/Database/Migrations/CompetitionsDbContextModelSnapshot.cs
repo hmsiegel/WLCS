@@ -74,7 +74,7 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
-                    b.Property<Guid>("MeetId")
+                    b.Property<Guid?>("MeetId")
                         .HasColumnType("uuid")
                         .HasColumnName("meet_id");
 
@@ -188,7 +188,6 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .WithMany()
                         .HasForeignKey("MeetId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_athletes_meets_meet_id");
                 });
 

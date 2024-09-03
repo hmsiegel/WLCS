@@ -12,7 +12,7 @@ using WLCS.Modules.Competitions.Infrastructure.Database;
 namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CompetitionsDbContext))]
-    [Migration("20240902012722_Create_Database")]
+    [Migration("20240903005201_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
-                    b.Property<Guid>("MeetId")
+                    b.Property<Guid?>("MeetId")
                         .HasColumnType("uuid")
                         .HasColumnName("meet_id");
 
@@ -191,7 +191,6 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .WithMany()
                         .HasForeignKey("MeetId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_athletes_meets_meet_id");
                 });
 

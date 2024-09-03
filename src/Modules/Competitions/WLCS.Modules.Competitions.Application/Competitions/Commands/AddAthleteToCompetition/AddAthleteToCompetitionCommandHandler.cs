@@ -28,7 +28,6 @@ internal sealed class AddAthleteToCompetitionCommandHandler(ICompetitionResposit
 
     var result = Athlete.Create(
       athlete.Id,
-      competition.MeetId,
       athlete.MembershipId,
       athlete.FirstName,
       athlete.LastName,

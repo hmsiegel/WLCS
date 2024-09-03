@@ -12,8 +12,7 @@ public sealed class Athlete : Entity
     string firstName,
     string lastName,
     DateOnly dateOfBirth,
-    Gender gender,
-    MeetId meetId)
+    Gender gender)
   {
     Membership = Guard.Against.NullOrWhiteSpace(membership);
     FirstName = Guard.Against.NullOrWhiteSpace(firstName);
@@ -21,7 +20,6 @@ public sealed class Athlete : Entity
     DateOfBirth = Guard.Against.Default(dateOfBirth);
     Gender = Guard.Against.Default(gender);
     Id = Guard.Against.Default(id);
-    MeetId = meetId;
   }
 
   private Athlete()
@@ -30,7 +28,7 @@ public sealed class Athlete : Entity
 
   public Guid Id { get; private set; }
 
-  public MeetId MeetId { get; private set; } = default!;
+  public MeetId? MeetId { get; private set; } = default!;
 
   public string Membership { get; private set; } = default!;
 
@@ -48,26 +46,39 @@ public sealed class Athlete : Entity
 
   public static Athlete Create(
     Guid id,
-    MeetId meetId,
     string membership,
     string firstName,
     string lastName,
     DateOnly dateOfBirth,
     Gender gender)
   {
-    ArgumentNullException.ThrowIfNull(meetId);
-
     var athlete = new Athlete(
       id: id,
-      meetId: meetId,
       membership: membership,
       firstName: firstName,
       lastName: lastName,
       dateOfBirth: dateOfBirth,
       gender: gender);
 
-    athlete.Raise(new AthleteCreatedDomainEvent(athlete.Id, meetId.Value));
+    athlete.Raise(new AthleteCreatedDomainEvent(athlete.Id));
 
     return athlete;
+  }
+
+  public void Update(
+    string firstName,
+    string lastName,
+    string club,
+    string coach)
+  {
+    FirstName = Guard.Against.NullOrWhiteSpace(firstName);
+    LastName = Guard.Against.NullOrWhiteSpace(lastName);
+    Club = Guard.Against.NullOrWhiteSpace(club);
+    Coach = Guard.Against.NullOrWhiteSpace(coach);
+  }
+
+  public void AddToMeet(MeetId meetId)
+  {
+    MeetId = Guard.Against.Default(meetId);
   }
 }

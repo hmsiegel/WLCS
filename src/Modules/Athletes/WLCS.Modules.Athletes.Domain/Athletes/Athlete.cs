@@ -64,7 +64,7 @@ public sealed class Athlete : Entity<AthleteId>
       gender: gender,
       email: email);
 
-    athlete.Raise(new AthleteCreatedDomainEvent(athlete.Id.Value));
+    athlete.Raise(new AthleteRegisteredDomainEvent(athlete.Id.Value));
 
     return athlete;
   }

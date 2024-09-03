@@ -4,6 +4,7 @@
     <ProjectReference Include="..\WLCS.Modules.Competitions.Application\WLCS.Modules.Competitions.Application.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Competitions.Presentation\WLCS.Modules.Competitions.Presentation.csproj" />
     <ProjectReference Include="..\..\..\Common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Competitions.PublicApi\WLCS.Modules.Competitions.PublicApi.csproj" />
   </ItemGroup>
 
 </Project>

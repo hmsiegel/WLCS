@@ -12,4 +12,14 @@ internal sealed class AthleteRepository(CompetitionsDbContext dbContext) : IAthl
   {
     _dbContext.Athletes.Add(athlete);
   }
+
+  public void Update(Athlete athlete)
+  {
+    _dbContext.Athletes.Update(athlete);
+  }
+
+  public async Task<Athlete?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+  {
+    return await _dbContext.Athletes.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+  }
 }

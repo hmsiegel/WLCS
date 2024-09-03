@@ -4,11 +4,9 @@
 
 namespace WLCS.Common.Domain;
 
-public abstract class Entity<TEntityId>
+public abstract class Entity<TEntityId> : Entity
   where TEntityId : class
 {
-  private readonly List<IDomainEvent> _domainEvents = [];
-
   protected Entity(TEntityId id)
   {
     Id = id;
@@ -19,16 +17,4 @@ public abstract class Entity<TEntityId>
   }
 
   public TEntityId Id { get; init; } = default!;
-
-  public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents;
-
-  public void ClearDomainEvents()
-  {
-    _domainEvents.Clear();
-  }
-
-  protected void Raise(IDomainEvent domainEvent)
-  {
-    _domainEvents.Add(domainEvent);
-  }
 }

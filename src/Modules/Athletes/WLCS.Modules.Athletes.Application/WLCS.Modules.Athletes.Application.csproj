@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Common\WLCS.Common.Application\WLCS.Common.Application.csproj" />
-    <ProjectReference Include="..\..\Competitions\WLCS.Modules.Competitions.PublicApi\WLCS.Modules.Competitions.PublicApi.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Athletes.Domain\WLCS.Modules.Athletes.Domain.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Athletes.IntegrationEvents\WLCS.Modules.Athletes.IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

@@ -63,6 +63,8 @@ internal sealed class AthleteConfiguration : IEntityTypeConfiguration<Athlete>
         .HasMaxLength(8)
         .HasColumnName("memberId")
         .IsRequired();
+
+      membershipBuilder.HasIndex(x => x.MembershipId).IsUnique();
     });
 
     builder.OwnsOne(a => a.Address, addressBuilder =>

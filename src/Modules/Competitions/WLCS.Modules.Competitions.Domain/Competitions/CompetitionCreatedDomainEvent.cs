@@ -8,5 +8,5 @@ public sealed class CompetitionCreatedDomainEvent(Guid competitionId, Guid meetI
 {
   public Guid CompetitionId { get; init; } = competitionId;
 
-  public Guid MeetId { get; } = meetId;
+  public Guid MeetId { get; init; } = meetId;
 }

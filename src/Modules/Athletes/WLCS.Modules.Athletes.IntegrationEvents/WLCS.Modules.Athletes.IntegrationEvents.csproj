@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\WLCS.Common.Application\WLCS.Common.Application.csproj" />
+  </ItemGroup>
+</Project>

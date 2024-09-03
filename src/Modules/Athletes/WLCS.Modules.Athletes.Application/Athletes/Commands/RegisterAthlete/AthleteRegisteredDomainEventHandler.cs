@@ -5,12 +5,12 @@
 namespace WLCS.Modules.Athletes.Application.Athletes.Commands.RegisterAthlete;
 
 internal sealed class AthleteRegisteredDomainEventHandler(
-  ICompetitionsApi competitionsApi,
+  IEventBus eventBus,
   ISender sender)
   : IDomainEventHandler<AthleteRegisteredDomainEvent>
 {
+  private readonly IEventBus _eventBus = eventBus;
   private readonly ISender _sender = sender;
-  private readonly ICompetitionsApi _competitionsApi = competitionsApi;
 
   public async Task Handle(AthleteRegisteredDomainEvent notification, CancellationToken cancellationToken)
   {
@@ -23,13 +23,16 @@ internal sealed class AthleteRegisteredDomainEventHandler(
       throw new WlcsException(nameof(GetAthleteQuery), result.Errors[0]);
     }
 
-    await _competitionsApi.CreateAthleteAsync(
-      result.Value.Id,
-      result.Value.MembershipId,
-      result.Value.FirstName,
-      result.Value.LastName,
-      result.Value.DateOfBirth,
-      result.Value.Gender,
+    await _eventBus.PublishAsync(
+      new AthleteRegisteredIntegrationEvent(
+        notification.Id,
+        notification.OccurredOnUtc,
+        result.Value.Id,
+        result.Value.MembershipId,
+        result.Value.FirstName,
+        result.Value.LastName,
+        result.Value.DateOfBirth,
+        Gender.FromName(result.Value.Gender)),
       cancellationToken);
   }
 }

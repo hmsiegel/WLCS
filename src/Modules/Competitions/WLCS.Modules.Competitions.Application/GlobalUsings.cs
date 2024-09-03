@@ -12,7 +12,6 @@ global using WLCS.Common.Application.Clock;
 global using WLCS.Common.Application.Data;
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
-global using WLCS.Modules.Athletes.PublicApi;
 global using WLCS.Modules.Competitions.Application.Abstractions.Data;
 global using WLCS.Modules.Competitions.Domain.Athletes;
 global using WLCS.Modules.Competitions.Domain.Competitions;

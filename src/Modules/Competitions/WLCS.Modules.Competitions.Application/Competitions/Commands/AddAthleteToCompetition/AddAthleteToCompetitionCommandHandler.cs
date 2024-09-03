@@ -4,11 +4,13 @@
 
 namespace WLCS.Modules.Competitions.Application.Competitions.Commands.AddAthleteToCompetition;
 
-internal sealed class AddAthleteToCompetitionCommandHandler(ICompetitionRespository competitionRepository, IAthleteApi athleteApi)
+internal sealed class AddAthleteToCompetitionCommandHandler(
+  ICompetitionRespository competitionRepository,
+  IAthleteRepository athleteRepository)
   : ICommandHandler<AddAthleteToCompetitionCommand>
 {
   private readonly ICompetitionRespository _competitionRepository = competitionRepository;
-  private readonly IAthleteApi _athleteApi = athleteApi;
+  private readonly IAthleteRepository _athleteRepository = athleteRepository;
 
   public async Task<Result> Handle(AddAthleteToCompetitionCommand request, CancellationToken cancellationToken)
   {
@@ -19,7 +21,7 @@ internal sealed class AddAthleteToCompetitionCommandHandler(ICompetitionResposit
       return Result.Failure(CompetitionErrors.NotFound(request.CompetitionId));
     }
 
-    var athlete = await _athleteApi.GetAsync(request.AthleteId, cancellationToken);
+    var athlete = await _athleteRepository.GetAsync(request.AthleteId, cancellationToken);
 
     if (athlete is null)
     {
@@ -28,11 +30,11 @@ internal sealed class AddAthleteToCompetitionCommandHandler(ICompetitionResposit
 
     var result = Athlete.Create(
       athlete.Id,
-      athlete.MembershipId,
+      athlete.Membership,
       athlete.FirstName,
       athlete.LastName,
       athlete.DateOfBirth,
-      Gender.FromName(athlete.Gender));
+      athlete.Gender);
 
     competition.AddAthlete(result);
 

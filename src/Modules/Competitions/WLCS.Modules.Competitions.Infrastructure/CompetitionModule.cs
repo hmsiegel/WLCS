@@ -15,6 +15,13 @@ public static class CompetitionModule
     return services;
   }
 
+  public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
+  {
+    ArgumentNullException.ThrowIfNull(registrationConfigurator);
+
+    registrationConfigurator.AddConsumer<AthleteRegisteredIntegrationEventConsumer>();
+  }
+
   private static void AddInfrastructure(
     this IServiceCollection services,
     IConfiguration configuration)
@@ -34,7 +41,6 @@ public static class CompetitionModule
     services.AddScoped<IMeetRepository, MeetRepository>();
     services.AddScoped<ICompetitionRespository, CompetitionRepository>();
     services.AddScoped<IAthleteRepository, AthleteRepository>();
-    services.AddScoped<ICompetitionsApi, CompetitionsApi>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CompetitionsDbContext>());
   }

@@ -25,11 +25,11 @@ public sealed class PublishDomainEventsInterceptor(IServiceScopeFactory serviceS
   {
     var domainEvents = context
         .ChangeTracker
-        .Entries<Entity>()
+        .Entries<IEntity>()
         .Select(entry => entry.Entity)
         .SelectMany(entity =>
         {
-          IReadOnlyCollection<IDomainEvent> domainEvents = entity.DomainEvents;
+          IReadOnlyCollection<IDomainEvent> domainEvents = entity.GetDomainEvents();
 
           entity.ClearDomainEvents();
 

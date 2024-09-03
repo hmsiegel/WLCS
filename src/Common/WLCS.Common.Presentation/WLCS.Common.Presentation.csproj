@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="5.28.0" />
+    <PackageReference Include="MassTransit.Abstractions" Version="8.2.5" />
   </ItemGroup>
 
   <ItemGroup>

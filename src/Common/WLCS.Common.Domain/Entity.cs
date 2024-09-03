@@ -4,7 +4,7 @@
 
 namespace WLCS.Common.Domain;
 
-public abstract class Entity
+public abstract class Entity : IEntity
 {
   private readonly List<IDomainEvent> _domainEvents = [];
 
@@ -12,7 +12,7 @@ public abstract class Entity
   {
   }
 
-  public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents;
+  public IReadOnlyCollection<IDomainEvent> GetDomainEvents() => _domainEvents.ToList();
 
   public void ClearDomainEvents()
   {

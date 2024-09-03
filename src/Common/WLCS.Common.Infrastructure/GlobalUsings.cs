@@ -6,6 +6,8 @@ global using System.Buffers;
 global using System.Data.Common;
 global using System.Text.Json;
 
+global using MassTransit;
+
 global using MediatR;
 
 global using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,7 @@ global using StackExchange.Redis;
 global using WLCS.Common.Application.Caching;
 global using WLCS.Common.Application.Clock;
 global using WLCS.Common.Application.Data;
+global using WLCS.Common.Application.EventBus;
 global using WLCS.Common.Domain;
 global using WLCS.Common.Infrastructure.Caching;
 global using WLCS.Common.Infrastructure.Clock;

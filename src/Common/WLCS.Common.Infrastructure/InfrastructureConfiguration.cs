@@ -8,6 +8,7 @@ public static class InfrastructureConfiguration
 {
   public static IServiceCollection AddInfrastructure(
     this IServiceCollection services,
+    Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
     string databaseConnectionString,
     string redisConnectionString)
   {
@@ -34,6 +35,23 @@ public static class InfrastructureConfiguration
     }
 
     services.TryAddSingleton<ICacheService, CacheService>();
+
+    services.TryAddSingleton<IEventBus, EventBus.EventBus>();
+
+    services.AddMassTransit(configure =>
+    {
+      foreach (var configureConsumer in moduleConfigureConsumers)
+      {
+        configureConsumer(configure);
+      }
+
+      configure.SetKebabCaseEndpointNameFormatter();
+
+      configure.UsingInMemory((context, cfg) =>
+      {
+        cfg.ConfigureEndpoints(context);
+      });
+    });
 
     return services;
   }

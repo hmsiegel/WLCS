@@ -6,5 +6,5 @@ namespace WLCS.Modules.Competitions.Domain.Meets.DomainEvents;
 
 public sealed class MeetUpdatedDomainEvent(Guid meetId) : DomainEvent
 {
-  public Guid MeetId { get; } = meetId;
+  public Guid MeetId { get; init; } = meetId;
 }

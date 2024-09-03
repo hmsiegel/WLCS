@@ -37,6 +37,7 @@ var builder = WebApplication.CreateBuilder(args);
   var redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
 
   builder.Services.AddInfrastructure(
+    [CompetitionModule.ConfigureConsumers],
     databaseConnectionString,
     redisConnectionString);
 

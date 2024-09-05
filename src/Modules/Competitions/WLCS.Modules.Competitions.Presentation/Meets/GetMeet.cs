@@ -11,7 +11,6 @@ internal sealed class GetMeet(ISender sender) : EndpointWithoutRequest<MeetRespo
   public override void Configure()
   {
     Get("meets/{id}");
-    AllowAnonymous();
     Options(x => x.WithTags(SwaggerTags.Meets));
   }
 

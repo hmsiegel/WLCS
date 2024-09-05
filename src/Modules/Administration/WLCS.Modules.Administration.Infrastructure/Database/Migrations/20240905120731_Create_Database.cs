@@ -23,7 +23,8 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     first_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    last_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                    last_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    identity_id = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,6 +36,13 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
                 schema: "administration",
                 table: "users",
                 column: "email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_identity_id",
+                schema: "administration",
+                table: "users",
+                column: "identity_id",
                 unique: true);
         }
 

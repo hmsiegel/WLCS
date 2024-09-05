@@ -10,6 +10,7 @@ public static class LoggerExtensions
   private static readonly Action<ILogger, string, DateTime, Exception> _completedRequest = InitializeRequestCompletedLogger();
   private static readonly Action<ILogger, string, Error, Exception> _requestErrors = InitializeRequstErrorLogger();
   private static readonly Action<ILogger, string, Exception> _exceptionLogger = InitializeExceptionLogger();
+  private static readonly Action<ILogger, string, Exception> _userRegistrationError = InitializeUserRegistrationError();
   private static readonly Action<ILogger, Exception> _globalException = InitializeGlobalExceptionLogger();
 
   public static Action<ILogger, string, DateTime, Exception> InitializeRequestProcessingLogger()
@@ -44,6 +45,14 @@ public static class LoggerExtensions
       "Unhandled exception for {RequestName}");
   }
 
+  public static Action<ILogger, string, Exception> InitializeUserRegistrationError()
+  {
+    return LoggerMessage.Define<string>(
+      LogLevel.Error,
+      new EventId(6, nameof(UserRegistrationError)),
+      "User registration failed for {RequestName}");
+  }
+
   public static Action<ILogger, Exception> InitializeGlobalExceptionLogger()
   {
     return LoggerMessage.Define(
@@ -63,6 +72,9 @@ public static class LoggerExtensions
 
   public static void LogException(this ILogger logger, string requestName, Exception exception)
     => _exceptionLogger(logger, requestName, exception);
+
+  public static void UserRegistrationError(this ILogger logger, string requestName, Exception exception)
+    => _userRegistrationError(logger, requestName, exception);
 
   public static void LogGlobalException(this ILogger logger, Exception exception)
     => _globalException(logger, exception);

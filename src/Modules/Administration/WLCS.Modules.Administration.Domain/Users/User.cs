@@ -10,12 +10,14 @@ public sealed class User : Entity<UserId>
     Email email,
     FirstName firstName,
     LastName lastName,
+    string identityId,
     UserId? id = null)
   {
     Id = id ?? UserId.CreateUnique();
     Email = Guard.Against.Default(email);
     FirstName = Guard.Against.Default(firstName);
     LastName = Guard.Against.Default(lastName);
+    IdentityId = Guard.Against.NullOrWhiteSpace(identityId);
   }
 
   private User()
@@ -28,12 +30,15 @@ public sealed class User : Entity<UserId>
 
   public LastName LastName { get; private set; } = default!;
 
+  public string IdentityId { get; private set; } = default!;
+
   public static User Create(
     Email email,
     FirstName firstName,
-    LastName lastName)
+    LastName lastName,
+    string identityId)
   {
-    var user = new User(email, firstName, lastName);
+    var user = new User(email, firstName, lastName, identityId);
 
     user.Raise(new UserRegisteredDomainEvent(user.Id.Value));
 

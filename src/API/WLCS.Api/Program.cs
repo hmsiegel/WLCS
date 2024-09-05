@@ -28,10 +28,6 @@ var builder = WebApplication.CreateBuilder(args);
   ];
 
   builder.Services.AddApplication(applicationAssemblies);
-  builder.Services.AddFastEndpoints(opt =>
-    {
-      opt.Assemblies = presentationAssemblies;
-    });
 
   var databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
   var redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
@@ -41,11 +37,17 @@ var builder = WebApplication.CreateBuilder(args);
     databaseConnectionString,
     redisConnectionString);
 
+  builder.Services.AddFastEndpoints(opt =>
+    {
+      opt.Assemblies = presentationAssemblies;
+    });
+
   builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes"]);
 
   builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
-    .AddRedis(redisConnectionString);
+    .AddRedis(redisConnectionString)
+    .AddUrlGroup(new Uri(builder.Configuration.GetValue<string>("KeyCloak:HealthUrl")!), HttpMethod.Get, "keycloak");
 
   builder.Services.AddCompetitionModule(builder.Configuration);
   builder.Services.AddAdministrationModule(builder.Configuration);
@@ -62,9 +64,6 @@ var app = builder.Build();
     app.ApplyMigrations();
   }
 
-  app.UseFastEndpoints()
-     .UseSwaggerGen();
-
   app.MapHealthChecks("health", new HealthCheckOptions
   {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
@@ -73,6 +72,13 @@ var app = builder.Build();
   app.UseSerilogRequestLogging();
 
   app.UseExceptionHandler();
+
+  app.UseAuthentication();
+
+  app.UseAuthorization();
+
+  app.UseFastEndpoints()
+     .UseSwaggerGen();
 
   app.Run();
 }

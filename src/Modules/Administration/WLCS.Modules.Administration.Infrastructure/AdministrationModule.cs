@@ -10,6 +10,8 @@ public static class AdministrationModule
     this IServiceCollection services,
     IConfiguration configuration)
   {
+    ArgumentNullException.ThrowIfNull(configuration);
+
     services.AddInfrastructure(configuration);
 
     return services;
@@ -19,6 +21,21 @@ public static class AdministrationModule
     this IServiceCollection services,
     IConfiguration configuration)
   {
+    services.Configure<KeyCloakOptions>(configuration.GetSection("Administration:KeyCloak"));
+
+    services.AddTransient<KeyCloakAuthDelegatingHandler>();
+
+    services
+      .AddHttpClient<KeyCloakClient>((sp, client) =>
+      {
+        var options = sp.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
+
+        client.BaseAddress = new Uri(options.AdminUrl);
+      })
+      .AddHttpMessageHandler<KeyCloakAuthDelegatingHandler>();
+
+    services.AddTransient<IIdentityProviderService, IdentityProviderService>();
+
     var connectionString = configuration.GetConnectionString("Database");
 
     services.AddDbContext<AdministrationDbContext>((sp, options) =>

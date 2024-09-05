@@ -11,5 +11,6 @@ global using WLCS.Common.Application.Data;
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
 global using WLCS.Modules.Administration.Application.Abstractions.Data;
+global using WLCS.Modules.Administration.Application.Abstractions.Identity;
 global using WLCS.Modules.Administration.Domain.Users;
 global using WLCS.Modules.Administration.Domain.Users.ValueObjects;

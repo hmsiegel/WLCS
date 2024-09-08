@@ -7,6 +7,7 @@ global using Dapper;
 
 global using FluentValidation;
 
+global using WLCS.Common.Application.Authorization;
 global using WLCS.Common.Application.Data;
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;

@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Common.Presentation.ApiResults;
+namespace WLCS.Common.Presentation.Results;
 
 public static class ResultExtensions
 {

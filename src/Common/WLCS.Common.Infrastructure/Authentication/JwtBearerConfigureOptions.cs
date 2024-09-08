@@ -5,7 +5,7 @@
 namespace WLCS.Common.Infrastructure.Authentication;
 
 internal sealed class JwtBearerConfigureOptions(IConfiguration configuration)
-  : IConfigureOptions<JwtBearerOptions>
+  : IConfigureNamedOptions<JwtBearerOptions>
 {
   private const string ConfigurationSectionName = "Authentication";
 

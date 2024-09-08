@@ -2,9 +2,9 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Common.Presentation.ApiResults;
+namespace WLCS.Common.Presentation.Results;
 
-public static class ApiResult
+public static class ApiResults
 {
   public static IResult Problem(Result result)
   {
@@ -15,7 +15,7 @@ public static class ApiResult
       throw new InvalidOperationException();
     }
 
-    return Results.Problem(
+    return Microsoft.AspNetCore.Http.Results.Problem(
         title: GetTitle(result.Errors.FirstOrDefault()!),
         detail: GetDetail(result.Errors.FirstOrDefault()!),
         type: GetType(result.Errors.FirstOrDefault()!.Type),

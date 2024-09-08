@@ -4,7 +4,7 @@
       "AdminUrl": "http://wlcs.identity:8080/admin/realms/wlcs/",
       "TokenUrl": "http://wlcs.identity:8080/realms/wlcs/protocol/openid-connect/token",
       "ConfidentialClientId": "wlcs-confidential-client",
-      "ConfidentialClientSecret": "C3SiS6Y5JvjE1cq5TfGsLTGj58ayQs2x",
+      "ConfidentialClientSecret": "vT3NjzT08L5xMXj9PUIONZCp9cmOVNDE",
       "PublicClientId": "wlcs-public-client"
     }
   }

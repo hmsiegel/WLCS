@@ -4,35 +4,34 @@
 
 namespace WLCS.Modules.Competitions.Presentation.Competitions;
 
-internal sealed partial class CreateCompetition(ISender sender) : Endpoint<CreateCompetitionRequest>
+internal sealed class CreateCompetition : IEndpoint
 {
-  private readonly ISender _sender = sender;
-
-  public override void Configure()
+  public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    Post("meets/{meetId}/competition");
-    AllowAnonymous();
-    Options(x => x.WithTags(SwaggerTags.Competitions));
+    app.MapPost("meets/{meetId}/competition", async (
+      Guid meetId,
+      Request request,
+      ISender sender,
+      CancellationToken cancellationToken = default) =>
+    {
+      var command = new CreateCompetitionCommand(
+        meetId,
+        request.Name,
+        request.Scope,
+        request.CompetitionType,
+        request.AgeDivision);
+
+      var result = await sender.Send(command, cancellationToken);
+
+      return result.Match(Results.Ok, ApiResults.Problem);
+    })
+    .RequireAuthorization(Permissions.CreateCompetition)
+    .WithTags(Tags.Competitions);
   }
 
-  public override async Task HandleAsync(CreateCompetitionRequest req, CancellationToken ct)
-  {
-    var command = new CreateCompetitionCommand(
-      req.MeetId,
-      req.Name,
-      req.Scope,
-      req.CompetitionType,
-      req.AgeDivision);
-
-    var result = await _sender.Send(command, ct);
-
-    if (result.IsSuccess)
-    {
-      await SendResultAsync(TypedResults.Ok(result.Value));
-    }
-    else
-    {
-      await SendResultAsync(TypedResults.Problem());
-    }
-  }
+  internal sealed record Request(
+    string Name,
+    string Scope,
+    string CompetitionType,
+    string AgeDivision);
 }

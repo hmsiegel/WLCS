@@ -4,33 +4,23 @@
 
 namespace WLCS.Modules.Competitions.Presentation.Competitions;
 
-internal sealed class AddAthlete(ISender sender) : EndpointWithoutRequest
+internal sealed class AddAthlete : IEndpoint
 {
-  private readonly ISender _sender = sender;
-
-  public override void Configure()
+  public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    Post("competitions/{competitionId}/athletes/{athleteId}");
-    AllowAnonymous();
-    Options(x => x.WithTags(SwaggerTags.Competitions));
-  }
-
-  public override async Task HandleAsync(CancellationToken ct)
-  {
-    var competitionId = Route<Guid>("competitionId");
-    var athleteId = Route<Guid>("athleteId");
-
-    var command = new AddAthleteToCompetitionCommand(competitionId, athleteId);
-
-    var result = await _sender.Send(command, ct);
-
-    if (result.IsSuccess)
+    app.MapPost("competitions/{competitionId}/athletes/{athleteId}", async (
+      Guid competitionId,
+      Guid athleteId,
+      ISender sender,
+      CancellationToken cancellationToken = default) =>
     {
-      await SendResultAsync(TypedResults.Ok());
-    }
-    else
-    {
-      await SendResultAsync(TypedResults.Problem());
-    }
+      var command = new AddAthleteToCompetitionCommand(competitionId, athleteId);
+
+      var result = await sender.Send(command, cancellationToken);
+
+      return result.Match(Results.NoContent, ApiResults.Problem);
+    })
+    .RequireAuthorization(Permissions.ModifyCompetition)
+    .WithTags(Tags.Competitions);
   }
 }

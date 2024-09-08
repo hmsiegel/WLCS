@@ -12,6 +12,8 @@ public static class AthletesModule
   {
     services.AddInfrastructure(configuration);
 
+    services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
     return services;
   }
 

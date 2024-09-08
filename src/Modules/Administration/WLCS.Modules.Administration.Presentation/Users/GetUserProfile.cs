@@ -4,32 +4,22 @@
 
 namespace WLCS.Modules.Administration.Presentation.Users;
 
-internal sealed class GetUserProfile(ISender sender) : EndpointWithoutRequest<UserResponse>
+internal sealed class GetUserProfile : IEndpoint
 {
-  private readonly ISender _sender = sender;
-
-  public override void Configure()
+  public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    Get("users/{id}/profile");
-    AllowAnonymous();
-    Options(o => o.WithTags(SwaggerTags.Users));
-  }
-
-  public override async Task HandleAsync(CancellationToken ct)
-  {
-    var id = Route<Guid>("id");
-
-    var query = new GetUserQuery(id);
-
-    var results = await _sender.Send(query, ct);
-
-    if (results.IsSuccess)
+    app.MapGet("users/profile", async (
+      ClaimsPrincipal claims,
+      ISender sender,
+      CancellationToken cancellationToken = default) =>
     {
-      await SendResultAsync(TypedResults.Ok(results.Value));
-    }
-    else
-    {
-      await SendResultAsync(TypedResults.Problem());
-    }
+      var query = new GetUserQuery(claims.GetUserId());
+
+      var result = await sender.Send(query, cancellationToken);
+
+      return result.Match(Results.Ok, ApiResults.Problem);
+    })
+    .RequireAuthorization(Permissions.GetUser)
+    .WithTags(Tags.Users);
   }
 }

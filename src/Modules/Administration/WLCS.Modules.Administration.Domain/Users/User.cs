@@ -6,6 +6,8 @@ namespace WLCS.Modules.Administration.Domain.Users;
 
 public sealed class User : Entity<UserId>
 {
+  private readonly List<Role> _roles = [];
+
   private User(
     Email email,
     FirstName firstName,
@@ -32,6 +34,8 @@ public sealed class User : Entity<UserId>
 
   public string IdentityId { get; private set; } = default!;
 
+  public IReadOnlyCollection<Role> Roles => [.. _roles];
+
   public static User Create(
     Email email,
     FirstName firstName,
@@ -39,6 +43,8 @@ public sealed class User : Entity<UserId>
     string identityId)
   {
     var user = new User(email, firstName, lastName, identityId);
+
+    user._roles.Add(Role.User);
 
     user.Raise(new UserRegisteredDomainEvent(user.Id.Value));
 

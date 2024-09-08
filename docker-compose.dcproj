@@ -11,13 +11,13 @@
     <DockerComposeProjectName>wlcs</DockerComposeProjectName>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="GetMeet\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GetMeet\" />
   </ItemGroup>
 </Project>

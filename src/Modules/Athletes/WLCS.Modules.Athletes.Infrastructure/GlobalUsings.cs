@@ -11,6 +11,7 @@ global using SmartEnum.EFCore;
 
 global using WLCS.Common.Domain;
 global using WLCS.Common.Infrastructure.Interceptors;
+global using WLCS.Common.Presentation.Endpoints;
 global using WLCS.Modules.Athletes.Application.Abstractions.Data;
 global using WLCS.Modules.Athletes.Domain.Athletes;
 global using WLCS.Modules.Athletes.Domain.Athletes.ValueObjects;

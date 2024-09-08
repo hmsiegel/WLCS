@@ -4,36 +4,36 @@
 
 namespace WLCS.Modules.Competitions.Presentation.Meets;
 
-internal sealed partial class CreateMeet(ISender sender) : Endpoint<MeetRequest>
+internal sealed partial class CreateMeet : IEndpoint
 {
-  private readonly ISender _sender = sender;
-
-  public override void Configure()
+  public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    Post("meets");
-    AllowAnonymous();
-    Options(x => x.WithTags(SwaggerTags.Meets));
+    app.MapPost("meets", async (
+      Request request,
+      ISender sender,
+      CancellationToken cancellationToken = default) =>
+    {
+      var command = new CreateMeetCommand(
+        request.Name,
+        request.City,
+        request.State,
+        request.Venue,
+        request.StartDate,
+        request.EndDate);
+
+      var result = await sender.Send(command, cancellationToken);
+
+      return result.Match(Results.Ok, ApiResults.Problem);
+    })
+    .RequireAuthorization(Permissions.CreateMeet)
+    .WithTags(Tags.Meets);
   }
 
-  public override async Task HandleAsync(MeetRequest request, CancellationToken ct)
-  {
-    var command = new CreateMeetCommand(
-      request.Name,
-      request.City,
-      request.State,
-      request.Venue,
-      request.StartDate,
-      request.EndDate);
-
-    var result = await _sender.Send(command, ct);
-
-    if (result.IsSuccess)
-    {
-      await SendResultAsync(TypedResults.Ok(result.Value));
-    }
-    else
-    {
-      await SendResultAsync(TypedResults.Problem());
-    }
-  }
+  internal sealed record Request(
+    string Name,
+    string City,
+    string State,
+    string Venue,
+    DateOnly StartDate,
+    DateOnly EndDate);
 }

@@ -12,6 +12,8 @@ public static class CompetitionModule
   {
     services.AddInfrastructure(configuration);
 
+    services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
     return services;
   }
 

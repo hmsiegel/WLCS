@@ -14,6 +14,8 @@ public static class AdministrationModule
 
     services.AddInfrastructure(configuration);
 
+    services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
     return services;
   }
 
@@ -21,6 +23,8 @@ public static class AdministrationModule
     this IServiceCollection services,
     IConfiguration configuration)
   {
+    services.AddScoped<IPermissionService, PermissionService>();
+
     services.Configure<KeyCloakOptions>(configuration.GetSection("Administration:KeyCloak"));
 
     services.AddTransient<KeyCloakAuthDelegatingHandler>();

@@ -4,36 +4,36 @@
 
 namespace WLCS.Modules.Athletes.Presentation.Athletes;
 
-internal sealed partial class RegisterAthlete(ISender sender) : Endpoint<RegisterAthleteRequest>
+internal sealed partial class RegisterAthlete : IEndpoint
 {
-  private readonly ISender _sender = sender;
-
-  public override void Configure()
+  public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    Post("athletes");
-    AllowAnonymous();
-    Options(x => x.WithTags(SwaggerTags.Athletes));
+    app.MapPost("athletes", async (
+      Request request,
+      ISender sender,
+      CancellationToken cancellationToken = default) =>
+    {
+      var command = new RegisterAthleteCommand(
+        request.MembershipId,
+        request.FirstName,
+        request.LastName,
+        request.DateOfBirth,
+        request.Email,
+        request.Gender);
+
+      var result = await sender.Send(command, cancellationToken);
+
+      return result.Match(Results.Ok, ApiResults.Problem);
+    })
+    .RequireAuthorization(Permissions.CreateAthlete)
+    .WithTags(Tags.Athletes);
   }
 
-  public override async Task HandleAsync(RegisterAthleteRequest req, CancellationToken ct)
-  {
-    var command = new RegisterAthleteCommand(
-      req.MembershipId,
-      req.FirstName,
-      req.LastName,
-      req.DateOfBirth,
-      req.Email,
-      req.Gender);
-
-    var result = await _sender.Send(command, ct);
-
-    if (result.IsSuccess)
-    {
-      await SendResultAsync(TypedResults.Ok(result.Value));
-    }
-    else
-    {
-      await SendResultAsync(TypedResults.Problem());
-    }
-  }
+  internal sealed record Request(
+    string MembershipId,
+    string FirstName,
+    string LastName,
+    DateOnly DateOfBirth,
+    string Email,
+    string Gender);
 }

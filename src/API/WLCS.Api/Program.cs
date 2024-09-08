@@ -11,20 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Services.AddProblemDetails();
 
   builder.Services.AddEndpointsApiExplorer();
-  builder.Services.AddSwaggerDocument();
+  builder.Services.AddSwaggerGen(options =>
+  {
+    options.CustomSchemaIds(t => t.FullName?.Replace("+", ".", StringComparison.InvariantCultureIgnoreCase));
+  });
 
   Assembly[] applicationAssemblies =
   [
     WLCS.Modules.Competitions.Application.AssemblyReference.Assembly,
     WLCS.Modules.Administration.Application.AssemblyReference.Assembly,
     WLCS.Modules.Athletes.Application.AssemblyReference.Assembly
-  ];
-
-  Assembly[] presentationAssemblies =
-  [
-    WLCS.Modules.Competitions.Presentation.AssemblyReference.Assembly,
-    WLCS.Modules.Administration.Presentation.AssemblyReference.Assembly,
-    WLCS.Modules.Athletes.Presentation.AssemblyReference.Assembly
   ];
 
   builder.Services.AddApplication(applicationAssemblies);
@@ -36,11 +32,6 @@ var builder = WebApplication.CreateBuilder(args);
     [CompetitionModule.ConfigureConsumers],
     databaseConnectionString,
     redisConnectionString);
-
-  builder.Services.AddFastEndpoints(opt =>
-    {
-      opt.Assemblies = presentationAssemblies;
-    });
 
   builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes"]);
 
@@ -64,6 +55,8 @@ var app = builder.Build();
     app.ApplyMigrations();
   }
 
+  app.MapEndpoints();
+
   app.MapHealthChecks("health", new HealthCheckOptions
   {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
@@ -76,9 +69,6 @@ var app = builder.Build();
   app.UseAuthentication();
 
   app.UseAuthorization();
-
-  app.UseFastEndpoints()
-     .UseSwaggerGen();
 
   app.Run();
 }

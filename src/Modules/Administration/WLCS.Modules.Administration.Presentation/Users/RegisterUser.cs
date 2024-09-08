@@ -2,39 +2,29 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using static WLCS.Modules.Administration.Presentation.Users.RegisterUser;
-
 namespace WLCS.Modules.Administration.Presentation.Users;
 
-internal sealed class RegisterUser(ISender sender) : Endpoint<Request>
+internal sealed class RegisterUser : IEndpoint
 {
-  private readonly ISender _sender = sender;
-
-  public override void Configure()
+  public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    Post("users/register");
-    AllowAnonymous();
-    Options(x => x.WithTags(SwaggerTags.Users));
-  }
-
-  public override async Task HandleAsync(Request req, CancellationToken ct)
-  {
-    var user = new RegisterUserCommand(
-      req.Email,
-      req.Password,
-      req.FirstName,
-      req.LastName);
-
-    var result = await _sender.Send(user, ct);
-
-    if (result.IsSuccess)
+    app.MapPost("users/register", async (
+      Request request,
+      ISender sender,
+      CancellationToken cancellationToken = default) =>
     {
-      await SendResultAsync(TypedResults.Ok(result.Value));
-    }
-    else
-    {
-      await SendResultAsync(TypedResults.Problem());
-    }
+      var user = new RegisterUserCommand(
+        request.Email,
+        request.Password,
+        request.FirstName,
+        request.LastName);
+
+      var result = await sender.Send(user, cancellationToken);
+
+      return result.Match(Results.Ok, ApiResults.Problem);
+    })
+    .AllowAnonymous()
+    .WithTags(Tags.Users);
   }
 
   internal sealed record Request(

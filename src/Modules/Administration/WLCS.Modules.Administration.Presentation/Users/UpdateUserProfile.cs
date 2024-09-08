@@ -1,41 +1,29 @@
 ﻿// <copyright file="UpdateUserProfile.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
-
-using static WLCS.Modules.Administration.Presentation.Users.UpdateUserProfile;
-
 namespace WLCS.Modules.Administration.Presentation.Users;
 
-internal sealed class UpdateUserProfile(ISender sender) : Endpoint<Request>
+internal sealed class UpdateUserProfile : IEndpoint
 {
-  private readonly ISender _sender = sender;
-
-  public override void Configure()
+  public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    Put("users/{id}/profile");
-    AllowAnonymous();
-    Options(x => x.WithTags(SwaggerTags.Users));
-  }
-
-  public override async Task HandleAsync(Request req, CancellationToken ct)
-  {
-    var id = Route<Guid>("id");
-
-    var command = new UpdateUserCommand(
-      id,
-      req.FirstName,
-      req.LastName);
-
-    var result = await _sender.Send(command, ct);
-
-    if (result.IsSuccess)
+    app.MapPut("users/update", async (
+      ClaimsPrincipal claims,
+      Request request,
+      ISender sender,
+      CancellationToken cancellationToken = default) =>
     {
-      await SendResultAsync(TypedResults.Ok(result));
-    }
-    else
-    {
-      await SendResultAsync(TypedResults.Problem());
-    }
+      var command = new UpdateUserCommand(
+       claims.GetUserId(),
+       request.FirstName,
+       request.LastName);
+
+      var result = await sender.Send(command, cancellationToken);
+
+      result.Match(Results.NoContent, ApiResults.Problem);
+    })
+    .RequireAuthorization(Permissions.ModifyUser)
+    .WithTags(Tags.Users);
   }
 
   internal sealed record Request(string FirstName, string LastName);

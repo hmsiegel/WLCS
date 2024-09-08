@@ -10,6 +10,11 @@ internal sealed class UserRepository(AdministrationDbContext context) : IUserRep
 
   public void Add(User user)
   {
+    foreach (var role in user.Roles)
+    {
+      _context.Attach(role);
+    }
+
     _context.Users.Add(user);
   }
 

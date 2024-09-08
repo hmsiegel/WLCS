@@ -17,7 +17,6 @@ global using Serilog.Context;
 
 global using WLCS.Common.Application.Behaviors;
 global using WLCS.Common.Application.Clock;
-global using WLCS.Common.Application.Data;
 global using WLCS.Common.Application.Exceptions;
 global using WLCS.Common.Application.Extensions;
 global using WLCS.Common.Application.Messaging;

@@ -4,7 +4,7 @@
 
 namespace WLCS.Modules.Administration.Presentation;
 
-internal static class SwaggerTags
+internal static class Tags
 {
   internal const string Users = "users";
 }

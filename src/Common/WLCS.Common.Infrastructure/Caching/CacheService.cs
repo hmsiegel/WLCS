@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using JsonSerializer = System.Text.Json.JsonSerializer;
+
 namespace WLCS.Common.Infrastructure.Caching;
 
 internal sealed class CacheService(IDistributedCache cache) : ICacheService

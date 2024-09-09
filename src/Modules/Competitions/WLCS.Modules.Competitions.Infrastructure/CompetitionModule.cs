@@ -10,6 +10,8 @@ public static class CompetitionModule
     this IServiceCollection services,
     IConfiguration configuration)
   {
+    ArgumentNullException.ThrowIfNull(configuration);
+
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
@@ -37,7 +39,7 @@ public static class CompetitionModule
         npgsqlOptions => npgsqlOptions
           .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Competitions))
       .UseSnakeCaseNamingConvention()
-      .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>());
+      .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });
 
     services.AddScoped<IMeetRepository, MeetRepository>();
@@ -45,5 +47,9 @@ public static class CompetitionModule
     services.AddScoped<IAthleteRepository, AthleteRepository>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CompetitionsDbContext>());
+
+    services.Configure<OutboxOptions>(configuration.GetSection("Competitions:Outbox"));
+
+    services.ConfigureOptions<ConfigureProcessOutboxJob>();
   }
 }

@@ -23,6 +23,42 @@ namespace WLCS.Modules.Athletes.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("WLCS.Common.Infrastructure.Outbox.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("jsonb")
+                        .HasColumnName("content");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("text")
+                        .HasColumnName("error");
+
+                    b.Property<DateTime>("OccurredOnUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_on_utc");
+
+                    b.Property<DateTime?>("ProcessedOnUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("processed_on_utc");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("pk_outbox_messages");
+
+                    b.ToTable("outbox_messages", "athletes");
+                });
+
             modelBuilder.Entity("WLCS.Modules.Athletes.Domain.Athletes.Athlete", b =>
                 {
                     b.Property<Guid>("Id")
@@ -172,6 +208,10 @@ namespace WLCS.Modules.Athletes.Infrastructure.Database.Migrations
                                 .HasColumnName("memberId");
 
                             b1.HasKey("AthleteId");
+
+                            b1.HasIndex("MembershipId")
+                                .IsUnique()
+                                .HasDatabaseName("ix_athletes_member_id");
 
                             b1.ToTable("athletes", "athletes");
 

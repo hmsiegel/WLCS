@@ -21,9 +21,15 @@ public static class InfrastructureConfiguration
 
     services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
+    SqlMapper.AddTypeHandler(new GenericArrayHandler<string>());
+
     services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 
-    services.TryAddSingleton<PublishDomainEventsInterceptor>();
+    services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
+
+    services.AddQuartz();
+
+    services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
     try
     {

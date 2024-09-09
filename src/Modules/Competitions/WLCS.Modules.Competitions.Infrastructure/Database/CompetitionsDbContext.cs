@@ -17,6 +17,7 @@ public class CompetitionsDbContext(DbContextOptions<CompetitionsDbContext> optio
   {
     ArgumentNullException.ThrowIfNull(modelBuilder);
     modelBuilder.HasDefaultSchema(Schemas.Competitions);
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(OutboxMessage).Assembly);
     modelBuilder.ApplyConfigurationsFromAssembly(typeof(CompetitionModule).Assembly);
   }
 

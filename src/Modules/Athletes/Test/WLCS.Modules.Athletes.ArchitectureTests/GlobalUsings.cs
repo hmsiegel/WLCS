@@ -13,5 +13,6 @@ global using NetArchTest.Rules;
 
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
+global using WLCS.Modules.Athletes.ArchitectureTests.Abstractions;
 global using WLCS.Modules.Athletes.Domain.Athletes;
 global using WLCS.Modules.Athletes.Infrastructure;

@@ -13,6 +13,7 @@ public class AthletesDbContext(DbContextOptions<AthletesDbContext> options)
   {
     ArgumentNullException.ThrowIfNull(modelBuilder);
     modelBuilder.HasDefaultSchema(Schemas.Athletes);
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(OutboxMessage).Assembly);
     modelBuilder.ApplyConfigurationsFromAssembly(typeof(AthletesModule).Assembly);
   }
 

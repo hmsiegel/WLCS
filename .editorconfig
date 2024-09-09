@@ -236,6 +236,12 @@ dotnet_diagnostic.CA2007.severity = none
 #CA2225: Operator overloads have named alternates
 dotnet_diagnostic.CA2225.severity = none
 
+#CA2326: Do not use TypeNameHandling values other than none
+dotnet_diagnostic.CA2326.severity = none
+
+#CA2327: Do not use insecure JsonSerializerSettings
+dotnet_diagnostic.CA2327.severity = none
+
 # CS1591: Missing XML comment for publicly visible type or member
 dotnet_diagnostic.CS1591.severity = none
 

@@ -49,11 +49,15 @@ public static class AdministrationModule
         npgsqlOptions => npgsqlOptions
           .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Administration))
       .UseSnakeCaseNamingConvention()
-      .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>());
+      .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });
 
     services.AddScoped<IUserRepository, UserRepository>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AdministrationDbContext>());
+
+    services.Configure<OutboxOptions>(configuration.GetSection("Administration:Outbox"));
+
+    services.ConfigureOptions<ConfigureProcessOutboxJob>();
   }
 }

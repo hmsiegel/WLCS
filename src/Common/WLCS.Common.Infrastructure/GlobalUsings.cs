@@ -3,26 +3,32 @@
 // </copyright>
 
 global using System.Buffers;
+global using System.Data;
 global using System.Data.Common;
 global using System.Security.Claims;
 global using System.Text.Json;
 
-global using MassTransit;
+global using Dapper;
 
-global using MediatR;
+global using MassTransit;
 
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Diagnostics;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.Caching.Distributed;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.Extensions.Options;
 
+global using Newtonsoft.Json;
+
 global using Npgsql;
+
+global using Quartz;
 
 global using StackExchange.Redis;
 
@@ -38,4 +44,5 @@ global using WLCS.Common.Infrastructure.Authorization;
 global using WLCS.Common.Infrastructure.Caching;
 global using WLCS.Common.Infrastructure.Clock;
 global using WLCS.Common.Infrastructure.Data;
-global using WLCS.Common.Infrastructure.Interceptors;
+global using WLCS.Common.Infrastructure.Outbox;
+global using WLCS.Common.Infrastructure.Serialization;

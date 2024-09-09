@@ -1,5 +1,9 @@
 {
   "Administration": {
+    "Outbox": {
+      "IntervalInSeconds": 15,
+      "BatchSize": 20
+    },
     "KeyCloak": {
       "AdminUrl": "http://wlcs.identity:8080/admin/realms/wlcs/",
       "TokenUrl": "http://wlcs.identity:8080/realms/wlcs/protocol/openid-connect/token",

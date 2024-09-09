@@ -14,6 +14,7 @@ public class AdministrationDbContext(DbContextOptions<AdministrationDbContext> o
     ArgumentNullException.ThrowIfNull(modelBuilder);
     modelBuilder.HasDefaultSchema(Schemas.Administration);
     modelBuilder.ApplyConfigurationsFromAssembly(typeof(AdministrationModule).Assembly);
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(OutboxMessage).Assembly);
   }
 
   protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

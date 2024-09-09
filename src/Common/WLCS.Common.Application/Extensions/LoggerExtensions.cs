@@ -8,6 +8,9 @@ public static class LoggerExtensions
 {
   private static readonly Action<ILogger, string, DateTime, Exception> _processingRequst = InitializeRequestProcessingLogger();
   private static readonly Action<ILogger, string, DateTime, Exception> _completedRequest = InitializeRequestCompletedLogger();
+  private static readonly Action<ILogger, string, DateTime, Exception> _beginProcessOutboxMessages = InitializeBeginProcessOutboxMessageLogger();
+  private static readonly Action<ILogger, string, DateTime, Exception> _completeProcessOutboxMessages = InitializeCompleteProcessOutboxMessageLogger();
+  private static readonly Action<ILogger, string, Guid, Exception> _outboxMessageException = InitializeOutboxMessageExceptionLogger();
   private static readonly Action<ILogger, string, Error, Exception> _requestErrors = InitializeRequstErrorLogger();
   private static readonly Action<ILogger, string, Exception> _exceptionLogger = InitializeExceptionLogger();
   private static readonly Action<ILogger, string, Exception> _userRegistrationError = InitializeUserRegistrationError();
@@ -61,11 +64,44 @@ public static class LoggerExtensions
       "Unhandled exception occurred");
   }
 
+  public static Action<ILogger, string, DateTime, Exception> InitializeBeginProcessOutboxMessageLogger()
+  {
+    return LoggerMessage.Define<string, DateTime>(
+      LogLevel.Information,
+      new EventId(7, nameof(BeginProcessingOutboxMessage)),
+      "Beginning to process outbox messages for module {ModuleName} at {DateTime}");
+  }
+
+  public static Action<ILogger, string, DateTime, Exception> InitializeCompleteProcessOutboxMessageLogger()
+  {
+    return LoggerMessage.Define<string, DateTime>(
+      LogLevel.Information,
+      new EventId(8, nameof(CompleteProcessingOutBoxMessage)),
+      "Finished processing outbox messages for module {ModuleName} at {DateTime}");
+  }
+
+  public static Action<ILogger, string, Guid, Exception> InitializeOutboxMessageExceptionLogger()
+  {
+    return LoggerMessage.Define<string, Guid>(
+      LogLevel.Error,
+      new EventId(9, nameof(OutboxMessageException)),
+      "Error processing outbox message for module {ModuleName} on outbox message {MessageId}");
+  }
+
   public static void ProcessingRequest(this ILogger logger, string requestName, DateTime time)
     => _processingRequst(logger, requestName, time, default!);
 
   public static void CompletedRequest(this ILogger logger, string requestName, DateTime time)
     => _completedRequest(logger, requestName, time, default!);
+
+  public static void BeginProcessingOutboxMessage(this ILogger logger, string moduleName, DateTime time)
+    => _beginProcessOutboxMessages(logger, moduleName, time, default!);
+
+  public static void CompleteProcessingOutBoxMessage(this ILogger logger, string moduleName, DateTime time)
+    => _completeProcessOutboxMessages(logger, moduleName, time, default!);
+
+  public static void OutboxMessageException(this ILogger logger, string moduleName, Guid id, Exception exception)
+    => _outboxMessageException(logger, moduleName, id, exception);
 
   public static void RequestErrors(this ILogger logger, string requestName, Error error)
     => _requestErrors(logger, requestName, error, default!);

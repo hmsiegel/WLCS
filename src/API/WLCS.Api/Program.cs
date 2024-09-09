@@ -11,10 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Services.AddProblemDetails();
 
   builder.Services.AddEndpointsApiExplorer();
-  builder.Services.AddSwaggerGen(options =>
-  {
-    options.CustomSchemaIds(t => t.FullName?.Replace("+", ".", StringComparison.InvariantCultureIgnoreCase));
-  });
+  builder.Services.AddSwaggerDocumentation();
 
   Assembly[] applicationAssemblies =
   [
@@ -25,20 +22,24 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddApplication(applicationAssemblies);
 
-  var databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
-  var redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+  var databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database")!;
+  var redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache")!;
 
   builder.Services.AddInfrastructure(
-    [CompetitionModule.ConfigureConsumers],
+    [
+    CompetitionModule.ConfigureConsumers
+    ],
     databaseConnectionString,
     redisConnectionString);
+
+  Uri keyCloakHealthUri = builder.Configuration.GetKeyCloakHealthUrl();
 
   builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes"]);
 
   builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(redisConnectionString)
-    .AddUrlGroup(new Uri(builder.Configuration.GetValue<string>("KeyCloak:HealthUrl")!), HttpMethod.Get, "keycloak");
+    .AddKeyCloak(keyCloakHealthUri);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
   builder.Services.AddAdministrationModule(builder.Configuration);

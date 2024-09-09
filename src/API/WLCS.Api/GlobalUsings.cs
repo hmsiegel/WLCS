@@ -8,6 +8,7 @@ global using HealthChecks.UI.Client;
 global using Microsoft.AspNetCore.Diagnostics;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.OpenApi.Models;
 
 global using Serilog;
 
@@ -16,6 +17,7 @@ global using WLCS.Api.Middleware;
 global using WLCS.Common.Application;
 global using WLCS.Common.Application.Extensions;
 global using WLCS.Common.Infrastructure;
+global using WLCS.Common.Infrastructure.Configuration;
 global using WLCS.Common.Presentation.Endpoints;
 global using WLCS.Modules.Administration.Infrastructure;
 global using WLCS.Modules.Administration.Infrastructure.Database;

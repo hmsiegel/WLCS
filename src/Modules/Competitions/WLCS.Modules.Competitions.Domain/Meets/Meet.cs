@@ -1,8 +1,6 @@
 ﻿// <copyright file="Meet.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
-using WLCS.Modules.Competitions.Domain.Athletes;
-
 using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
 
 namespace WLCS.Modules.Competitions.Domain.Meets;

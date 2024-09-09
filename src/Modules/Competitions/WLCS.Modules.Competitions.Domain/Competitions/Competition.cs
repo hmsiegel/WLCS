@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using WLCS.Modules.Competitions.Domain.Athletes;
-
 using Name = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.Name;
 
 namespace WLCS.Modules.Competitions.Domain.Competitions;

@@ -43,9 +43,15 @@ internal sealed class ProcessOutboxJob(
 
         using var scope = _serviceScopeFactory.CreateScope();
 
-        var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+        var domainEventHandlers = DomainEventHandlersFactory.GetHandlers(
+          domainEvent.GetType(),
+          scope.ServiceProvider,
+          Application.AssemblyReference.Assembly);
 
-        await publisher.Publish(domainEvent);
+        foreach (var domainEventHandler in domainEventHandlers)
+        {
+          await domainEventHandler.Handle(domainEvent);
+        }
       }
       catch (Exception caughtException)
       {

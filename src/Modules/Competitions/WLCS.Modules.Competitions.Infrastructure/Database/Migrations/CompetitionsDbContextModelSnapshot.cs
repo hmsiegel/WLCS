@@ -78,6 +78,23 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                     b.ToTable("outbox_messages", "competitions");
                 });
 
+            modelBuilder.Entity("WLCS.Common.Infrastructure.Outbox.OutboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("OutboxMessageId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("outbox_message_id");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("name");
+
+                    b.HasKey("OutboxMessageId", "Name")
+                        .HasName("pk_outbox_message_consumers");
+
+                    b.ToTable("outbox_message_consumers", "competitions");
+                });
+
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Athletes.Athlete", b =>
                 {
                     b.Property<Guid>("Id")

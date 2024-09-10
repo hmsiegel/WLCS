@@ -12,6 +12,8 @@ public static class CompetitionModule
   {
     ArgumentNullException.ThrowIfNull(configuration);
 
+    services.AddDomainEventHandlers();
+
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
@@ -51,5 +53,31 @@ public static class CompetitionModule
     services.Configure<OutboxOptions>(configuration.GetSection("Competitions:Outbox"));
 
     services.ConfigureOptions<ConfigureProcessOutboxJob>();
+  }
+
+  private static void AddDomainEventHandlers(this IServiceCollection services)
+  {
+    Type[] domainEventHandlers = Application.AssemblyReference.Assembly
+      .GetTypes()
+      .Where(t => t.IsAssignableTo(typeof(IDomainEventHandler)))
+      .ToArray();
+
+    foreach (var domainEventHandler in domainEventHandlers)
+    {
+      services.TryAddScoped(domainEventHandler);
+
+      var domainEvent = domainEventHandler
+        .GetInterfaces()
+        .Single(i => i.IsGenericType)
+        .GetGenericArguments()
+        .Single();
+
+      var closedIdempotentHandler = typeof(IdempotentDomainEventHandler<>)
+        .MakeGenericType(domainEvent);
+
+      services.Decorate(
+        domainEventHandler,
+        closedIdempotentHandler);
+    }
   }
 }

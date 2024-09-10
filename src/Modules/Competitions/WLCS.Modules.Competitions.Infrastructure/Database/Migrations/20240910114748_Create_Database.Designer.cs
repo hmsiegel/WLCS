@@ -12,7 +12,7 @@ using WLCS.Modules.Competitions.Infrastructure.Database;
 namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CompetitionsDbContext))]
-    [Migration("20240909192708_Create_Database")]
+    [Migration("20240910114748_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -79,6 +79,23 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                         .HasName("pk_outbox_messages");
 
                     b.ToTable("outbox_messages", "competitions");
+                });
+
+            modelBuilder.Entity("WLCS.Common.Infrastructure.Outbox.OutboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("OutboxMessageId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("outbox_message_id");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("name");
+
+                    b.HasKey("OutboxMessageId", "Name")
+                        .HasName("pk_outbox_message_consumers");
+
+                    b.ToTable("outbox_message_consumers", "competitions");
                 });
 
             modelBuilder.Entity("WLCS.Modules.Competitions.Domain.Athletes.Athlete", b =>

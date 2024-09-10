@@ -35,6 +35,19 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "outbox_message_consumers",
+                schema: "competitions",
+                columns: table => new
+                {
+                    outbox_message_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_outbox_message_consumers", x => new { x.outbox_message_id, x.name });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "outbox_messages",
                 schema: "competitions",
                 columns: table => new
@@ -153,6 +166,10 @@ namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
         {
             migrationBuilder.DropTable(
                 name: "athlete_competition",
+                schema: "competitions");
+
+            migrationBuilder.DropTable(
+                name: "outbox_message_consumers",
                 schema: "competitions");
 
             migrationBuilder.DropTable(

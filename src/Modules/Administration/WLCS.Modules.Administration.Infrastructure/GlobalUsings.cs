@@ -3,6 +3,7 @@
 // </copyright>
 
 global using System.Data;
+global using System.Data.Common;
 global using System.Net.Http.Headers;
 global using System.Net.Http.Json;
 global using System.Text.Json.Serialization;
@@ -16,6 +17,7 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.EntityFrameworkCore.Migrations;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
 
@@ -29,6 +31,7 @@ global using WLCS.Common.Application.Authorization;
 global using WLCS.Common.Application.Clock;
 global using WLCS.Common.Application.Data;
 global using WLCS.Common.Application.Extensions;
+global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
 global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;

@@ -12,7 +12,7 @@ using WLCS.Modules.Administration.Infrastructure.Database;
 namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AdministrationDbContext))]
-    [Migration("20240909161213_Create_Database")]
+    [Migration("20240910114414_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -210,6 +210,23 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
                         .HasName("pk_outbox_messages");
 
                     b.ToTable("outbox_messages", "administration");
+                });
+
+            modelBuilder.Entity("WLCS.Common.Infrastructure.Outbox.OutboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("OutboxMessageId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("outbox_message_id");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("name");
+
+                    b.HasKey("OutboxMessageId", "Name")
+                        .HasName("pk_outbox_message_consumers");
+
+                    b.ToTable("outbox_message_consumers", "administration");
                 });
 
             modelBuilder.Entity("WLCS.Modules.Administration.Domain.Users.Permission", b =>

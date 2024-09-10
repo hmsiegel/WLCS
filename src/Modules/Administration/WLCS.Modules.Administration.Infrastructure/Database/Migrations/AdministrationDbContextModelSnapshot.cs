@@ -209,6 +209,23 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
                     b.ToTable("outbox_messages", "administration");
                 });
 
+            modelBuilder.Entity("WLCS.Common.Infrastructure.Outbox.OutboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("OutboxMessageId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("outbox_message_id");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("name");
+
+                    b.HasKey("OutboxMessageId", "Name")
+                        .HasName("pk_outbox_message_consumers");
+
+                    b.ToTable("outbox_message_consumers", "administration");
+                });
+
             modelBuilder.Entity("WLCS.Modules.Administration.Domain.Users.Permission", b =>
                 {
                     b.Property<string>("Code")

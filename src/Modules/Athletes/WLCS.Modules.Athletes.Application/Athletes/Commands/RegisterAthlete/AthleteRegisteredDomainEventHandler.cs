@@ -7,12 +7,12 @@ namespace WLCS.Modules.Athletes.Application.Athletes.Commands.RegisterAthlete;
 internal sealed class AthleteRegisteredDomainEventHandler(
   IEventBus eventBus,
   ISender sender)
-  : IDomainEventHandler<AthleteRegisteredDomainEvent>
+  : DomainEventHandler<AthleteRegisteredDomainEvent>
 {
   private readonly IEventBus _eventBus = eventBus;
   private readonly ISender _sender = sender;
 
-  public async Task Handle(AthleteRegisteredDomainEvent notification, CancellationToken cancellationToken)
+  public override async Task Handle(AthleteRegisteredDomainEvent notification, CancellationToken cancellationToken = default)
   {
     var query = new GetAthleteQuery(notification.AthleteId);
 

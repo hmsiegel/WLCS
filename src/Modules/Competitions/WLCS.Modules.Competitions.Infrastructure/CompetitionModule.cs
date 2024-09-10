@@ -14,6 +14,8 @@ public static class CompetitionModule
 
     services.AddDomainEventHandlers();
 
+    services.AddIntegrationEventHandlers();
+
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
@@ -25,7 +27,7 @@ public static class CompetitionModule
   {
     ArgumentNullException.ThrowIfNull(registrationConfigurator);
 
-    registrationConfigurator.AddConsumer<AthleteRegisteredIntegrationEventConsumer>();
+    registrationConfigurator.AddConsumer<IntegrationEventConsumer<AthleteRegisteredIntegrationEvent>>();
   }
 
   private static void AddInfrastructure(
@@ -53,6 +55,10 @@ public static class CompetitionModule
     services.Configure<OutboxOptions>(configuration.GetSection("Competitions:Outbox"));
 
     services.ConfigureOptions<ConfigureProcessOutboxJob>();
+
+    services.Configure<InboxOptions>(configuration.GetSection("Competitions:Inbox"));
+
+    services.ConfigureOptions<ConfigureProcessInboxJob>();
   }
 
   private static void AddDomainEventHandlers(this IServiceCollection services)
@@ -77,6 +83,32 @@ public static class CompetitionModule
 
       services.Decorate(
         domainEventHandler,
+        closedIdempotentHandler);
+    }
+  }
+
+  private static void AddIntegrationEventHandlers(this IServiceCollection services)
+  {
+    Type[] integrationEventHandlers = Presentation.AssemblyReference.Assembly
+      .GetTypes()
+      .Where(t => t.IsAssignableTo(typeof(IIntegrationEventHandler)))
+      .ToArray();
+
+    foreach (var integrationEventHandler in integrationEventHandlers)
+    {
+      services.TryAddScoped(integrationEventHandler);
+
+      var integrationEvent = integrationEventHandler
+        .GetInterfaces()
+        .Single(i => i.IsGenericType)
+        .GetGenericArguments()
+        .Single();
+
+      var closedIdempotentHandler = typeof(IdempotentIntegrationEventHandler<>)
+        .MakeGenericType(integrationEvent);
+
+      services.Decorate(
+        integrationEventHandler,
         closedIdempotentHandler);
     }
   }

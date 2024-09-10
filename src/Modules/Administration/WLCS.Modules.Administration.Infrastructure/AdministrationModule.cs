@@ -14,6 +14,8 @@ public static class AdministrationModule
 
     services.AddDomainEventHandlers();
 
+    services.AddIntegrationEventHandlers();
+
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
@@ -61,6 +63,10 @@ public static class AdministrationModule
     services.Configure<OutboxOptions>(configuration.GetSection("Administration:Outbox"));
 
     services.ConfigureOptions<ConfigureProcessOutboxJob>();
+
+    services.Configure<InboxOptions>(configuration.GetSection("Administration:Inbox"));
+
+    services.ConfigureOptions<ConfigureProcessInboxJob>();
   }
 
   private static void AddDomainEventHandlers(this IServiceCollection services)
@@ -85,6 +91,32 @@ public static class AdministrationModule
 
       services.Decorate(
         domainEventHandler,
+        closedIdempotentHandler);
+    }
+  }
+
+  private static void AddIntegrationEventHandlers(this IServiceCollection services)
+  {
+    Type[] integrationEventHandlers = Presentation.AssemblyReference.Assembly
+      .GetTypes()
+      .Where(t => t.IsAssignableTo(typeof(IIntegrationEventHandler)))
+      .ToArray();
+
+    foreach (var integrationEventHandler in integrationEventHandlers)
+    {
+      services.TryAddScoped(integrationEventHandler);
+
+      var integrationEvent = integrationEventHandler
+        .GetInterfaces()
+        .Single(i => i.IsGenericType)
+        .GetGenericArguments()
+        .Single();
+
+      var closedIdempotentHandler = typeof(IdempotentIntegrationEventHandler<>)
+        .MakeGenericType(integrationEvent);
+
+      services.Decorate(
+        integrationEventHandler,
         closedIdempotentHandler);
     }
   }

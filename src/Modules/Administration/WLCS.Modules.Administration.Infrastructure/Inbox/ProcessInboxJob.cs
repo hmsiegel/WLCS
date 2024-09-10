@@ -1,28 +1,28 @@
-﻿// <copyright file="ProcessOutboxJob.cs" company="WLCS">
+﻿// <copyright file="ProcessInboxJob.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Competitions.Infrastructure.Outbox;
+namespace WLCS.Modules.Administration.Infrastructure.Inbox;
 
 [DisallowConcurrentExecution]
-internal sealed class ProcessOutboxJob(
+internal sealed class ProcessInboxJob(
   IDbConnectionFactory dbConnectionFactory,
   IServiceScopeFactory serviceScopeFactory,
   IDateTimeProvider dateTimeProvider,
-  IOptions<OutboxOptions> options,
-  ILogger<ProcessOutboxJob> logger) : IJob
+  IOptions<InboxOptions> options,
+  ILogger<ProcessInboxJob> logger) : IJob
 {
-  private const string ModuleName = "Competitions";
+  private const string ModuleName = "Administration";
 
   private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
   private readonly IServiceScopeFactory _serviceScopeFactory = serviceScopeFactory;
   private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
-  private readonly OutboxOptions _options = options.Value;
-  private readonly ILogger<ProcessOutboxJob> _logger = logger;
+  private readonly InboxOptions _options = options.Value;
+  private readonly ILogger<ProcessInboxJob> _logger = logger;
 
   public async Task Execute(IJobExecutionContext context)
   {
-    LoggerExtensions.BeginProcessingOutboxMessage(
+    LoggerExtensions.BeginProcessingInboxMessage(
       _logger,
       ModuleName,
       _dateTimeProvider.UtcNow);
@@ -30,42 +30,42 @@ internal sealed class ProcessOutboxJob(
     await using var connection = await _dbConnectionFactory.OpenConnectionAsync();
     await using var transaction = await connection.BeginTransactionAsync();
 
-    var outboxMessages = await GetOutboxMessagesAsync(connection, transaction);
+    var inboxMessages = await GetInboxMessagesAsync(connection, transaction);
 
-    foreach (var outboxMessage in outboxMessages)
+    foreach (var inboxMessage in inboxMessages)
     {
       Exception? exception = null;
       try
       {
-        var domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(
-          outboxMessage.Content,
+        var integrationEvent = JsonConvert.DeserializeObject<IIntegrationEvent>(
+          inboxMessage.Content,
           SerializerSettings.Instance)!;
 
         using var scope = _serviceScopeFactory.CreateScope();
 
-        var domainEventHandlers = DomainEventHandlersFactory.GetHandlers(
-          domainEvent.GetType(),
+        var integrationEventHandlers = IntgrationEventHandlersFactory.GetHandlers(
+          integrationEvent.GetType(),
           scope.ServiceProvider,
-          Application.AssemblyReference.Assembly);
+          Presentation.AssemblyReference.Assembly);
 
-        foreach (var domainEventHandler in domainEventHandlers)
+        foreach (var integrationEventHandler in integrationEventHandlers)
         {
-          await domainEventHandler.Handle(domainEvent);
+          await integrationEventHandler.Handle(integrationEvent);
         }
       }
       catch (Exception caughtException)
       {
-        LoggerExtensions.OutboxMessageException(
+        LoggerExtensions.InboxMessageException(
           _logger,
           ModuleName,
-          outboxMessage.Id,
+          inboxMessage.Id,
           caughtException);
 
         exception = caughtException;
       }
 
       // HACK: Add logic to continue to retry messages if they fail
-      await UpdateOutboxMessageAsync(connection, transaction, outboxMessage, exception);
+      await UpdateInboxMessageAsync(connection, transaction, inboxMessage, exception);
     }
 
     await transaction.CommitAsync();
@@ -76,38 +76,38 @@ internal sealed class ProcessOutboxJob(
       _dateTimeProvider.UtcNow);
   }
 
-  private async Task<IReadOnlyList<OutboxMessageResponse>> GetOutboxMessagesAsync(
+  private async Task<IReadOnlyList<InboxMessageResponse>> GetInboxMessagesAsync(
     IDbConnection connection,
     IDbTransaction transaction)
   {
     string sql =
       $"""
       SELECT
-        id AS {nameof(OutboxMessageResponse.Id)},
-        content AS {nameof(OutboxMessageResponse.Content)}
-      FROM competitions.outbox_messages
+        id AS {nameof(InboxMessageResponse.Id)},
+        content AS {nameof(InboxMessageResponse.Content)}
+      FROM administration.inbox_messages
       WHERE processed_on_utc IS NULL
       ORDER BY occurred_on_utc
       LIMIT {_options.BatchSize}
       FOR UPDATE SKIP LOCKED
       """;
 
-    var outboxMessages = await connection.QueryAsync<OutboxMessageResponse>(
+    var inboxMessages = await connection.QueryAsync<InboxMessageResponse>(
       sql,
       transaction: transaction);
 
-    return outboxMessages.ToList();
+    return inboxMessages.ToList();
   }
 
-  private async Task UpdateOutboxMessageAsync(
+  private async Task UpdateInboxMessageAsync(
     IDbConnection connection,
     IDbTransaction transaction,
-    OutboxMessageResponse outboxMessage,
+    InboxMessageResponse inboxMessage,
     Exception? exception)
   {
     string sql =
       $"""
-      UPDATE competitions.outbox_messages
+      UPDATE administration.inbox_messages
       SET processed_on_utc = @ProcessedOnUtc,
         error = @Error
       WHERE id = @Id
@@ -117,12 +117,12 @@ internal sealed class ProcessOutboxJob(
       sql,
       new
       {
-        outboxMessage.Id,
+        inboxMessage.Id,
         ProcessedOnUtc = _dateTimeProvider.UtcNow,
         Error = exception?.ToString(),
       },
       transaction: transaction);
   }
 
-  internal sealed record OutboxMessageResponse(Guid Id, string Content);
+  internal sealed record InboxMessageResponse(Guid Id, string Content);
 }

@@ -14,6 +14,8 @@ public static class AthletesModule
 
     services.AddDomainEventHandlers();
 
+    services.AddIntegrationEventHandlers();
+
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
@@ -44,6 +46,10 @@ public static class AthletesModule
     services.Configure<OutboxOptions>(configuration.GetSection("Athletes:Outbox"));
 
     services.ConfigureOptions<ConfigureProcessOutboxJob>();
+
+    services.Configure<InboxOptions>(configuration.GetSection("Athletes:Inbox"));
+
+    services.ConfigureOptions<ConfigureProcessInboxJob>();
   }
 
   private static void AddDomainEventHandlers(this IServiceCollection services)
@@ -68,6 +74,32 @@ public static class AthletesModule
 
       services.Decorate(
         domainEventHandler,
+        closedIdempotentHandler);
+    }
+  }
+
+  private static void AddIntegrationEventHandlers(this IServiceCollection services)
+  {
+    Type[] integrationEventHandlers = Presentation.AssemblyReference.Assembly
+      .GetTypes()
+      .Where(t => t.IsAssignableTo(typeof(IIntegrationEventHandler)))
+      .ToArray();
+
+    foreach (var integrationEventHandler in integrationEventHandlers)
+    {
+      services.TryAddScoped(integrationEventHandler);
+
+      var integrationEvent = integrationEventHandler
+        .GetInterfaces()
+        .Single(i => i.IsGenericType)
+        .GetGenericArguments()
+        .Single();
+
+      var closedIdempotentHandler = typeof(IdempotentIntegrationEventHandler<>)
+        .MakeGenericType(integrationEvent);
+
+      services.Decorate(
+        integrationEventHandler,
         closedIdempotentHandler);
     }
   }

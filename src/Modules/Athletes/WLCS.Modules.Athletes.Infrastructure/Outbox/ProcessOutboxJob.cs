@@ -70,7 +70,7 @@ internal sealed class ProcessOutboxJob(
 
     await transaction.CommitAsync();
 
-    LoggerExtensions.CompleteProcessingOutBoxMessage(
+    LoggerExtensions.CompleteProcessingInboxMessage(
       _logger,
       ModuleName,
       _dateTimeProvider.UtcNow);

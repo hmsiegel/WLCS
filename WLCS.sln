@@ -84,9 +84,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BA6E60A9-6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{2CA46628-D82D-47D1-85A8-542E823468D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Athletes.ArchitectureTests", "src\Modules\Athletes\Test\WLCS.Modules.Athletes.ArchitectureTests\WLCS.Modules.Athletes.ArchitectureTests.csproj", "{7CD5E763-FF20-424A-A575-F99257167116}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Athletes.ArchitectureTests", "src\Modules\Athletes\Test\WLCS.Modules.Athletes.ArchitectureTests\WLCS.Modules.Athletes.ArchitectureTests.csproj", "{7CD5E763-FF20-424A-A575-F99257167116}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Competitions.ArchitectureTests", "src\Modules\Competitions\Test\WLCS.Modules.Competitions.ArchitectureTests\WLCS.Modules.Competitions.ArchitectureTests.csproj", "{C223299A-FE26-427A-8366-086D8EC26A12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competitions.ArchitectureTests", "src\Modules\Competitions\Test\WLCS.Modules.Competitions.ArchitectureTests\WLCS.Modules.Competitions.ArchitectureTests.csproj", "{C223299A-FE26-427A-8366-086D8EC26A12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Athletes.UnitTests", "src\Modules\Athletes\Test\WLCS.Modules.Athletes.UnitTests\WLCS.Modules.Athletes.UnitTests.csproj", "{950F81EA-3B58-4E7A-BF63-DFBE63F86D22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Administration.UnitTests", "src\Modules\Administration\Test\WLCS.Modules.Administration.UnitTests\WLCS.Modules.Administration.UnitTests.csproj", "{07AF540D-C214-4949-9845-0C2EB6292733}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.Modules.Competitions.UnitTests", "src\Modules\Competitions\Test\WLCS.Modules.Competitions.UnitTests\WLCS.Modules.Competitions.UnitTests.csproj", "{2CE76F14-8DC9-48E4-ABEA-952A955196B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -194,6 +200,18 @@ Global
 		{C223299A-FE26-427A-8366-086D8EC26A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C223299A-FE26-427A-8366-086D8EC26A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C223299A-FE26-427A-8366-086D8EC26A12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{950F81EA-3B58-4E7A-BF63-DFBE63F86D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{950F81EA-3B58-4E7A-BF63-DFBE63F86D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{950F81EA-3B58-4E7A-BF63-DFBE63F86D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{950F81EA-3B58-4E7A-BF63-DFBE63F86D22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07AF540D-C214-4949-9845-0C2EB6292733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07AF540D-C214-4949-9845-0C2EB6292733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07AF540D-C214-4949-9845-0C2EB6292733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07AF540D-C214-4949-9845-0C2EB6292733}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE76F14-8DC9-48E4-ABEA-952A955196B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE76F14-8DC9-48E4-ABEA-952A955196B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE76F14-8DC9-48E4-ABEA-952A955196B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE76F14-8DC9-48E4-ABEA-952A955196B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -232,6 +250,9 @@ Global
 		{2CA46628-D82D-47D1-85A8-542E823468D1} = {471B188E-439D-465B-A674-E859579B21DB}
 		{7CD5E763-FF20-424A-A575-F99257167116} = {BA6E60A9-67B6-43BE-A2D3-461C3D512EDC}
 		{C223299A-FE26-427A-8366-086D8EC26A12} = {2CA46628-D82D-47D1-85A8-542E823468D1}
+		{950F81EA-3B58-4E7A-BF63-DFBE63F86D22} = {BA6E60A9-67B6-43BE-A2D3-461C3D512EDC}
+		{07AF540D-C214-4949-9845-0C2EB6292733} = {2FD65E12-616F-4BBF-8C19-1E950A8613AF}
+		{2CE76F14-8DC9-48E4-ABEA-952A955196B3} = {2CA46628-D82D-47D1-85A8-542E823468D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58193C77-D538-4269-B7B4-388AB5B0BCB4}

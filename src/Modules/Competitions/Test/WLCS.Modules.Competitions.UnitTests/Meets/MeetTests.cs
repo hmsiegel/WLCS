@@ -40,7 +40,7 @@ public class MeetTests : BaseTest
     var location = Location.Create(Faker.Address.City(), Faker.Address.State());
     var venue = Venue.Create(Faker.Company.CompanyName());
     var startDate = DateOnly.FromDateTime(Faker.Date.Recent());
-    var endDate = DateOnly.FromDateTime(Faker.Date.Past());
+    var endDate = startDate.AddDays(-1);
 
     // Act
     var result = Meet.Create(

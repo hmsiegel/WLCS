@@ -6,4 +6,8 @@
     <ProjectReference Include="..\..\..\Common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="WLCS.Modules.Administration.IntegrationTests"/>
+  </ItemGroup>
+
 </Project>

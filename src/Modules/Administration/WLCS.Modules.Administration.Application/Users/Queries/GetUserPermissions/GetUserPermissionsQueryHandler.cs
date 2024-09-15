@@ -28,7 +28,7 @@ internal sealed class GetUserPermissionsQueryHandler(IDbConnectionFactory dbConn
 
     if (permissions.Count == 0)
     {
-      return Result.Failure<PermissionsResponse>(UserErrors.NotFoud(request.IdentityId));
+      return Result.Failure<PermissionsResponse>(UserErrors.NotFound(request.IdentityId));
     }
 
     return new PermissionsResponse(permissions[0].UserId, permissions.Select(p => p.Permission).ToHashSet());

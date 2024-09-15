@@ -7,7 +7,7 @@ namespace WLCS.Modules.Administration.Infrastructure.Database;
 public class AdministrationDbContext(DbContextOptions<AdministrationDbContext> options)
   : DbContext(options), IUnitOfWork
 {
-  public DbSet<User> Users { get; set; } = null!;
+  internal DbSet<User> Users { get; set; } = null!;
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

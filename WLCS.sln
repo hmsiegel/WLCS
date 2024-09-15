@@ -101,6 +101,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Athletes.Integ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WLCS.Modules.Competitions.IntegrationTests", "src\Modules\Competitions\Test\WLCS.Modules.Competitions.IntegrationTests\WLCS.Modules.Competitions.IntegrationTests.csproj", "{BA024AD1-4D2E-4537-8743-C17284357BF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLCS.IntegrationTests", "test\WLCS.IntegrationTests\WLCS.IntegrationTests.csproj", "{886AEC6D-97D2-4D52-86BF-9964DD10C3ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -231,6 +233,10 @@ Global
 		{BA024AD1-4D2E-4537-8743-C17284357BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA024AD1-4D2E-4537-8743-C17284357BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA024AD1-4D2E-4537-8743-C17284357BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{886AEC6D-97D2-4D52-86BF-9964DD10C3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{886AEC6D-97D2-4D52-86BF-9964DD10C3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{886AEC6D-97D2-4D52-86BF-9964DD10C3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{886AEC6D-97D2-4D52-86BF-9964DD10C3ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -275,6 +281,7 @@ Global
 		{2EECE17B-E21A-4679-BB63-D9A5D1414BFF} = {2FD65E12-616F-4BBF-8C19-1E950A8613AF}
 		{34E1063C-405D-4302-9B54-F77F65A00F5F} = {BA6E60A9-67B6-43BE-A2D3-461C3D512EDC}
 		{BA024AD1-4D2E-4537-8743-C17284357BF1} = {2CA46628-D82D-47D1-85A8-542E823468D1}
+		{886AEC6D-97D2-4D52-86BF-9964DD10C3ED} = {801132F8-151D-4FBB-869C-2598B654DE82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58193C77-D538-4269-B7B4-388AB5B0BCB4}

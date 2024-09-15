@@ -58,6 +58,8 @@ public static class AdministrationModule
 
     services.AddScoped<IUserRepository, UserRepository>();
 
+    services.AddScoped<IRolesService, RolesService>();
+
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AdministrationDbContext>());
 
     services.Configure<OutboxOptions>(configuration.GetSection("Administration:Outbox"));

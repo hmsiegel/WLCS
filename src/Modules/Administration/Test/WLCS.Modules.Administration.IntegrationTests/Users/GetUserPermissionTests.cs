@@ -17,7 +17,7 @@ public class GetUserPermissionTests(IntegrationTestWebAppFactory factory)
     var permissionResult = await Sender.Send(new GetUserPermissionsQuery(identityId));
 
     // Assert
-    permissionResult.Errors[0].Should().Be(UserErrors.NotFoud(identityId));
+    permissionResult.Errors[0].Should().Be(UserErrors.NotFound(identityId));
   }
 
   [Fact]

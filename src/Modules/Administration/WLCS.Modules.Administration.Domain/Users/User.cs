@@ -65,4 +65,16 @@ public sealed class User : Entity<UserId>
 
     Raise(new UserUpdatedDomainEvent(Id.Value));
   }
+
+  public void UpdateRole(Role role)
+  {
+    if (_roles.Contains(role))
+    {
+      return;
+    }
+
+    _roles.Add(role);
+
+    Raise(new UserRoleUpdatedDomainEvent(Id.Value, role));
+  }
 }

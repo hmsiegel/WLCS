@@ -35,7 +35,7 @@ public class UpdateUserTests(IntegrationTestWebAppFactory factory)
     var response = await Sender.Send(new UpdateUserCommand(userId, Faker.Name.FirstName(), Faker.Name.LastName()));
 
     // Assert
-    response.Errors[0].Should().Be(UserErrors.NotFoud(userId));
+    response.Errors[0].Should().Be(UserErrors.NotFound(userId));
   }
 
   [Fact]

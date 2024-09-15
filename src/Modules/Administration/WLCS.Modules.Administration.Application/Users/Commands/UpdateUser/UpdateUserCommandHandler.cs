@@ -18,7 +18,7 @@ internal sealed class UpdateUserCommandHandler(
 
     if (user is null)
     {
-      return Result.Failure(UserErrors.NotFoud(request.UserId));
+      return Result.Failure(UserErrors.NotFound(request.UserId));
     }
 
     var firstNameResult = FirstName.Create(request.FirstName);

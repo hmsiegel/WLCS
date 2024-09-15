@@ -17,7 +17,7 @@ public class GetUserTest(IntegrationTestWebAppFactory factory)
     var userResult = await Sender.Send(new GetUserQuery(userId));
 
     // Assert
-    userResult.Errors[0].Should().Be(UserErrors.NotFoud(userId));
+    userResult.Errors[0].Should().Be(UserErrors.NotFound(userId));
   }
 
   [Fact]

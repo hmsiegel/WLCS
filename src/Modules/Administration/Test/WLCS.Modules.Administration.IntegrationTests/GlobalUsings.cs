@@ -2,6 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 global using System.Net;
+global using System.Net.Http.Headers;
 global using System.Net.Http.Json;
 global using System.Text.Json.Serialization;
 
@@ -11,6 +12,7 @@ global using FluentAssertions;
 
 global using MediatR;
 
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Mvc.Testing;
 global using Microsoft.AspNetCore.TestHost;
@@ -29,4 +31,5 @@ global using WLCS.Modules.Administration.Application.Users.Queries.GetUserPermis
 global using WLCS.Modules.Administration.Domain.Users;
 global using WLCS.Modules.Administration.Infrastructure.Database;
 global using WLCS.Modules.Administration.Infrastructure.Identity;
+global using WLCS.Modules.Administration.IntegrationTests.Abstractions;
 global using WLCS.Modules.Administration.Presentation.Users;

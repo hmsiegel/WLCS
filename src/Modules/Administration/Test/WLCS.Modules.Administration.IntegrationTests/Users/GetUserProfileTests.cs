@@ -2,10 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using System.Net.Http.Headers;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 namespace WLCS.Modules.Administration.IntegrationTests.Users;
 
 public class GetUserProfileTests(IntegrationTestWebAppFactory factory)

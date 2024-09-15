@@ -16,4 +16,5 @@ global using WLCS.Common.Presentation.Endpoints;
 global using WLCS.Common.Presentation.Results;
 global using WLCS.Modules.Administration.Application.Users.Commands.RegisterUser;
 global using WLCS.Modules.Administration.Application.Users.Commands.UpdateUser;
+global using WLCS.Modules.Administration.Application.Users.Commands.UpdateUserRole;
 global using WLCS.Modules.Administration.Application.Users.Queries.GetUser;

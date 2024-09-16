@@ -21,7 +21,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     .Build();
 
   private readonly KeycloakContainer _keycloakContainer = new KeycloakBuilder()
-    .WithImage("quay.io/keycloak/keycloak:latest")
+    .WithImage("quay.io/keycloak/keycloak:24.0.0")
     .WithResourceMapping(
       new FileInfo("wlcs-realm-export.json"),
       new FileInfo("/opt/keycloak/data/import/realm.json"))

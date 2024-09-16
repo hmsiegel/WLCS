@@ -13,10 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        
-
     steps:
       - uses: actions/checkout@v4
 

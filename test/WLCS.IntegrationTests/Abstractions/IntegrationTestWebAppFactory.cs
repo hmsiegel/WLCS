@@ -5,6 +5,10 @@ namespace WLCS.IntegrationTests.Abstractions;
 
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
+  private readonly MockAuthUser _user = new(
+    new Claim("sub", Guid.NewGuid().ToString()),
+    new Claim("email", "mock@test.com"));
+
   private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
     .WithImage("postgres:latest")
     .WithDatabase("wlcs")
@@ -59,6 +63,9 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
 
     builder.ConfigureTestServices(services =>
     {
+      services.AddMockAuthentication();
+      services.AddScoped(_ => _user);
+
       services.Configure<KeyCloakOptions>(o =>
       {
         o.AdminUrl = $"{keycloakAddress}admin/realms/wlcs";

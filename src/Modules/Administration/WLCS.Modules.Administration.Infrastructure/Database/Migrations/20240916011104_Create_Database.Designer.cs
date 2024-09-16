@@ -12,7 +12,7 @@ using WLCS.Modules.Administration.Infrastructure.Database;
 namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AdministrationDbContext))]
-    [Migration("20240910170347_Create_Database")]
+    [Migration("20240916011104_Create_Database")]
     partial class Create_Database
     {
         /// <inheritdoc />
@@ -144,6 +144,56 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
                         {
                             PermissionCode = "athletes:update",
                             RoleName = "CompDirector"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:read",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:create",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:update",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "athletes:create",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "athletes:update",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "users:read",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "users:update",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "athletes:read",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "competitions:create",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "competitions:update",
+                            RoleName = "User"
                         },
                         new
                         {

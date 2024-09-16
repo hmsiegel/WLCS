@@ -57,6 +57,16 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
           CreateRolePermission(Role.CompDirector, Permission.SearchAthletes),
           CreateRolePermission(Role.CompDirector, Permission.CreateAthlete),
           CreateRolePermission(Role.CompDirector, Permission.ModifyAthlete),
+          CreateRolePermission(Role.User, Permission.GetMeets),
+          CreateRolePermission(Role.User, Permission.CreateMeet),
+          CreateRolePermission(Role.User, Permission.ModifyMeet),
+          CreateRolePermission(Role.User, Permission.CreateAthlete),
+          CreateRolePermission(Role.User, Permission.ModifyAthlete),
+          CreateRolePermission(Role.User, Permission.GetUser),
+          CreateRolePermission(Role.User, Permission.ModifyUser),
+          CreateRolePermission(Role.User, Permission.GetAthletes),
+          CreateRolePermission(Role.User, Permission.CreateCompetition),
+          CreateRolePermission(Role.User, Permission.ModifyCompetition),
           CreateRolePermission(Role.User, Permission.SearchMeets),
           CreateRolePermission(Role.User, Permission.SearchAthletes)));
   }

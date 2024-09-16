@@ -65,10 +65,12 @@ public class RegisterUserTests(IntegrationTestWebAppFactory factory)
       Faker.Name.FirstName(),
       Faker.Name.LastName());
 
+    await HttpClient.PostAsJsonAsync("users/register", request);
+
     // Act
-    var accessToekn = await GetAccessTokenAsync(request.Email, request.Password);
+    var accessToken = await GetAccessTokenAsync(request.Email, request.Password);
 
     // Assert
-    accessToekn.Should().NotBeEmpty();
+    accessToken.Should().NotBeEmpty();
   }
 }

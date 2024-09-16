@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using Microsoft.EntityFrameworkCore;
+
 namespace WLCS.Modules.Administration.IntegrationTests.Users;
 
 public class GetUserPermissionTests(IntegrationTestWebAppFactory factory)
@@ -30,7 +32,9 @@ public class GetUserPermissionTests(IntegrationTestWebAppFactory factory)
       Faker.Name.FirstName(),
       Faker.Name.LastName()));
 
-    var identityId = DbContext.Users.Single(u => u.Id.Value == result.Value).IdentityId;
+    var users = await DbContext.Users.ToListAsync();
+
+    var identityId = users.SingleOrDefault(x => x.Id.Value == result.Value)!.IdentityId;
 
     // Act
     var permissionResult = await Sender.Send(new GetUserPermissionsQuery(identityId));

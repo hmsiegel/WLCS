@@ -61,7 +61,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     {
       services.Configure<KeyCloakOptions>(o =>
       {
-        o.AdminUrl = $"{keycloakAddress}admin/realms/wlcs";
+        o.AdminUrl = $"{keycloakAddress}admin/realms/wlcs/";
         o.TokenUrl = $"{keyCloakRealmUrl}/protocol/openid-connect/token";
       });
     });

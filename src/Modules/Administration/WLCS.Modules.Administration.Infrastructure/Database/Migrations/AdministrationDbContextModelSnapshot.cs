@@ -144,6 +144,56 @@ namespace WLCS.Modules.Administration.Infrastructure.Database.Migrations
                         },
                         new
                         {
+                            PermissionCode = "meets:read",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:create",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "meets:update",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "athletes:create",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "athletes:update",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "users:read",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "users:update",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "athletes:read",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "competitions:create",
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            PermissionCode = "competitions:update",
+                            RoleName = "User"
+                        },
+                        new
+                        {
                             PermissionCode = "meets:search",
                             RoleName = "User"
                         },

@@ -24,16 +24,20 @@ public class GetUserTest(IntegrationTestWebAppFactory factory)
   public async Task Should_ReturnUser_WhenUserExistsAsync()
   {
     // Arrange
-    var result = await Sender.Send(new RegisterUserCommand(
+    var command = new RegisterUserCommand(
       Faker.Internet.Email(),
       Faker.Internet.Password(),
       Faker.Name.FirstName(),
-      Faker.Name.LastName()));
+      Faker.Name.LastName());
+
+    var result = await Sender.Send(command);
 
     var userId = result.Value;
 
+    var query = new GetUserQuery(userId);
+
     // Act
-    var userResult = await Sender.Send(new GetUserQuery(userId));
+    var userResult = await Sender.Send(query);
 
     // Assert
     userResult.IsSuccess.Should().BeTrue();

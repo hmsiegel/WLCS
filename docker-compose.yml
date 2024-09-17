@@ -11,6 +11,16 @@ services:
       - 5000:8080
       - 5001:8081 
 
+  wlcs.gateway:
+    image: ${DOCKER_REGISTRY-}wlcsgateway
+    container_name: wlcs.gateway
+    build:
+      context: .
+      dockerfile: src/API/WLCS.Gateway/Dockerfile
+    ports:
+      - 3000:8080
+      - 3001:8081
+
   wlcs.database:
     image: postgres:latest
     container_name: wlcs.database
@@ -74,3 +84,5 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+
+

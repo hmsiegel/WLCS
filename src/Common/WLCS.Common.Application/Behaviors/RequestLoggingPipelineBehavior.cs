@@ -22,6 +22,9 @@ internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>(
     var moduleName = GetModuleName(typeof(TRequest).FullName!);
     var requestName = typeof(TRequest).Name!;
 
+    Activity.Current?.SetTag("request.module", moduleName);
+    Activity.Current?.SetTag("request.name", requestName);
+
     using (LogContext.PushProperty("Module", moduleName))
     {
       _logger.ProcessingRequest(requestName, _dateTimeProvider.UtcNow);

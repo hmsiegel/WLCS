@@ -26,6 +26,7 @@ var builder = WebApplication.CreateBuilder(args);
   var redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache")!;
 
   builder.Services.AddInfrastructure(
+    DiagnosticsConfig.ServiceName,
     [
     CompetitionModule.ConfigureConsumers
     ],
@@ -62,6 +63,8 @@ var app = builder.Build();
   {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
   });
+
+  app.UseLogContextTraceLogging();
 
   app.UseSerilogRequestLogging();
 

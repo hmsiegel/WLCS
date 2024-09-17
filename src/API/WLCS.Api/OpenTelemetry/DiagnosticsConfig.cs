@@ -6,5 +6,5 @@ namespace WLCS.Api.OpenTelemetry;
 
 public static class DiagnosticsConfig
 {
-  public const string ServiceName = "WLCS";
+  public const string ServiceName = "WLCS.Api";
 }

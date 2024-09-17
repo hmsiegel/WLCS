@@ -6,8 +6,12 @@ namespace WLCS.Common.Infrastructure;
 
 public static class InfrastructureConfiguration
 {
+  private const string DefaultSchedulerId = "default-id";
+  private const string DefaultSchedulerName = "default-name";
+
   public static IServiceCollection AddInfrastructure(
     this IServiceCollection services,
+    string serviceName,
     Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
     string databaseConnectionString,
     string redisConnectionString)
@@ -30,8 +34,8 @@ public static class InfrastructureConfiguration
     services.AddQuartz(configurator =>
     {
       var scheduler = Guid.NewGuid();
-      configurator.SchedulerId = $"default-id-{scheduler}";
-      configurator.SchedulerName = $"default-name-{scheduler}";
+      configurator.SchedulerId = $"{DefaultSchedulerId}-{scheduler}";
+      configurator.SchedulerName = $"{DefaultSchedulerName}-{scheduler}";
     });
 
     services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
@@ -67,6 +71,22 @@ public static class InfrastructureConfiguration
         cfg.ConfigureEndpoints(context);
       });
     });
+
+    services
+      .AddOpenTelemetry()
+      .ConfigureResource(resource => resource.AddService(serviceName))
+      .WithTracing(tracing =>
+      {
+        tracing
+          .AddAspNetCoreInstrumentation()
+          .AddHttpClientInstrumentation()
+          .AddEntityFrameworkCoreInstrumentation()
+          .AddRedisInstrumentation()
+          .AddNpgsql()
+          .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName);
+
+        tracing.AddOtlpExporter();
+      });
 
     return services;
   }

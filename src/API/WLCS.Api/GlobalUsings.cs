@@ -1,6 +1,7 @@
 ﻿// <copyright file="GlobalUsings.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+global using System.Diagnostics;
 global using System.Reflection;
 
 global using HealthChecks.UI.Client;
@@ -11,9 +12,11 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.OpenApi.Models;
 
 global using Serilog;
+global using Serilog.Context;
 
 global using WLCS.Api.Extensions;
 global using WLCS.Api.Middleware;
+global using WLCS.Api.OpenTelemetry;
 global using WLCS.Common.Application;
 global using WLCS.Common.Application.Extensions;
 global using WLCS.Common.Infrastructure;

@@ -24,12 +24,14 @@ var builder = WebApplication.CreateBuilder(args);
 
   var databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database")!;
   var redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache")!;
+  var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionString("Queue")!);
 
   builder.Services.AddInfrastructure(
     DiagnosticsConfig.ServiceName,
     [
     CompetitionModule.ConfigureConsumers
     ],
+    rabbitMqSettings,
     databaseConnectionString,
     redisConnectionString);
 
@@ -40,6 +42,7 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(redisConnectionString)
+    .AddRabbitMQ(rabbitConnectionString: rabbitMqSettings.Host)
     .AddKeyCloak(keyCloakHealthUri);
 
   builder.Services.AddCompetitionModule(builder.Configuration);

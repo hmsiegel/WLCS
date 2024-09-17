@@ -50,5 +50,6 @@ global using WLCS.Common.Infrastructure.Authorization;
 global using WLCS.Common.Infrastructure.Caching;
 global using WLCS.Common.Infrastructure.Clock;
 global using WLCS.Common.Infrastructure.Data;
+global using WLCS.Common.Infrastructure.EventBus;
 global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;

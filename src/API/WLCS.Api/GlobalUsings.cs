@@ -21,6 +21,7 @@ global using WLCS.Common.Application;
 global using WLCS.Common.Application.Extensions;
 global using WLCS.Common.Infrastructure;
 global using WLCS.Common.Infrastructure.Configuration;
+global using WLCS.Common.Infrastructure.EventBus;
 global using WLCS.Common.Presentation.Endpoints;
 global using WLCS.Modules.Administration.Infrastructure;
 global using WLCS.Modules.Administration.Infrastructure.Database;

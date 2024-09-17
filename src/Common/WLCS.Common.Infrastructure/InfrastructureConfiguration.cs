@@ -12,7 +12,8 @@ public static class InfrastructureConfiguration
   public static IServiceCollection AddInfrastructure(
     this IServiceCollection services,
     string serviceName,
-    Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
+    Action<IRegistrationConfigurator, string>[] moduleConfigureConsumers,
+    RabbitMqSettings rabbitMqSettings,
     string databaseConnectionString,
     string redisConnectionString)
   {
@@ -59,16 +60,21 @@ public static class InfrastructureConfiguration
 
     services.AddMassTransit(configure =>
     {
-      foreach (var configureConsumer in moduleConfigureConsumers)
+      var instanceId = serviceName.ToLowerInvariant().Replace('.', '-');
+      foreach (Action<IRegistrationConfigurator, string> configureConsumer in moduleConfigureConsumers)
       {
-        configureConsumer(configure);
+        configureConsumer(configure, instanceId);
       }
 
       configure.SetKebabCaseEndpointNameFormatter();
 
-      configure.UsingInMemory((context, cfg) =>
+      configure.UsingRabbitMq((context, cfg) =>
       {
-        cfg.ConfigureEndpoints(context);
+        cfg.Host(new Uri(rabbitMqSettings.Host), h =>
+        {
+          h.Username(rabbitMqSettings.Username);
+          h.Password(rabbitMqSettings.Password);
+        });
       });
     });
 

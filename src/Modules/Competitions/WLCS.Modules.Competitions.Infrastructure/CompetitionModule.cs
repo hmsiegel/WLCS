@@ -23,11 +23,12 @@ public static class CompetitionModule
     return services;
   }
 
-  public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
+  public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator, string instanceId)
   {
     ArgumentNullException.ThrowIfNull(registrationConfigurator);
 
-    registrationConfigurator.AddConsumer<IntegrationEventConsumer<AthleteRegisteredIntegrationEvent>>();
+    registrationConfigurator.AddConsumer<IntegrationEventConsumer<AthleteRegisteredIntegrationEvent>>()
+      .Endpoint(c => c.InstanceId = instanceId);
   }
 
   private static void AddInfrastructure(

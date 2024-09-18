@@ -13,5 +13,6 @@ global using WLCS.Modules.Administration.Domain.Users;
 global using WLCS.Modules.Administration.Infrastructure;
 global using WLCS.Modules.Athletes.Domain.Athletes;
 global using WLCS.Modules.Athletes.Infrastructure;
+global using WLCS.Modules.Communication.Infrastructure;
 global using WLCS.Modules.Competitions.Domain.Meets;
 global using WLCS.Modules.Competitions.Infrastructure;

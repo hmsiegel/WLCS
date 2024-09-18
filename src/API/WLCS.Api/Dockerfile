@@ -32,6 +32,12 @@ COPY ["Modules/Administration/WLCS.Modules.Administration.Application/WLCS.Modul
 COPY ["Modules/Administration/WLCS.Modules.Administration.Domain/WLCS.Modules.Administration.Domain.csproj", "Modules/Administration/WLCS.Modules.Administration.Domain/"]
 COPY ["Modules/Administration/WLCS.Modules.Administration.Presentation/WLCS.Modules.Administration.Presentation.csproj", "Modules/Administration/WLCS.Modules.Administration.Presentation/"]
 COPY ["Modules/Administration/WLCS.Modules.Administration.IntegrationEvents/WLCS.Modules.Administration.IntegrationEvents.csproj", "Modules/Administration/WLCS.Modules.Administration.IntegrationEvents/"]
+# Communication Module
+COPY ["Modules/Communication/WLCS.Modules.Communication.Infrastructure/WLCS.Modules.Communication.Infrastructure.csproj", "Modules/Communication/WLCS.Modules.Communication.Infrastructure/"]
+COPY ["Modules/Communication/WLCS.Modules.Communication.Application/WLCS.Modules.Communication.Application.csproj", "Modules/Communication/WLCS.Modules.Communication.Application/"]
+COPY ["Modules/Communication/WLCS.Modules.Communication.Domain/WLCS.Modules.Communication.Domain.csproj", "Modules/Communication/WLCS.Modules.Communication.Domain/"]
+COPY ["Modules/Communication/WLCS.Modules.Communication.Presentation/WLCS.Modules.Communication.Presentation.csproj", "Modules/Communication/WLCS.Modules.Communication.Presentation/"]
+COPY ["Modules/Communication/WLCS.Modules.Communication.IntegrationEvents/WLCS.Modules.Communication.IntegrationEvents.csproj", "Modules/Communication/WLCS.Modules.Communication.IntegrationEvents/"]
 
 RUN dotnet restore "./API/WLCS.Api/WLCS.Api.csproj"
 COPY . .

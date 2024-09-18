@@ -27,5 +27,7 @@ global using WLCS.Modules.Administration.Infrastructure;
 global using WLCS.Modules.Administration.Infrastructure.Database;
 global using WLCS.Modules.Athletes.Infrastructure;
 global using WLCS.Modules.Athletes.Infrastructure.Database;
+global using WLCS.Modules.Communication.Infrastructure;
+global using WLCS.Modules.Communication.Infrastructure.Database;
 global using WLCS.Modules.Competitions.Infrastructure;
 global using WLCS.Modules.Competitions.Infrastructure.Database;

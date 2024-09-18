@@ -13,6 +13,7 @@ internal static class MigrationExtensions
     ApplyMigration<CompetitionsDbContext>(scope);
     ApplyMigration<AdministrationDbContext>(scope);
     ApplyMigration<AthletesDbContext>(scope);
+    ApplyMigration<CommunicationDbContext>(scope);
   }
 
   private static void ApplyMigration<TDbContext>(IServiceScope scope)

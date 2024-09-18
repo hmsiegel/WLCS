@@ -1,12 +1,12 @@
-﻿// <copyright file="AthletesModule.cs" company="WLCS">
+﻿// <copyright file="CommunicationModule.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Modules.Athletes.Infrastructure;
+namespace WLCS.Modules.Communication.Infrastructure;
 
-public static class AthletesModule
+public static class CommunicationModule
 {
-  public static IServiceCollection AddAthletesModule(
+  public static IServiceCollection AddCommunicationModule(
     this IServiceCollection services,
     IConfiguration configuration)
   {
@@ -18,8 +18,6 @@ public static class AthletesModule
 
     services.AddInfrastructure(configuration);
 
-    services.AddEndpoints(Presentation.AssemblyReference.Assembly);
-
     return services;
   }
 
@@ -29,25 +27,23 @@ public static class AthletesModule
   {
     var connectionString = configuration.GetConnectionString("Database");
 
-    services.AddDbContext<AthletesDbContext>((sp, options) =>
+    services.AddDbContext<CommunicationDbContext>((sp, options) =>
     {
       options.UseNpgsql(
         connectionString,
         npgsqlOptions => npgsqlOptions
-          .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Athletes))
+          .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Communication))
       .UseSnakeCaseNamingConvention()
       .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });
 
-    services.AddScoped<IAthleteRepository, AthleteRepository>();
+    services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CommunicationDbContext>());
 
-    services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AthletesDbContext>());
-
-    services.Configure<OutboxOptions>(configuration.GetSection("Athletes:Outbox"));
+    services.Configure<OutboxOptions>(configuration.GetSection("Communication:Outbox"));
 
     services.ConfigureOptions<ConfigureProcessOutboxJob>();
 
-    services.Configure<InboxOptions>(configuration.GetSection("Athletes:Inbox"));
+    services.Configure<InboxOptions>(configuration.GetSection("Communication:Inbox"));
 
     services.ConfigureOptions<ConfigureProcessInboxJob>();
   }

@@ -17,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
   [
     WLCS.Modules.Competitions.Application.AssemblyReference.Assembly,
     WLCS.Modules.Administration.Application.AssemblyReference.Assembly,
-    WLCS.Modules.Athletes.Application.AssemblyReference.Assembly
+    WLCS.Modules.Athletes.Application.AssemblyReference.Assembly,
+    WLCS.Modules.Communication.Application.AssemblyReference.Assembly
   ];
 
   builder.Services.AddApplication(applicationAssemblies);
@@ -46,11 +47,12 @@ var builder = WebApplication.CreateBuilder(args);
     .AddRabbitMQ(rabbitConnectionString: rabbitMqSettings.Host)
     .AddKeyCloak(keyCloakHealthUrl);
 
-  builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes"]);
+  builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes", "communication"]);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
   builder.Services.AddAdministrationModule(builder.Configuration);
-  builder.Services.AddAthletesModules(builder.Configuration);
+  builder.Services.AddAthletesModule(builder.Configuration);
+  builder.Services.AddCommunicationModule(builder.Configuration);
 }
 
 var app = builder.Build();

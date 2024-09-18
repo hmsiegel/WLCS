@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\WLCS.Modules.Communication.Application\WLCS.Modules.Communication.Application.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Communication.Presentation\WLCS.Modules.Communication.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="WLCS.Modules.Communication.IntegrationTests"/>
+    <InternalsVisibleTo Include="WLCS.IntegrationTests"/>
+  </ItemGroup>
+</Project>

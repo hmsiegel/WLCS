@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Administration\WLCS.Modules.Administration.Infrastructure\WLCS.Modules.Administration.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Communication\WLCS.Modules.Communication.Infrastructure\WLCS.Modules.Communication.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Competitions\WLCS.Modules.Competitions.Infrastructure\WLCS.Modules.Competitions.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Athletes\WLCS.Modules.Athletes.Infrastructure\WLCS.Modules.Athletes.Infrastructure.csproj" />
   </ItemGroup>

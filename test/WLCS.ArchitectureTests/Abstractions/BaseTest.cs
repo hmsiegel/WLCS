@@ -12,4 +12,6 @@ public abstract class BaseTest
   protected const string AthletesIntegrationEventsNamespace = "WLCS.Modules.Athletes.IntegrationEvents";
   protected const string CompetitionsNamespace = "WLCS.Modules.Competitions";
   protected const string CompetitionsIntegrationEventsNamespace = "WLCS.Modules.Competitions.IntegrationEvents";
+  protected const string CommunicationNamespace = "WLCS.Modules.Communication";
+  protected const string CommunicationIntegrationEventsNamespace = "WLCS.Modules.Communication.IntegrationEvents";
 }

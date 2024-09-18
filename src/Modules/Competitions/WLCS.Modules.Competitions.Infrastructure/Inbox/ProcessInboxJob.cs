@@ -22,7 +22,7 @@ internal sealed class ProcessInboxJob(
 
   public async Task Execute(IJobExecutionContext context)
   {
-    LoggerExtensions.BeginProcessingInboxMessage(
+    InboxOutboxProcessingLoggerExtensions.BeginProcessingInboxMessage(
       _logger,
       ModuleName,
       _dateTimeProvider.UtcNow);
@@ -55,7 +55,7 @@ internal sealed class ProcessInboxJob(
       }
       catch (Exception caughtException)
       {
-        LoggerExtensions.InboxMessageException(
+        InboxOutboxProcessingLoggerExtensions.InboxMessageException(
           _logger,
           ModuleName,
           inboxMessage.Id,
@@ -70,7 +70,7 @@ internal sealed class ProcessInboxJob(
 
     await transaction.CommitAsync();
 
-    LoggerExtensions.CompleteProcessingInboxMessage(
+    InboxOutboxProcessingLoggerExtensions.CompleteProcessingInboxMessage(
       _logger,
       ModuleName,
       _dateTimeProvider.UtcNow);

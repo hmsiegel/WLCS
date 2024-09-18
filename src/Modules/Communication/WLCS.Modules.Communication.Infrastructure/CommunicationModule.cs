@@ -1,22 +1,29 @@
 ﻿// <copyright file="CommunicationModule.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+using ILogger = Serilog.ILogger;
 
 namespace WLCS.Modules.Communication.Infrastructure;
 
 public static class CommunicationModule
 {
+  private const string ModuleName = "Communication";
+
   public static IServiceCollection AddCommunicationModule(
     this IServiceCollection services,
+    ILogger logger,
     IConfiguration configuration)
   {
     ArgumentNullException.ThrowIfNull(configuration);
+    ArgumentNullException.ThrowIfNull(logger);
 
     services.AddDomainEventHandlers();
 
     services.AddIntegrationEventHandlers();
 
     services.AddInfrastructure(configuration);
+
+    logger.Information("{Module} module services registered.", ModuleName);
 
     return services;
   }
@@ -36,6 +43,8 @@ public static class CommunicationModule
       .UseSnakeCaseNamingConvention()
       .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });
+
+    services.AddTransient<ISendEmail, MimeKitEmailSender>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CommunicationDbContext>());
 

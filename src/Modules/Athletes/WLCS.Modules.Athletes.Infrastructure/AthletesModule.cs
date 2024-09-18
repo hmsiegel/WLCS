@@ -2,15 +2,21 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using ILogger = Serilog.ILogger;
+
 namespace WLCS.Modules.Athletes.Infrastructure;
 
 public static class AthletesModule
 {
+  private const string ModuleName = "Athletes";
+
   public static IServiceCollection AddAthletesModule(
     this IServiceCollection services,
+    ILogger logger,
     IConfiguration configuration)
   {
     ArgumentNullException.ThrowIfNull(configuration);
+    ArgumentNullException.ThrowIfNull(logger);
 
     services.AddDomainEventHandlers();
 
@@ -19,6 +25,8 @@ public static class AthletesModule
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
+    logger.Information("{Module} module services registered.", ModuleName);
 
     return services;
   }

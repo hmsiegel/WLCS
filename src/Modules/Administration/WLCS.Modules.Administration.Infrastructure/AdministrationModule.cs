@@ -2,15 +2,21 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using ILogger = Serilog.ILogger;
+
 namespace WLCS.Modules.Administration.Infrastructure;
 
 public static class AdministrationModule
 {
+  private const string ModuleName = "Administration";
+
   public static IServiceCollection AddAdministrationModule(
     this IServiceCollection services,
+    ILogger logger,
     IConfiguration configuration)
   {
     ArgumentNullException.ThrowIfNull(configuration);
+    ArgumentNullException.ThrowIfNull(logger);
 
     services.AddDomainEventHandlers();
 
@@ -19,6 +25,8 @@ public static class AdministrationModule
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
+    logger.Information("{Module} module services registered.", ModuleName);
 
     return services;
   }

@@ -76,7 +76,7 @@ internal sealed class RolesService(
     {
       await transaction.RollbackAsync(cancellationToken);
 
-      LoggerExtensions.UserRoleError(
+      UserLoggingExtensions.UserRoleError(
         _logger,
         exception);
 
@@ -157,7 +157,7 @@ internal sealed class RolesService(
     {
       await transaction.RollbackAsync(cancellationToken);
 
-      LoggerExtensions.UserRoleError(
+      UserLoggingExtensions.UserRoleError(
         _logger,
         exception);
 

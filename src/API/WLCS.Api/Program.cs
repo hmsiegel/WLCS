@@ -4,6 +4,13 @@
 
 var builder = WebApplication.CreateBuilder(args);
 {
+  var logger = Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console(formatProvider: CultureInfo.CurrentCulture)
+    .CreateLogger();
+
+  logger.Information("Starting web host");
+
   builder.Host.UseSerilog((context, loggerConfiguration)
     => loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 
@@ -49,10 +56,10 @@ var builder = WebApplication.CreateBuilder(args);
 
   builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes", "communication"]);
 
-  builder.Services.AddCompetitionModule(builder.Configuration);
-  builder.Services.AddAdministrationModule(builder.Configuration);
-  builder.Services.AddAthletesModule(builder.Configuration);
-  builder.Services.AddCommunicationModule(builder.Configuration);
+  builder.Services.AddCompetitionModule(logger, builder.Configuration);
+  builder.Services.AddAdministrationModule(logger, builder.Configuration);
+  builder.Services.AddAthletesModule(logger, builder.Configuration);
+  builder.Services.AddCommunicationModule(logger, builder.Configuration);
 }
 
 var app = builder.Build();

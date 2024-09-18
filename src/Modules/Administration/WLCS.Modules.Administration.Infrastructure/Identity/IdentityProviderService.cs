@@ -2,6 +2,8 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using WLCS.Common.Infrastructure.Logging;
+
 namespace WLCS.Modules.Administration.Infrastructure.Identity;
 
 internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILogger<IdentityProviderService> logger) : IIdentityProviderService

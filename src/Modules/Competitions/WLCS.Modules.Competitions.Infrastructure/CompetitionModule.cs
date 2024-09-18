@@ -1,16 +1,21 @@
 ﻿// <copyright file="CompetitionModule.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+using ILogger = Serilog.ILogger;
 
 namespace WLCS.Modules.Competitions.Infrastructure;
 
 public static class CompetitionModule
 {
+  private const string ModuleName = "Competition";
+
   public static IServiceCollection AddCompetitionModule(
     this IServiceCollection services,
+    ILogger logger,
     IConfiguration configuration)
   {
     ArgumentNullException.ThrowIfNull(configuration);
+    ArgumentNullException.ThrowIfNull(logger);
 
     services.AddDomainEventHandlers();
 
@@ -19,6 +24,8 @@ public static class CompetitionModule
     services.AddInfrastructure(configuration);
 
     services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
+    logger.Information("{Module} module services registered.", ModuleName);
 
     return services;
   }

@@ -29,6 +29,7 @@ global using WLCS.Common.Application.EventBus;
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
 global using WLCS.Common.Infrastructure.Inbox;
+global using WLCS.Common.Infrastructure.Logging;
 global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;
 global using WLCS.Common.Presentation.Endpoints;
@@ -39,5 +40,3 @@ global using WLCS.Modules.Athletes.Infrastructure.Athletes;
 global using WLCS.Modules.Athletes.Infrastructure.Database;
 global using WLCS.Modules.Athletes.Infrastructure.Inbox;
 global using WLCS.Modules.Athletes.Infrastructure.Outbox;
-
-global using LoggerExtensions = WLCS.Common.Application.Extensions.LoggerExtensions;

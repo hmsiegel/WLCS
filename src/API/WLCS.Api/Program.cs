@@ -25,6 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
   var databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database")!;
   var redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache")!;
   var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionString("Queue")!);
+  var mongoConnectionString = builder.Configuration.GetConnectionString("Mongo")!;
 
   builder.Services.AddInfrastructure(
     DiagnosticsConfig.ServiceName,
@@ -33,17 +34,19 @@ var builder = WebApplication.CreateBuilder(args);
     ],
     rabbitMqSettings,
     databaseConnectionString,
-    redisConnectionString);
+    redisConnectionString,
+    mongoConnectionString);
 
-  Uri keyCloakHealthUri = builder.Configuration.GetKeyCloakHealthUrl();
-
-  builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes"]);
+  Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 
   builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(redisConnectionString)
+    .AddMongoDb(mongoConnectionString)
     .AddRabbitMQ(rabbitConnectionString: rabbitMqSettings.Host)
-    .AddKeyCloak(keyCloakHealthUri);
+    .AddKeyCloak(keyCloakHealthUrl);
+
+  builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes"]);
 
   builder.Services.AddCompetitionModule(builder.Configuration);
   builder.Services.AddAdministrationModule(builder.Configuration);

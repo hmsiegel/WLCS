@@ -11,7 +11,7 @@ internal static class KeyCloakHealthChecksBuilderExtensions
 
   internal static IHealthChecksBuilder AddKeyCloak(this IHealthChecksBuilder builder, Uri healthUri)
   {
-    builder.AddUrlGroup(healthUri, HttpMethod.Get, KeyCloakHealthCheck);
+    builder.AddUrlGroup(uri: healthUri, httpMethod: HttpMethod.Get, name: KeyCloakHealthCheck);
 
     return builder;
   }

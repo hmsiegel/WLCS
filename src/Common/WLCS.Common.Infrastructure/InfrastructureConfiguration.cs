@@ -2,6 +2,12 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Extensions.DiagnosticSources;
+
 namespace WLCS.Common.Infrastructure;
 
 public static class InfrastructureConfiguration
@@ -15,7 +21,8 @@ public static class InfrastructureConfiguration
     Action<IRegistrationConfigurator, string>[] moduleConfigureConsumers,
     RabbitMqSettings rabbitMqSettings,
     string databaseConnectionString,
-    string redisConnectionString)
+    string redisConnectionString,
+    string mongoConnectionString)
   {
     services.AddAuthenticationInternal();
 
@@ -89,10 +96,29 @@ public static class InfrastructureConfiguration
           .AddEntityFrameworkCoreInstrumentation()
           .AddRedisInstrumentation()
           .AddNpgsql()
-          .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName);
+          .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName)
+          .AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources");
 
         tracing.AddOtlpExporter();
       });
+
+    var mongoClientSettings = MongoClientSettings.FromConnectionString(mongoConnectionString);
+
+    mongoClientSettings.ClusterConfigurator = c => c.Subscribe(
+      new DiagnosticsActivityEventSubscriber(
+        new InstrumentationOptions
+        {
+          CaptureCommandText = true,
+        }));
+
+    services.AddSingleton<IMongoClient>(new MongoClient(mongoClientSettings));
+
+#pragma warning disable CS0618 // Type or member is obsolete
+    BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
+    BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+    BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
     return services;
   }

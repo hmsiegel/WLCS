@@ -71,6 +71,17 @@ services:
       - 4318:4318
       - 16686:16686
 
+  wlcs.mongo:
+    image: mongo:latest
+    container_name: wlcs.mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - ./.containers/mongo:/data/db
+    ports:
+      - 27017:27017
+
   wlcs.queue:
     image: rabbitmq:management-alpine
     container_name: wlcs.queue

@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Common.Infrastructure.Logging;
+namespace WLCS.Common.Application.Logging;
 
 public static class InboxOutboxProcessingLoggerExtensions
 {

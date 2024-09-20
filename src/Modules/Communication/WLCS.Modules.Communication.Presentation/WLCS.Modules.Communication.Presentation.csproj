@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.28.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Administration\WLCS.Modules.Administration.IntegrationEvents\WLCS.Modules.Administration.IntegrationEvents.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Communication.Application\WLCS.Modules.Communication.Application.csproj" />
     <ProjectReference Include="..\..\..\Common\WLCS.Common.Presentation\WLCS.Common.Presentation.csproj" />
   </ItemGroup>

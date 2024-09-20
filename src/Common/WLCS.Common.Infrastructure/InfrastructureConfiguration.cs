@@ -2,12 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
-using MongoDB.Driver;
-using MongoDB.Driver.Core.Extensions.DiagnosticSources;
-
 namespace WLCS.Common.Infrastructure;
 
 public static class InfrastructureConfiguration
@@ -82,6 +76,8 @@ public static class InfrastructureConfiguration
           h.Username(rabbitMqSettings.Username);
           h.Password(rabbitMqSettings.Password);
         });
+
+        cfg.ConfigureEndpoints(context);
       });
     });
 

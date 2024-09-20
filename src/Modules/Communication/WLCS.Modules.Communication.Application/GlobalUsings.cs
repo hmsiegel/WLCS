@@ -6,3 +6,4 @@ global using System.Reflection;
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
 global using WLCS.Modules.Communication.Application.Abstractions.Email;
+global using WLCS.Modules.Communication.Domain.EmailMessages;

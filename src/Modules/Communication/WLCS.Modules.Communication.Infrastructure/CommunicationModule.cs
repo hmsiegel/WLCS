@@ -23,9 +23,19 @@ public static class CommunicationModule
 
     services.AddInfrastructure(configuration);
 
+    services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
     logger.Information("{Module} module services registered.", ModuleName);
 
     return services;
+  }
+
+  public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator, string instanceId)
+  {
+    ArgumentNullException.ThrowIfNull(registrationConfigurator);
+
+    registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>()
+      .Endpoint(c => c.InstanceId = instanceId);
   }
 
   private static void AddInfrastructure(
@@ -45,8 +55,14 @@ public static class CommunicationModule
     });
 
     services.AddTransient<ISendEmail, MimeKitEmailSender>();
+    services.AddTransient<IOutboxService, MongoDbEmailOutboxService>();
+    services.AddTransient<ISendEmailsFromOutboxService, DefaultSendEmailsFromOutboxService>();
+
+    services.AddHostedService<EmailSendingBackgroundService>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CommunicationDbContext>());
+
+    services.Configure<EmailOptions>(configuration.GetSection("Communication:Email"));
 
     services.Configure<OutboxOptions>(configuration.GetSection("Communication:Outbox"));
 

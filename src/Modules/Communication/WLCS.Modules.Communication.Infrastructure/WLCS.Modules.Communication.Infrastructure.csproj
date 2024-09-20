@@ -4,6 +4,7 @@
     <ProjectReference Include="..\WLCS.Modules.Communication.Application\WLCS.Modules.Communication.Application.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Communication.Presentation\WLCS.Modules.Communication.Presentation.csproj" />
     <ProjectReference Include="..\..\..\Common\WLCS.Common.Infrastructure\WLCS.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Administration\WLCS.Modules.Administration.IntegrationEvents\WLCS.Modules.Administration.IntegrationEvents.csproj" />
   </ItemGroup>
 
   <ItemGroup>

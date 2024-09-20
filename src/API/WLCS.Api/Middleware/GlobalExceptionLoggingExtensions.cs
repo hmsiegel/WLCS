@@ -2,7 +2,9 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-namespace WLCS.Common.Infrastructure.Logging;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
+
+namespace WLCS.Api.Middleware;
 
 public static class GlobalExceptionLoggingExtensions
 {

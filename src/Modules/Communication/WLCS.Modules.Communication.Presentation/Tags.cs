@@ -7,4 +7,5 @@ namespace WLCS.Modules.Communication.Presentation;
 internal static class Tags
 {
   internal const string Communication = "communication";
+  internal const string Email = "email";
 }

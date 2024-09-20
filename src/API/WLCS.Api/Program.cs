@@ -38,7 +38,8 @@ var builder = WebApplication.CreateBuilder(args);
   builder.Services.AddInfrastructure(
     DiagnosticsConfig.ServiceName,
     [
-    CompetitionModule.ConfigureConsumers
+    CompetitionModule.ConfigureConsumers,
+    CommunicationModule.ConfigureConsumers,
     ],
     rabbitMqSettings,
     databaseConnectionString,

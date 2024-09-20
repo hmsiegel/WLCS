@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\WLCS.Common.Application\WLCS.Common.Application.csproj" />
     <ProjectReference Include="..\WLCS.Modules.Administration.Domain\WLCS.Modules.Administration.Domain.csproj" />
+    <ProjectReference Include="..\WLCS.Modules.Administration.IntegrationEvents\WLCS.Modules.Administration.IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

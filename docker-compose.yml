@@ -94,4 +94,9 @@ services:
       - 5672:5672
       - 15672:15672
 
-
+  wlcs.email:
+    image: jijiechen/papercut:latest
+    container_name: wlcs.email
+    ports:
+      - 25:25
+      - 37408:37408

@@ -4,7 +4,7 @@
 
 namespace WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 
-internal sealed class CreateCompetitionCommandValidator : AbstractValidator<CreateCompetitionCommand>
+internal sealed class CreateCompetitionCommandValidator : CustomValidator<CreateCompetitionCommand>
 {
   public CreateCompetitionCommandValidator()
   {

@@ -22,3 +22,4 @@ global using WLCS.Modules.Competitions.Application.Meets.Commands.AddAthleteToMe
 global using WLCS.Modules.Competitions.Application.Meets.Commands.CreateMeet;
 global using WLCS.Modules.Competitions.Application.Meets.Queries.GetMeet;
 global using WLCS.Modules.Competitions.Application.Meets.Queries.GetMeets;
+global using WLCS.Modules.Competitions.Application.Platforms.Commands.CreatePlatform;

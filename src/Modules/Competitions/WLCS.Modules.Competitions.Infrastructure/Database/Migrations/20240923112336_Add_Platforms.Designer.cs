@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WLCS.Modules.Competitions.Infrastructure.Database;
@@ -11,9 +12,11 @@ using WLCS.Modules.Competitions.Infrastructure.Database;
 namespace WLCS.Modules.Competitions.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CompetitionsDbContext))]
-    partial class CompetitionsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240923112336_Add_Platforms")]
+    partial class Add_Platforms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

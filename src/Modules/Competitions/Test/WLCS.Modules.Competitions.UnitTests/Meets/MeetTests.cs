@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
-
 namespace WLCS.Modules.Competitions.UnitTests.Meets;
 
 public class MeetTests : BaseTest
@@ -12,7 +10,7 @@ public class MeetTests : BaseTest
   public void CreateMeet_ShouldRaiseDomainEvent_WhenMeetIsCreated()
   {
     // Arrange
-    var name = Name.Create(Faker.Lorem.Word());
+    var name = MeetName.Create(Faker.Lorem.Word());
     var location = Location.Create(Faker.Address.City(), Faker.Address.State());
     var venue = Venue.Create(Faker.Company.CompanyName());
     var startDate = DateOnly.FromDateTime(Faker.Date.Recent());
@@ -36,7 +34,7 @@ public class MeetTests : BaseTest
   public void CreateMeet_ShouldReturnFailure_WhenEndDatePrecedesStartDate()
   {
     // Arrange
-    var name = Name.Create(Faker.Lorem.Word());
+    var name = MeetName.Create(Faker.Lorem.Word());
     var location = Location.Create(Faker.Address.City(), Faker.Address.State());
     var venue = Venue.Create(Faker.Company.CompanyName());
     var startDate = DateOnly.FromDateTime(Faker.Date.Recent());
@@ -60,7 +58,7 @@ public class MeetTests : BaseTest
   {
     // Arrange
     var meet = Meet.Create(
-      Name.Create(Faker.Lorem.Word()).Value,
+      MeetName.Create(Faker.Lorem.Word()).Value,
       Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
       Venue.Create(Faker.Company.CompanyName()).Value,
       DateOnly.FromDateTime(Faker.Date.Recent()),
@@ -80,7 +78,7 @@ public class MeetTests : BaseTest
   {
     // Arrange
     var meet = Meet.Create(
-      Name.Create(Faker.Lorem.Word()).Value,
+      MeetName.Create(Faker.Lorem.Word()).Value,
       Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
       Venue.Create(Faker.Company.CompanyName()).Value,
       DateOnly.FromDateTime(Faker.Date.Recent()),
@@ -88,7 +86,7 @@ public class MeetTests : BaseTest
 
     var competition = Competition.Create(
       MeetId.Create(meet.Id.Value),
-      Domain.Competitions.ValueObjects.Name.Create(Faker.Company.CompanyName()).Value,
+      Domain.Competitions.ValueObjects.CompetitionName.Create(Faker.Company.CompanyName()).Value,
       Scope.FromValue(Faker.Random.Number(0, 1)),
       CompetitionType.FromValue(Faker.Random.Number(0, 2)),
       AgeDivision.FromValue(Faker.Random.Number(0, 6)));
@@ -108,7 +106,7 @@ public class MeetTests : BaseTest
   {
     // Arrange
     var meet = Meet.Create(
-      Name.Create(Faker.Lorem.Word()).Value,
+      MeetName.Create(Faker.Lorem.Word()).Value,
       Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
       Venue.Create(Faker.Company.CompanyName()).Value,
       DateOnly.FromDateTime(Faker.Date.Recent()),
@@ -116,7 +114,7 @@ public class MeetTests : BaseTest
 
     var competition = Competition.Create(
       MeetId.Create(meet.Id.Value),
-      Domain.Competitions.ValueObjects.Name.Create(Faker.Company.CompanyName()).Value,
+      Domain.Competitions.ValueObjects.CompetitionName.Create(Faker.Company.CompanyName()).Value,
       Scope.FromValue(Faker.Random.Number(0, 1)),
       CompetitionType.FromValue(Faker.Random.Number(0, 2)),
       AgeDivision.FromValue(Faker.Random.Number(0, 6)));
@@ -138,7 +136,7 @@ public class MeetTests : BaseTest
   {
     // Arrange
     var meet = Meet.Create(
-      Name.Create(Faker.Lorem.Word()).Value,
+      MeetName.Create(Faker.Lorem.Word()).Value,
       Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
       Venue.Create(Faker.Company.CompanyName()).Value,
       DateOnly.FromDateTime(Faker.Date.Recent()),

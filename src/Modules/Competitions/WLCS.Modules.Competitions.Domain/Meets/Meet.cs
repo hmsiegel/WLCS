@@ -1,7 +1,7 @@
 ﻿// <copyright file="Meet.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
-using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
+using MeetName = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.MeetName;
 
 namespace WLCS.Modules.Competitions.Domain.Meets;
 
@@ -11,7 +11,7 @@ public sealed class Meet : Entity<MeetId>
   private readonly List<Guid> _athletes = [];
 
   private Meet(
-    Name name,
+    MeetName name,
     Location location,
     Venue venue,
     DateOnly startDate,
@@ -30,7 +30,7 @@ public sealed class Meet : Entity<MeetId>
   {
   }
 
-  public Name Name { get; private set; } = default!;
+  public MeetName Name { get; private set; } = default!;
 
   public Location Location { get; private set; } = default!;
 
@@ -47,7 +47,7 @@ public sealed class Meet : Entity<MeetId>
   public IReadOnlyCollection<Guid> Athletes => [.. _athletes];
 
   public static Result<Meet> Create(
-    Name name,
+    MeetName name,
     Location location,
     Venue venue,
     DateOnly startDate,
@@ -78,7 +78,7 @@ public sealed class Meet : Entity<MeetId>
   }
 
   public void UpdateMeet(
-    Name name,
+    MeetName name,
     Location location,
     Venue venue,
     DateOnly startDate,

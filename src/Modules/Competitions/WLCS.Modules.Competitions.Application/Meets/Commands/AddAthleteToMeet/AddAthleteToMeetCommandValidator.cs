@@ -4,7 +4,7 @@
 
 namespace WLCS.Modules.Competitions.Application.Meets.Commands.AddAthleteToMeet;
 
-internal sealed class AddAthleteToMeetCommandValidator : AbstractValidator<AddAthleteToMeetCommand>
+internal sealed class AddAthleteToMeetCommandValidator : CustomValidator<AddAthleteToMeetCommand>
 {
   public AddAthleteToMeetCommandValidator()
   {

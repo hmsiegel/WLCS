@@ -13,6 +13,8 @@ public class CompetitionsDbContext(DbContextOptions<CompetitionsDbContext> optio
 
   internal DbSet<Athlete> Athletes { get; set; } = null!;
 
+  internal DbSet<Platform> Platforms { get; set; } = null!;
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     ArgumentNullException.ThrowIfNull(modelBuilder);

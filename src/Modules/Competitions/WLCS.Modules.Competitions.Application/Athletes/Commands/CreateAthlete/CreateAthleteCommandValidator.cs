@@ -4,7 +4,7 @@
 
 namespace WLCS.Modules.Competitions.Application.Athletes.Commands.CreateAthlete;
 
-internal sealed class CreateAthleteCommandValidator : AbstractValidator<CreateAthleteCommand>
+internal sealed class CreateAthleteCommandValidator : CustomValidator<CreateAthleteCommand>
 {
   public CreateAthleteCommandValidator()
   {

@@ -57,6 +57,7 @@ public static class CompetitionModule
     services.AddScoped<IMeetRepository, MeetRepository>();
     services.AddScoped<ICompetitionRespository, CompetitionRepository>();
     services.AddScoped<IAthleteRepository, AthleteRepository>();
+    services.AddScoped<IPlatformRepository, PlatformRepository>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CompetitionsDbContext>());
 

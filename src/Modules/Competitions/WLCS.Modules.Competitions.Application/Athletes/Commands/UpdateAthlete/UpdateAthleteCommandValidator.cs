@@ -4,7 +4,7 @@
 
 namespace WLCS.Modules.Competitions.Application.Athletes.Commands.UpdateAthlete;
 
-internal sealed class UpdateAthleteCommandValidator : AbstractValidator<UpdateAthleteCommand>
+internal sealed class UpdateAthleteCommandValidator : CustomValidator<UpdateAthleteCommand>
 {
   public UpdateAthleteCommandValidator()
   {

@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
+using MeetName = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.MeetName;
 
 namespace WLCS.Modules.Competitions.Application.Meets.Commands.CreateMeet;
 
@@ -23,7 +23,7 @@ internal sealed class CreateMeetCommandHandler(
       return Result.Failure<Guid>(MeetErrors.StartDateIsInThePast);
     }
 
-    var nameResult = Name.Create(request.Name);
+    var nameResult = MeetName.Create(request.Name);
     var venueResult = Venue.Create(request.Venue);
     var locationResult = Location.Create(request.City, request.State);
 

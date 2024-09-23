@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Name = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.Name;
+using CompetitionName = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.CompetitionName;
 
 namespace WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 
@@ -30,7 +30,7 @@ internal sealed class CreateCompetitionCommandHandler(
       return Result.Failure<Guid>(MeetErrors.AlreadyArchived);
     }
 
-    var competitionNameResult = Name.Create(request.Name);
+    var competitionNameResult = CompetitionName.Create(request.Name);
 
     var competition = Competition.Create(
       meet.Id,

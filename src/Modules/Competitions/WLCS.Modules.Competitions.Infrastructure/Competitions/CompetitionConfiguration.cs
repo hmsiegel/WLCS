@@ -1,8 +1,6 @@
 ﻿// <copyright file="CompetitionConfiguration.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
-using Name = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.Name;
-
 namespace WLCS.Modules.Competitions.Infrastructure.Competitions;
 
 internal sealed class CompetitionConfiguration : IEntityTypeConfiguration<Competition>
@@ -22,7 +20,7 @@ internal sealed class CompetitionConfiguration : IEntityTypeConfiguration<Compet
       .HasMaxLength(200)
       .HasConversion(
       name => name.Value,
-      value => new Name(value));
+      value => new CompetitionName(value));
 
     builder.HasMany(x => x.Athletes)
       .WithMany();

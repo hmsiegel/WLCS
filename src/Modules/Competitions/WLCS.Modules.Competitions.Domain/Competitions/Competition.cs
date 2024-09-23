@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Name = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.Name;
-
 namespace WLCS.Modules.Competitions.Domain.Competitions;
 
 public sealed class Competition : Entity<CompetitionId>
@@ -12,7 +10,7 @@ public sealed class Competition : Entity<CompetitionId>
 
   private Competition(
     MeetId meetId,
-    Name name,
+    CompetitionName name,
     Scope scope,
     CompetitionType competitionType,
     AgeDivision ageDivisions,
@@ -32,7 +30,7 @@ public sealed class Competition : Entity<CompetitionId>
 
   public MeetId MeetId { get; private set; } = default!;
 
-  public Name Name { get; private set; } = default!;
+  public CompetitionName Name { get; private set; } = default!;
 
   public Scope Scope { get; private set; } = Scope.IWF;
 
@@ -44,7 +42,7 @@ public sealed class Competition : Entity<CompetitionId>
 
   public static Competition Create(
     MeetId meetId,
-    Name name,
+    CompetitionName name,
     Scope scope,
     CompetitionType competitionType,
     AgeDivision ageDivisions)

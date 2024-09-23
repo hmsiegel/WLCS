@@ -2,8 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using Name = WLCS.Modules.Competitions.Domain.Meets.ValueObjects.Name;
-
 namespace WLCS.Modules.Competitions.Infrastructure.Meets;
 
 internal sealed class MeetConfiguration : IEntityTypeConfiguration<Meet>
@@ -23,7 +21,7 @@ internal sealed class MeetConfiguration : IEntityTypeConfiguration<Meet>
       .HasMaxLength(100)
       .HasConversion(
       name => name.Value,
-      value => new Name(value));
+      value => new MeetName(value));
 
     builder.OwnsOne(x => x.Location, locationBuilder =>
     {
@@ -58,6 +56,11 @@ internal sealed class MeetConfiguration : IEntityTypeConfiguration<Meet>
 
     builder
       .HasMany<Athlete>()
+      .WithOne()
+      .HasForeignKey(x => x.MeetId)
+      .OnDelete(DeleteBehavior.Cascade);
+
+    builder.HasMany<Platform>()
       .WithOne()
       .HasForeignKey(x => x.MeetId)
       .OnDelete(DeleteBehavior.Cascade);

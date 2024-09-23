@@ -4,7 +4,7 @@
 
 namespace WLCS.Modules.Competitions.Application.Meets.Commands.CreateMeet;
 
-internal sealed class CreateMeetCommandValidator : AbstractValidator<CreateMeetCommand>
+internal sealed class CreateMeetCommandValidator : CustomValidator<CreateMeetCommand>
 {
   public CreateMeetCommandValidator()
   {

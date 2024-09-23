@@ -5,12 +5,12 @@
 namespace WLCS.Modules.Administration.Application.Users.Commands.RegisterUser;
 
 internal sealed class UserRegisteredDomainEventHandler(
-  IEventBus eventBus,
-  ISender sender)
+  ISender sender,
+  IEventBus eventBus)
   : DomainEventHandler<UserRegisteredDomainEvent>
 {
-  private readonly IEventBus _eventBus = eventBus;
   private readonly ISender _sender = sender;
+  private readonly IEventBus _eventBus = eventBus;
 
   public override async Task Handle(UserRegisteredDomainEvent domainEvent, CancellationToken cancellationToken = default)
   {
@@ -23,14 +23,16 @@ internal sealed class UserRegisteredDomainEventHandler(
       throw new WlcsException(nameof(GetUserQuery), result.Errors[0]);
     }
 
+    var user = result.Value;
+
     await _eventBus.PublishAsync(
       new UserRegisteredIntegrationEvent(
-        domainEvent.Id,
-        domainEvent.OccurredOnUtc,
-        result.Value.Id,
-        result.Value.Email,
-        result.Value.FirstName,
-        result.Value.LastName),
+      domainEvent.Id,
+      domainEvent.OccurredOnUtc,
+      user.Id,
+      user.Email,
+      user.FirstName,
+      user.LastName),
       cancellationToken);
   }
 }

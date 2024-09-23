@@ -4,7 +4,10 @@
 
 namespace WLCS.Modules.Administration.Infrastructure.Identity;
 
-internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILogger<IdentityProviderService> logger) : IIdentityProviderService
+internal sealed class IdentityProviderService(
+  KeyCloakClient keyCloakClient,
+  ILogger<IdentityProviderService> logger)
+  : IIdentityProviderService
 {
   private const string PasswordCredentialType = "Password";
 
@@ -19,7 +22,7 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
       user.Email,
       user.FirstName,
       user.LastName,
-      true,
+      false,
       true,
       [new CredentialRepresentation(
         PasswordCredentialType,

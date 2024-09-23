@@ -56,13 +56,24 @@ public static class CommunicationModule
 
     services.AddTransient<ISendEmail, MimeKitEmailSender>();
     services.AddTransient<IOutboxService, MongoDbEmailOutboxService>();
-    services.AddTransient<ISendEmailsFromOutboxService, DefaultSendEmailsFromOutboxService>();
-
-    services.AddHostedService<EmailSendingBackgroundService>();
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CommunicationDbContext>());
 
+    var emailSettings = configuration.GetSection("Communication:Email").Get<EmailOptions>();
+
+    services
+      .AddFluentEmail(emailSettings!.From)
+      .AddRazorRenderer()
+      .AddMailKitSender(new SmtpClientOptions
+      {
+        Server = emailSettings.Host,
+        Port = emailSettings.Port,
+        UseSsl = emailSettings.UseSsl,
+      });
+
     services.Configure<EmailOptions>(configuration.GetSection("Communication:Email"));
+
+    services.ConfigureOptions<ConfigureProcessEmailOutboxJob>();
 
     services.Configure<OutboxOptions>(configuration.GetSection("Communication:Outbox"));
 

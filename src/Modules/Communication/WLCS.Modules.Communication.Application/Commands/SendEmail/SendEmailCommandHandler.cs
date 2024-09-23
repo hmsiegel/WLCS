@@ -4,20 +4,22 @@
 
 namespace WLCS.Modules.Communication.Application.Commands.SendEmail;
 
-internal sealed class SendEmailCommandHandler(ISendEmail emailSender) // : ICommandHandler<SendEmailCommand, Guid>
+internal sealed class SendEmailCommandHandler(IOutboxService outboxService)
+    : ICommandHandler<SendEmailCommand, Guid>
 {
-  private readonly ISendEmail _emailSender = emailSender;
+  private readonly IOutboxService _outboxService = outboxService;
 
-  public async Task<Result<Guid>> HandleAsync(SendEmailCommand request, CancellationToken cancellationToken)
+  public async Task<Result<Guid>> Handle(SendEmailCommand request, CancellationToken cancellationToken)
   {
-    await _emailSender.SendEmailAsync(
-      request.To,
-      request.Subject,
-      request.Body,
-      request.Cc,
-      request.Bcc,
-      cancellationToken);
+    var newEntity = new EmailOutboxEntity
+    {
+      Body = request.Body,
+      Subject = request.Subject,
+      To = request.To,
+    };
 
-    return Guid.Empty;
+    await _outboxService.QueueEmailForSending(newEntity);
+
+    return newEntity.Id;
   }
 }

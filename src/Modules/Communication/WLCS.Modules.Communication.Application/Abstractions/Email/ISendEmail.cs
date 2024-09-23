@@ -10,7 +10,5 @@ public interface ISendEmail
     string to,
     string subject,
     string body,
-    string? cc = null,
-    string? bcc = null,
     CancellationToken cancellationToken = default);
 }

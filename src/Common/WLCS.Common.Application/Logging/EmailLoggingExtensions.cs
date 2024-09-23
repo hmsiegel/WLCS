@@ -8,10 +8,10 @@ public static class EmailLoggingExtensions
 {
   private static readonly Action<ILogger, string, string, string, DateTime, Exception> _sendEmailLogger = InitializeAttemptingToSendEmailMessageLogger();
   private static readonly Action<ILogger, DateTime, Exception> _emailSentLogger = InitializeEmailSentLogger();
-  private static readonly Action<ILogger, string, Exception> _backgroundServiceLogger = InitializeBackgroundServiceLogger();
+  private static readonly Action<ILogger, Exception> _unprocessedEmailLogger = InitializeGetUnprocessedEmailLogger();
   private static readonly Action<ILogger, string, Exception> _backgroundServiceExceptionLogger = InitializeBackgroundServiceExceptionLogger();
   private static readonly Action<ILogger, long, Exception> _emailOutboxProcessedLogger = InitializeEmailOutboxProcessedLogger();
-  private static readonly Action<ILogger, Exception> _sleepingEmailProcessedLogger = InitializeSleepingEmailProcessedLogger();
+  private static readonly Action<ILogger, string, Exception> _emailSendingException = InitializeEmailSendingExceptionLogger();
 
   public static Action<ILogger, DateTime, Exception> InitializeEmailSentLogger()
   {
@@ -29,12 +29,12 @@ public static class EmailLoggingExtensions
       "Attempting to send email to {To} from {From} with subject {Subject} at {DateTime}");
   }
 
-  public static Action<ILogger, string, Exception> InitializeBackgroundServiceLogger()
+  public static Action<ILogger, Exception> InitializeGetUnprocessedEmailLogger()
   {
-    return LoggerMessage.Define<string>(
+    return LoggerMessage.Define(
       LogLevel.Information,
-      new EventId(3, nameof(BackgroundServiceStarting)),
-      "{ServiceName} starting...");
+      new EventId(3, nameof(GettingUnprocessedEmails)),
+      "Attempting to get unprocessed emails...");
   }
 
   public static Action<ILogger, string, Exception> InitializeBackgroundServiceExceptionLogger()
@@ -53,12 +53,12 @@ public static class EmailLoggingExtensions
       "{Count} email outbox messages processed");
   }
 
-  public static Action<ILogger, Exception> InitializeSleepingEmailProcessedLogger()
+  public static Action<ILogger, string, Exception> InitializeEmailSendingExceptionLogger()
   {
-    return LoggerMessage.Define(
-      LogLevel.Information,
-      new EventId(6, nameof(Sleeping)),
-      "Sleeping...");
+    return LoggerMessage.Define<string>(
+      LogLevel.Error,
+      new EventId(6, nameof(ErrorSendingEmail)),
+      "Errror sending email: {Error}");
   }
 
   public static void AttemptingToSendEmailMessage(this ILogger logger, string to, string from, string subject, DateTime time)
@@ -67,8 +67,8 @@ public static class EmailLoggingExtensions
   public static void EmailSent(this ILogger logger, DateTime time)
     => _emailSentLogger(logger, time, default!);
 
-  public static void BackgroundServiceStarting(this ILogger logger, string serviceName)
-    => _backgroundServiceLogger(logger, serviceName, default!);
+  public static void GettingUnprocessedEmails(this ILogger logger)
+    => _unprocessedEmailLogger(logger, default!);
 
   public static void BackgroundServiceException(this ILogger logger, string message, Exception ex)
     => _backgroundServiceExceptionLogger(logger, message, ex);
@@ -76,6 +76,6 @@ public static class EmailLoggingExtensions
   public static void EmailOutboxProcessed(this ILogger logger, long count)
     => _emailOutboxProcessedLogger(logger, count, default!);
 
-  public static void Sleeping(this ILogger logger)
-    => _sleepingEmailProcessedLogger(logger, default!);
+  public static void ErrorSendingEmail(this ILogger logger, string errorMessage, Exception ex)
+    => _emailSendingException(logger, errorMessage, ex);
 }

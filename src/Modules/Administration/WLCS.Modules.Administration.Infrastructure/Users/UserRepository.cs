@@ -36,4 +36,12 @@ internal sealed class UserRepository(AdministrationDbContext context) : IUserRep
   {
     _context.Users.Update(user);
   }
+
+  public async Task<Guid> GetIdentityIdAsync(Guid userId, CancellationToken cancellationToken = default)
+  {
+    var users = await _context.Users.ToListAsync(cancellationToken);
+    var user = users.Find(x => x.Id.Value == userId);
+    var identityId = user!.IdentityId;
+    return Guid.Parse(identityId);
+  }
 }

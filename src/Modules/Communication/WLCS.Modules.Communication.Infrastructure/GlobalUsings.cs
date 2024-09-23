@@ -6,7 +6,8 @@ global using System.Data.Common;
 
 global using Dapper;
 
-global using MailKit.Net.Smtp;
+global using FluentEmail.Core;
+global using FluentEmail.MailKitSmtp;
 
 global using MassTransit;
 
@@ -15,11 +16,8 @@ global using Microsoft.EntityFrameworkCore.Migrations;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
-global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
-
-global using MimeKit;
 
 global using MongoDB.Driver;
 

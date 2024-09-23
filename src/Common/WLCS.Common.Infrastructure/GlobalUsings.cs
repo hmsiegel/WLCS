@@ -42,6 +42,8 @@ global using OpenTelemetry.Trace;
 
 global using Quartz;
 
+global using Scrutor;
+
 global using StackExchange.Redis;
 
 global using WLCS.Common.Application.Authorization;

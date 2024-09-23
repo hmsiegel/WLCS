@@ -54,10 +54,7 @@ public static class CompetitionModule
       .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });
 
-    services.AddScoped<IMeetRepository, MeetRepository>();
-    services.AddScoped<ICompetitionRespository, CompetitionRepository>();
-    services.AddScoped<IAthleteRepository, AthleteRepository>();
-    services.AddScoped<IPlatformRepository, PlatformRepository>();
+    RepositoryExtensions<CompetitionsDbContext>.RegisterRepositories(services);
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CompetitionsDbContext>());
 

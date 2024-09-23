@@ -36,6 +36,7 @@ global using WLCS.Common.Application.EventBus;
 global using WLCS.Common.Application.Logging;
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
+global using WLCS.Common.Infrastructure.Extensions;
 global using WLCS.Common.Infrastructure.Inbox;
 global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;

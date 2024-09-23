@@ -64,7 +64,7 @@ public static class AdministrationModule
       .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });
 
-    services.AddScoped<IUserRepository, UserRepository>();
+    RepositoryExtensions<AdministrationDbContext>.RegisterRepositories(services);
 
     services.AddScoped<IRolesService, RolesService>();
 

@@ -4,7 +4,7 @@
 
 namespace WLCS.Modules.Competitions.Domain.Platforms;
 
-public class PlatformCreatedDomainEvent(Guid platformId, Guid meetId) : DomainEvent
+public sealed class PlatformCreatedDomainEvent(Guid platformId, Guid meetId) : DomainEvent
 {
   public Guid PlatformId { get; init; } = platformId;
 

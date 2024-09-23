@@ -47,7 +47,7 @@ public static class AthletesModule
       .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });
 
-    services.AddScoped<IAthleteRepository, AthleteRepository>();
+    RepositoryExtensions<AthletesDbContext>.RegisterRepositories(services);
 
     services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AthletesDbContext>());
 

@@ -1,30 +1,36 @@
 ﻿// <copyright file="UpdateUserProfile.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+
 namespace WLCS.Modules.Administration.Presentation.Users;
 
-internal sealed class UpdateUserProfile : IEndpoint
+internal sealed class UpdateUserProfile(ISender sender) : Endpoint<UpdateUserRequest>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+
+  public override void Configure()
   {
-    app.MapPut("users/update", async (
-      ClaimsPrincipal claims,
-      Request request,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
-    {
-      var command = new UpdateUserCommand(
-       claims.GetUserId(),
-       request.FirstName,
-       request.LastName);
-
-      var result = await sender.Send(command, cancellationToken);
-
-      result.Match(Results.NoContent, ApiResults.Problem);
-    })
-    .RequireAuthorization(Permissions.ModifyUser)
-    .WithTags(Tags.Users);
+    Put("users/update");
+    Permissions(Presentation.Permissions.ModifyUser);
+    Options(opt => opt.WithTags(Presentation.Tags.Users));
   }
 
-  internal sealed record Request(string FirstName, string LastName);
+  public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
+  {
+    var command = new UpdateUserCommand(
+     User.GetUserId(),
+     req.FirstName,
+     req.LastName);
+
+    var result = await _sender.Send(command, ct);
+
+    if (result.IsSuccess)
+    {
+      await SendOkAsync(ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
+  }
 }

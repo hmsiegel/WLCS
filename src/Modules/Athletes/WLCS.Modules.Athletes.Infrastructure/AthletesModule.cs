@@ -24,8 +24,6 @@ public static class AthletesModule
 
     services.AddInfrastructure(configuration);
 
-    services.AddEndpoints(Presentation.AssemblyReference.Assembly);
-
     logger.Information("{Module} module services registered.", ModuleName);
 
     return services;

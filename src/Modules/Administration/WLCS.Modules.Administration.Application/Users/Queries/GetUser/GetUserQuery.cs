@@ -4,4 +4,4 @@
 
 namespace WLCS.Modules.Administration.Application.Users.Queries.GetUser;
 
-public sealed record GetUserQuery(Guid UserId) : IQuery<UserResponse>;
+public sealed record GetUserQuery(Guid UserId) : IQuery<GetUserResponse>;

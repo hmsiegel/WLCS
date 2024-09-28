@@ -4,15 +4,16 @@
 
 global using System.Reflection;
 
+global using FastEndpoints;
+
+global using Mapster;
+
 global using MediatR;
 
-global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Http;
-global using Microsoft.AspNetCore.Routing;
 
 global using WLCS.Common.Application.EventBus;
 global using WLCS.Common.Application.Exceptions;
-global using WLCS.Common.Presentation.Endpoints;
 global using WLCS.Common.Presentation.Results;
 global using WLCS.Modules.Athletes.IntegrationEvents;
 global using WLCS.Modules.Competitions.Application.Athletes.Commands.CreateAthlete;
@@ -20,6 +21,10 @@ global using WLCS.Modules.Competitions.Application.Competitions.Commands.AddAthl
 global using WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 global using WLCS.Modules.Competitions.Application.Meets.Commands.AddAthleteToMeet;
 global using WLCS.Modules.Competitions.Application.Meets.Commands.CreateMeet;
+global using WLCS.Modules.Competitions.Application.Meets.Queries;
 global using WLCS.Modules.Competitions.Application.Meets.Queries.GetMeet;
 global using WLCS.Modules.Competitions.Application.Meets.Queries.GetMeets;
 global using WLCS.Modules.Competitions.Application.Platforms.Commands.CreatePlatform;
+global using WLCS.Modules.Competitions.Contracts.Competitions;
+global using WLCS.Modules.Competitions.Contracts.Meets;
+global using WLCS.Modules.Competitions.Contracts.Platforms;

@@ -28,6 +28,7 @@ global using WLCS.Modules.Administration.Application.Users.Commands.RegisterUser
 global using WLCS.Modules.Administration.Application.Users.Commands.UpdateUser;
 global using WLCS.Modules.Administration.Application.Users.Queries.GetUser;
 global using WLCS.Modules.Administration.Application.Users.Queries.GetUserPermissions;
+global using WLCS.Modules.Administration.Contracts.Users;
 global using WLCS.Modules.Administration.Domain.Users;
 global using WLCS.Modules.Administration.Infrastructure.Database;
 global using WLCS.Modules.Administration.Infrastructure.Identity;

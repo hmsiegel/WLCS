@@ -2,24 +2,34 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using IMapper = MapsterMapper.IMapper;
+
 namespace WLCS.Modules.Competitions.Presentation.Meets;
 
-internal sealed class GetMeet : IEndpoint
+internal sealed class GetMeet(ISender sender, IMapper mapper) : Endpoint<GetMeetRequest, MeetResponse>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+  private readonly IMapper _mapper = mapper;
+
+  public override void Configure()
   {
-    app.MapGet("meets/{id}", async (
-      Guid id,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
+    Get("meets/{id}");
+    Permissions(Presentation.Permissions.GetMeets);
+    Options(x => x.WithTags(Presentation.Tags.Meets));
+  }
+
+  public override async Task HandleAsync(GetMeetRequest req, CancellationToken ct)
+  {
+    var query = new GetMeetQuery(req.Id);
+    var result = await _sender.Send(query, ct);
+
+    if (result.IsSuccess)
     {
-      var query = new GetMeetQuery(id);
-
-      var meet = await sender.Send(query, cancellationToken);
-
-      return meet.Match(Results.Ok, ApiResults.Problem);
-    })
-    .RequireAuthorization(Permissions.GetMeets)
-    .WithTags(Tags.Meets);
+      await SendAsync(_mapper.Map<MeetResponse>(result), statusCode: StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
   }
 }

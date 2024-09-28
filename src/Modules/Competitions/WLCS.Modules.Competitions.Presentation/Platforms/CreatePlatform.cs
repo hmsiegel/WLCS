@@ -4,27 +4,34 @@
 
 namespace WLCS.Modules.Competitions.Presentation.Platforms;
 
-internal sealed class CreatePlatform : IEndpoint
+internal sealed class CreatePlatform(ISender sender) : Endpoint<CreatePlatformRequest>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+
+  public override void Configure()
   {
-    app.MapPost("meets/{meetId}/platform", async (
-      Guid meetId,
-      Request request,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
-    {
-      var command = new CreatePlatformCommand(
-        request.Name,
-        meetId);
-
-      var result = await sender.Send(command, cancellationToken);
-
-      return result.Match(Results.Ok, ApiResults.Problem);
-    })
-    .RequireAuthorization(Permissions.CreateMeet)
-    .WithTags(Tags.Meets);
+    Post("meets/{meetId}/platform");
+    Permissions(Presentation.Permissions.CreateMeet);
+    Options(opt => opt.WithTags(Presentation.Tags.Meets));
   }
 
-  internal sealed record Request(string Name);
+  public override async Task HandleAsync(CreatePlatformRequest req, CancellationToken ct)
+  {
+    var meetId = Route<Guid>("meetId");
+
+    var command = new CreatePlatformCommand(
+      req.Name,
+      meetId);
+
+    var result = await _sender.Send(command, ct);
+
+    if (result.IsSuccess)
+    {
+      await SendAsync(result.Value, statusCode: StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
+  }
 }

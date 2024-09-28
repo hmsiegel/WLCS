@@ -25,7 +25,7 @@ public class RegisterUserTests(IntegrationTestWebAppFactory factory)
     string lastName)
   {
     // Arrange
-    var request = new RegisterUser.Request(
+    var request = new RegisterUserRequest(
       email,
       password,
       firstName,
@@ -42,7 +42,7 @@ public class RegisterUserTests(IntegrationTestWebAppFactory factory)
   public async Task Should_ReturnOk_WhenRequestIsValidAsync()
   {
     // Arrange
-    var request = new RegisterUser.Request(
+    var request = new RegisterUserRequest(
       "create@test.com",
       Faker.Internet.Password(),
       Faker.Name.FirstName(),
@@ -59,7 +59,7 @@ public class RegisterUserTests(IntegrationTestWebAppFactory factory)
   public async Task Should_ReturnAccessToken_WhenUserIsRegisteredAsync()
   {
     // Arrange
-    var request = new RegisterUser.Request(
+    var request = new RegisterUserRequest(
       "token@test.com",
       Faker.Internet.Password(),
       Faker.Name.FirstName(),

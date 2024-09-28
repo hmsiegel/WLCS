@@ -4,36 +4,36 @@
 
 namespace WLCS.Modules.Athletes.Presentation.Athletes;
 
-internal sealed partial class RegisterAthlete : IEndpoint
+internal sealed class RegisterAthlete(ISender sender) : Endpoint<CreateAthleteRequest>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+
+  public override void Configure()
   {
-    app.MapPost("athletes", async (
-      Request request,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
-    {
-      var command = new RegisterAthleteCommand(
-        request.MembershipId,
-        request.FirstName,
-        request.LastName,
-        request.DateOfBirth,
-        request.Email,
-        request.Gender);
-
-      var result = await sender.Send(command, cancellationToken);
-
-      return result.Match(Results.Ok, ApiResults.Problem);
-    })
-    .RequireAuthorization(Permissions.CreateAthlete)
-    .WithTags(Tags.Athletes);
+    Post("athletes");
+    Permissions(Presentation.Permissions.CreateAthlete);
+    Options(opt => opt.WithTags(Presentation.Tags.Athletes));
   }
 
-  internal sealed record Request(
-    string MembershipId,
-    string FirstName,
-    string LastName,
-    DateOnly DateOfBirth,
-    string Email,
-    string Gender);
+  public override async Task HandleAsync(CreateAthleteRequest req, CancellationToken ct)
+  {
+    var command = new RegisterAthleteCommand(
+      req.MembershipId,
+      req.FirstName,
+      req.LastName,
+      req.DateOfBirth,
+      req.Email,
+      req.Gender);
+
+    var result = await _sender.Send(command, ct);
+
+    if (result.IsSuccess)
+    {
+      await SendAsync(result.Value, StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
+  }
 }

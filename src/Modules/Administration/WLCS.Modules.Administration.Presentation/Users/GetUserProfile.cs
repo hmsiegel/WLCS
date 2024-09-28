@@ -2,24 +2,37 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using IMapper = MapsterMapper.IMapper;
+
 namespace WLCS.Modules.Administration.Presentation.Users;
 
-internal sealed class GetUserProfile : IEndpoint
+internal sealed class GetUserProfile(ISender sender, IMapper mapper) : EndpointWithoutRequest<UserResponse>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+  private readonly IMapper _mapper = mapper;
+
+  public override void Configure()
   {
-    app.MapGet("users/profile", async (
-      ClaimsPrincipal claims,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
+    Get("users/profile");
+    Permissions(Presentation.Permissions.GetUser);
+    Options(opt => opt.WithTags(Presentation.Tags.Users));
+  }
+
+  public override async Task HandleAsync(CancellationToken ct)
+  {
+    var query = new GetUserQuery(User.GetUserId());
+
+    var result = await _sender.Send(query, ct);
+
+    if (result.IsSuccess)
     {
-      var query = new GetUserQuery(claims.GetUserId());
+      var response = _mapper.Map<UserResponse>(result.Value);
 
-      var result = await sender.Send(query, cancellationToken);
-
-      return result.Match(Results.Ok, ApiResults.Problem);
-    })
-    .RequireAuthorization(Permissions.GetUser)
-    .WithTags(Tags.Users);
+      await SendAsync(response, StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
   }
 }

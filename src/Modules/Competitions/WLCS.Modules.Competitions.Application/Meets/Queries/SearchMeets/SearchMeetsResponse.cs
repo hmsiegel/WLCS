@@ -8,4 +8,4 @@ public sealed record SearchMeetsResponse(
   int Page,
   int PageSize,
   int TotalCount,
-  IReadOnlyCollection<MeetResponse> Meets);
+  IReadOnlyCollection<GetMeetResponse> Meets);

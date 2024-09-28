@@ -4,32 +4,34 @@
 
 namespace WLCS.Modules.Administration.Presentation.Users;
 
-internal sealed class RegisterUser : IEndpoint
+internal sealed class RegisterUser(ISender sender) : Endpoint<RegisterUserRequest>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+
+  public override void Configure()
   {
-    app.MapPost("users/register", async (
-      Request request,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
-    {
-      var user = new RegisterUserCommand(
-        request.Email,
-        request.Password,
-        request.FirstName,
-        request.LastName);
-
-      var result = await sender.Send(user, cancellationToken);
-
-      return result.Match(Results.Ok, ApiResults.Problem);
-    })
-    .AllowAnonymous()
-    .WithTags(Tags.Users);
+    Post("users/register");
+    AllowAnonymous();
+    Options(o => o.WithTags(Presentation.Tags.Users));
   }
 
-  internal sealed record Request(
-    string Email,
-    string Password,
-    string FirstName,
-    string LastName);
+  public override async Task HandleAsync(RegisterUserRequest req, CancellationToken ct)
+  {
+    var user = new RegisterUserCommand(
+      req.Email,
+      req.Password,
+      req.FirstName,
+      req.LastName);
+
+    var result = await _sender.Send(user, ct);
+
+    if (result.IsSuccess)
+    {
+      await SendAsync(result.Value, StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
+  }
 }

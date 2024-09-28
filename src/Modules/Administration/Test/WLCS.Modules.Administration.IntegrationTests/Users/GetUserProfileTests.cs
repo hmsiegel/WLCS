@@ -32,13 +32,13 @@ public class GetUserProfileTests(IntegrationTestWebAppFactory factory)
     // Assert
     response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-    var user = await response.Content.ReadFromJsonAsync<UserResponse>();
+    var user = await response.Content.ReadFromJsonAsync<GetUserResponse>();
     user.Should().NotBeNull();
   }
 
   private async Task<string> RegisterUserAndGetAccessTokenAsync(string email, string password)
   {
-    var request = new RegisterUser.Request(
+    var request = new RegisterUserRequest(
       email,
       password,
       Faker.Name.FirstName(),
@@ -48,6 +48,6 @@ public class GetUserProfileTests(IntegrationTestWebAppFactory factory)
 
     var accessToken = await GetAccessTokenAsync(request.Email, request.Password);
 
-    return accessToken;
+    return accessToken!;
   }
 }

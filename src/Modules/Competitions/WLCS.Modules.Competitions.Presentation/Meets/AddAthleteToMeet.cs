@@ -4,25 +4,29 @@
 
 namespace WLCS.Modules.Competitions.Presentation.Meets;
 
-internal sealed class AddAthleteToMeet : IEndpoint
+internal sealed class AddAthleteToMeet(ISender sender) : Endpoint<AddAthleteToMeetRequest>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+
+  public override void Configure()
   {
-    app.MapPost("meets/{meetId}/athletes/{athleteId}", async (
-      Guid meetId,
-      Guid athleteId,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
+    Post("meets/{meetId}/athletes/{athleteId}");
+    Permissions(Presentation.Permissions.UpdateMeets);
+    Options(x => x.WithTags(Presentation.Tags.Meets));
+  }
+
+  public override async Task HandleAsync(AddAthleteToMeetRequest req, CancellationToken ct)
+  {
+    var command = new AddAthleteToMeetCommand(req.MeetId, req.AthleteId);
+    var result = await _sender.Send(command, ct);
+
+    if (result.IsSuccess)
     {
-      var command = new AddAthleteToMeetCommand(
-        meetId,
-        athleteId);
-
-      var result = await sender.Send(command, cancellationToken);
-
-      return result.Match(Results.NoContent, ApiResults.Problem);
-    })
-    .WithTags(Tags.Meets)
-    .RequireAuthorization(Permissions.UpdateMeets);
+      await SendAsync(result, statusCode: StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
   }
 }

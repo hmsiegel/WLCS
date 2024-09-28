@@ -2,38 +2,44 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using IMapper = MapsterMapper.IMapper;
+
 namespace WLCS.Modules.Competitions.Presentation.Meets;
 
-internal sealed partial class CreateMeet : IEndpoint
+internal sealed class CreateMeet(
+  ISender sender,
+  IMapper mapper)
+  : Endpoint<CreateMeetRequest, CreateMeetResponse>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+  private readonly IMapper _mapper = mapper;
+
+  public override void Configure()
   {
-    app.MapPost("meets", async (
-      Request request,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
-    {
-      var command = new CreateMeetCommand(
-        request.Name,
-        request.City,
-        request.State,
-        request.Venue,
-        request.StartDate,
-        request.EndDate);
-
-      var result = await sender.Send(command, cancellationToken);
-
-      return result.Match(Results.Ok, ApiResults.Problem);
-    })
-    .RequireAuthorization(Permissions.CreateMeet)
-    .WithTags(Tags.Meets);
+    Post("meets");
+    Permissions(Presentation.Permissions.CreateMeet);
+    Options(opt => opt.WithTags(Presentation.Tags.Meets));
   }
 
-  internal sealed record Request(
-    string Name,
-    string City,
-    string State,
-    string Venue,
-    DateOnly StartDate,
-    DateOnly EndDate);
+  public override async Task HandleAsync(CreateMeetRequest req, CancellationToken ct)
+  {
+    var command = new CreateMeetCommand(
+      req.Name,
+      req.City,
+      req.State,
+      req.Venue,
+      req.StartDate,
+      req.EndDate);
+
+    var result = await _sender.Send(command, ct);
+
+    if (result.IsSuccess)
+    {
+      await SendAsync(_mapper.Map<CreateMeetResponse>(result.Value), cancellation: ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
+  }
 }

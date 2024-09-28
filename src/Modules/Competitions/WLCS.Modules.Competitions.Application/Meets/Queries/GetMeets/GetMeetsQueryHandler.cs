@@ -5,17 +5,17 @@
 namespace WLCS.Modules.Competitions.Application.Meets.Queries.GetMeets;
 
 internal sealed class GetMeetsQueryHandler(IMeetRepository meetRepository)
-  : IQueryHandler<GetMeetsQuery, IReadOnlyCollection<MeetResponse>>
+  : IQueryHandler<GetMeetsQuery, IReadOnlyCollection<GetMeetResponse>>
 {
   private readonly IMeetRepository _meetRepository = meetRepository;
 
-  public async Task<Result<IReadOnlyCollection<MeetResponse>>> Handle(
+  public async Task<Result<IReadOnlyCollection<GetMeetResponse>>> Handle(
     GetMeetsQuery request,
     CancellationToken cancellationToken)
   {
     var meets = await _meetRepository.GetAll(cancellationToken);
 
-    var result = meets.Select(x => new MeetResponse(
+    var result = meets.Select(x => new GetMeetResponse(
       x.Id.Value,
       x.Name.Value,
       x.Location.City,

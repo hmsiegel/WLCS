@@ -4,27 +4,34 @@
 
 namespace WLCS.Modules.Administration.Presentation.Users;
 
-internal sealed class UpdateUserRole : IEndpoint
+internal sealed class UpdateUserRole(ISender sender) : Endpoint<UpdateUserRoleRequest>
 {
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  private readonly ISender _sender = sender;
+
+  public override void Configure()
   {
-    app.MapPut("users/{id}/roles", async (
-      Guid id,
-      Request request,
-      ISender sender,
-      CancellationToken cancellationToken = default) =>
-    {
-      var command = new UpdateUserRoleCommand(
-        id,
-        request.RoleName);
-
-      var result = await sender.Send(command, cancellationToken);
-
-      result.Match(Results.NoContent, ApiResults.Problem);
-    })
-    .RequireAuthorization(Permissions.ModifyUser)
-    .WithTags(Tags.Users);
+    Put("user/{id}/roles");
+    Permissions(Presentation.Permissions.ModifyUser);
+    Options(opt => opt.WithTags(Presentation.Tags.Users));
   }
 
-  internal sealed record Request(string RoleName);
+  public override async Task HandleAsync(UpdateUserRoleRequest req, CancellationToken ct)
+  {
+    var userId = Route<Guid>("id");
+
+    var command = new UpdateUserRoleCommand(
+      userId,
+      req.RoleName);
+
+    var result = await _sender.Send(command, ct);
+
+    if (result.IsSuccess)
+    {
+      await SendAsync(result, StatusCodes.Status200OK, ct);
+    }
+    else
+    {
+      await SendResultAsync(ApiResults.Problem(result));
+    }
+  }
 }

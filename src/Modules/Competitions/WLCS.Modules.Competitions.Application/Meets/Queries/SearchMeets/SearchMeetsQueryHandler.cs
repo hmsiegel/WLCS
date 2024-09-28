@@ -28,19 +28,19 @@ internal sealed class SearchMeetsQueryHandler(IDbConnectionFactory dbConnectionF
     return new SearchMeetsResponse(request.Page, request.PageSize, totalCount, meets);
   }
 
-  private static async Task<IReadOnlyCollection<MeetResponse>> GetMeetsAsync(
+  private static async Task<IReadOnlyCollection<GetMeetResponse>> GetMeetsAsync(
     DbConnection connection,
     SearchMeetsParameters parameters)
   {
     const string sql = $"""
       SELECT
-        id AS {nameof(MeetResponse.Id)},
-        name AS {nameof(MeetResponse.Name)},
-        city AS {nameof(MeetResponse.City)},
-        state AS {nameof(MeetResponse.State)},
-        venue AS {nameof(MeetResponse.Venue)},
-        start_date AS {nameof(MeetResponse.StartDate)},
-        end_date AS {nameof(MeetResponse.EndDate)}
+        id AS {nameof(GetMeetResponse.Id)},
+        name AS {nameof(GetMeetResponse.Name)},
+        city AS {nameof(GetMeetResponse.City)},
+        state AS {nameof(GetMeetResponse.State)},
+        venue AS {nameof(GetMeetResponse.Venue)},
+        start_date AS {nameof(GetMeetResponse.StartDate)},
+        end_date AS {nameof(GetMeetResponse.EndDate)}
       FROM
         competitions.meets
       WHERE
@@ -54,7 +54,7 @@ internal sealed class SearchMeetsQueryHandler(IDbConnectionFactory dbConnectionF
       OFFSET @Skip
       """;
 
-    var meets = (await connection.QueryAsync<MeetResponse>(sql, parameters)).AsList();
+    var meets = (await connection.QueryAsync<GetMeetResponse>(sql, parameters)).AsList();
 
     return meets;
   }

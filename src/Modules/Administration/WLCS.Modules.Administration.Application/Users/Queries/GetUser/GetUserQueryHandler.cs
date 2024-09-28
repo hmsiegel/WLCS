@@ -4,30 +4,30 @@
 
 namespace WLCS.Modules.Administration.Application.Users.Queries.GetUser;
 
-internal sealed class GetUserQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetUserQuery, UserResponse>
+internal sealed class GetUserQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetUserQuery, GetUserResponse>
 {
   private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
 
-  public async Task<Result<UserResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
+  public async Task<Result<GetUserResponse>> Handle(GetUserQuery request, CancellationToken cancellationToken)
   {
     await using var connection = await _dbConnectionFactory.OpenConnectionAsync();
 
     const string sql =
       $"""
        SELECT 
-        id AS {nameof(UserResponse.Id)},
-        email AS {nameof(UserResponse.Email)},
-        first_name AS {nameof(UserResponse.FirstName)},
-        last_name AS {nameof(UserResponse.LastName)}
+        id AS {nameof(GetUserResponse.Id)},
+        email AS {nameof(GetUserResponse.Email)},
+        first_name AS {nameof(GetUserResponse.FirstName)},
+        last_name AS {nameof(GetUserResponse.LastName)}
       FROM administration.users
       WHERE id = @UserId
       """;
 
-    var user = await connection.QuerySingleOrDefaultAsync<UserResponse>(sql, request);
+    var user = await connection.QuerySingleOrDefaultAsync<GetUserResponse>(sql, request);
 
     if (user is null)
     {
-      return Result.Failure<UserResponse>(UserErrors.NotFound(request.UserId));
+      return Result.Failure<GetUserResponse>(UserErrors.NotFound(request.UserId));
     }
 
     return user;

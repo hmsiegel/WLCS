@@ -28,7 +28,17 @@ var builder = WebApplication.CreateBuilder(args);
     WLCS.Modules.Communication.Application.AssemblyReference.Assembly
   ];
 
+  Assembly[] presentationAssemblies =
+  [
+    WLCS.Modules.Competitions.Presentation.AssemblyReference.Assembly,
+    WLCS.Modules.Administration.Presentation.AssemblyReference.Assembly,
+    WLCS.Modules.Athletes.Presentation.AssemblyReference.Assembly,
+    WLCS.Modules.Communication.Presentation.AssemblyReference.Assembly
+  ];
+
   builder.Services.AddApplication(applicationAssemblies);
+
+  builder.Services.AddMappings(presentationAssemblies);
 
   var databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database")!;
   var redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache")!;
@@ -45,6 +55,8 @@ var builder = WebApplication.CreateBuilder(args);
     databaseConnectionString,
     redisConnectionString,
     mongoConnectionString);
+
+  builder.Services.AddFastEndpoints(opt => opt.Assemblies = presentationAssemblies);
 
   Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 
@@ -89,6 +101,9 @@ var app = builder.Build();
   app.UseAuthentication();
 
   app.UseAuthorization();
+
+  app.UseFastEndpoints()
+    .UseSwaggerGen();
 
   app.Run();
 }

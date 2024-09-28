@@ -4,4 +4,4 @@
 
 namespace WLCS.Modules.Competitions.Application.Meets.Queries.GetMeets;
 
-public sealed record GetMeetsQuery : IQuery<IReadOnlyCollection<MeetResponse>>;
+public sealed record GetMeetsQuery : IQuery<IReadOnlyCollection<GetMeetResponse>>;

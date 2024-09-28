@@ -5,7 +5,14 @@ global using System.Diagnostics;
 global using System.Globalization;
 global using System.Reflection;
 
+global using FastEndpoints;
+global using FastEndpoints.Swagger;
+
 global using HealthChecks.UI.Client;
+
+global using Mapster;
+
+global using MapsterMapper;
 
 global using Microsoft.AspNetCore.Diagnostics;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;

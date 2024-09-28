@@ -44,6 +44,12 @@ public sealed class Athlete : Entity
 
   public string? Coach { get; private set; } = default!;
 
+  public string WeightClass { get; private set; } = default!;
+
+  public AgeDivision AgeDivision { get; private set; } = default!;
+
+  public int EntryTotal { get; private set; } = default!;
+
   public static Athlete Create(
     Guid id,
     string membership,

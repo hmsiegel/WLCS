@@ -11,7 +11,7 @@ internal sealed class CreatePlatform(ISender sender) : Endpoint<CreatePlatformRe
   public override void Configure()
   {
     Post("meets/{meetId}/platform");
-    Permissions(Presentation.Permissions.CreateMeet);
+    Policies(Presentation.Permissions.CreateMeet);
     Options(opt => opt.WithTags(Presentation.Tags.Meets));
   }
 

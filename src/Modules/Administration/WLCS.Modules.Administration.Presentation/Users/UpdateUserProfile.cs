@@ -11,7 +11,7 @@ internal sealed class UpdateUserProfile(ISender sender) : Endpoint<UpdateUserReq
   public override void Configure()
   {
     Put("users/update");
-    Permissions(Presentation.Permissions.ModifyUser);
+    Policies(Presentation.Permissions.ModifyUser);
     Options(opt => opt.WithTags(Presentation.Tags.Users));
   }
 

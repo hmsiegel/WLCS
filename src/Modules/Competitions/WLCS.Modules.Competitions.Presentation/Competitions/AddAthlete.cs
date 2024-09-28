@@ -13,7 +13,7 @@ internal sealed class AddAthlete(
   public override void Configure()
   {
     Post("competitions/{competitionId}/athletes/{athleteId}");
-    Permissions(Presentation.Permissions.ModifyCompetition);
+    Policies(Presentation.Permissions.ModifyCompetition);
     Options(opt => opt.WithTags(Presentation.Tags.Competitions));
   }
 

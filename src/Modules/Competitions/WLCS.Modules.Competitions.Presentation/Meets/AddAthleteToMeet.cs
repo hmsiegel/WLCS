@@ -11,7 +11,7 @@ internal sealed class AddAthleteToMeet(ISender sender) : Endpoint<AddAthleteToMe
   public override void Configure()
   {
     Post("meets/{meetId}/athletes/{athleteId}");
-    Permissions(Presentation.Permissions.UpdateMeets);
+    Policies(Presentation.Permissions.UpdateMeets);
     Options(x => x.WithTags(Presentation.Tags.Meets));
   }
 

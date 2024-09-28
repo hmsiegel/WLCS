@@ -11,7 +11,7 @@ internal sealed class CreateCompetition(ISender sender) : Endpoint<CreateCompeti
   public override void Configure()
   {
     Post("meets/{meetId}/competition");
-    Permissions(Presentation.Permissions.CreateCompetition);
+    Policies(Presentation.Permissions.CreateCompetition);
     Options(opt => opt.WithTags(Presentation.Tags.Competitions));
   }
 

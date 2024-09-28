@@ -11,7 +11,7 @@ internal sealed class RegisterAthlete(ISender sender) : Endpoint<CreateAthleteRe
   public override void Configure()
   {
     Post("athletes");
-    Permissions(Presentation.Permissions.CreateAthlete);
+    Policies(Presentation.Permissions.CreateAthlete);
     Options(opt => opt.WithTags(Presentation.Tags.Athletes));
   }
 

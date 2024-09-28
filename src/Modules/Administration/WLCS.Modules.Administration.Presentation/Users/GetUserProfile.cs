@@ -14,7 +14,7 @@ internal sealed class GetUserProfile(ISender sender, IMapper mapper) : EndpointW
   public override void Configure()
   {
     Get("users/profile");
-    Permissions(Presentation.Permissions.GetUser);
+    Policies(Presentation.Permissions.GetUser);
     Options(opt => opt.WithTags(Presentation.Tags.Users));
   }
 

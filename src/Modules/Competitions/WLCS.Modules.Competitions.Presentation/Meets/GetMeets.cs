@@ -11,7 +11,7 @@ internal sealed class GetMeetsEndpoint(ISender sender) : EndpointWithoutRequest<
   public override void Configure()
   {
     Get("meets");
-    Permissions(Presentation.Permissions.GetMeets);
+    Policies(Presentation.Permissions.GetMeets);
     Options(x => x.WithTags(Presentation.Tags.Meets));
   }
 

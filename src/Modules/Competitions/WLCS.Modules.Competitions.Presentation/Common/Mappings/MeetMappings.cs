@@ -8,7 +8,8 @@ internal sealed class MeetMappings : IRegister
 {
   public void Register(TypeAdapterConfig config)
   {
-    config.NewConfig<GetMeetResponse, MeetResponse>();
+    config.NewConfig<GetMeetResponse, MeetResponse>()
+      .Map(dest => dest, src => src);
 
     config.NewConfig<CreateMeetResponse, Guid>()
       .Map(dest => dest, src => src.Id);

@@ -14,7 +14,7 @@ internal sealed class GetMeet(ISender sender, IMapper mapper) : Endpoint<GetMeet
   public override void Configure()
   {
     Get("meets/{id}");
-    Permissions(Presentation.Permissions.GetMeets);
+    Policies(Presentation.Permissions.GetMeets);
     Options(x => x.WithTags(Presentation.Tags.Meets));
   }
 
@@ -25,7 +25,9 @@ internal sealed class GetMeet(ISender sender, IMapper mapper) : Endpoint<GetMeet
 
     if (result.IsSuccess)
     {
-      await SendAsync(_mapper.Map<MeetResponse>(result), statusCode: StatusCodes.Status200OK, ct);
+      var meet = _mapper.Map<MeetResponse>(result.Value);
+
+      await SendAsync(meet, statusCode: StatusCodes.Status200OK, ct);
     }
     else
     {

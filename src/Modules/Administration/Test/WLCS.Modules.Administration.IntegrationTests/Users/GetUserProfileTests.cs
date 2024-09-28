@@ -27,7 +27,7 @@ public class GetUserProfileTests(IntegrationTestWebAppFactory factory)
       accessToken);
 
     // Act
-    var response = await HttpClient.GetAsync(new Uri("http://localhost:5001/users/profile"));
+    var response = await HttpClient.GetAsync(new Uri("http://localhost:3000/users/profile"));
 
     // Assert
     response.StatusCode.Should().Be(HttpStatusCode.OK);

@@ -11,7 +11,7 @@ internal sealed class UpdateUserRole(ISender sender) : Endpoint<UpdateUserRoleRe
   public override void Configure()
   {
     Put("user/{id}/roles");
-    Permissions(Presentation.Permissions.ModifyUser);
+    Policies(Presentation.Permissions.ModifyUser);
     Options(opt => opt.WithTags(Presentation.Tags.Users));
   }
 

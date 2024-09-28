@@ -17,7 +17,7 @@ internal sealed class CreateMeet(
   public override void Configure()
   {
     Post("meets");
-    Permissions(Presentation.Permissions.CreateMeet);
+    Policies(Presentation.Permissions.CreateMeet);
     Options(opt => opt.WithTags(Presentation.Tags.Meets));
   }
 

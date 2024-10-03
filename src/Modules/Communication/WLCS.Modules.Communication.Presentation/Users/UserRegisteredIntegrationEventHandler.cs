@@ -12,7 +12,7 @@ internal sealed class UserRegisteredIntegrationEventHandler(ISender sender) : In
   {
     ArgumentNullException.ThrowIfNull(integrationEvent);
 
-    var command = new SendEmailCommand(
+    var command = new SendEmailService(
       integrationEvent.Email,
       "Welcome to WLCS",
       $"Hello {integrationEvent.FirstName} {integrationEvent.LastName}, welcome to WLCS!");
@@ -21,7 +21,7 @@ internal sealed class UserRegisteredIntegrationEventHandler(ISender sender) : In
 
     if (result.IsFailure)
     {
-      throw new WlcsException(nameof(SendEmailCommand), result.Errors[0]);
+      throw new WlcsException(nameof(SendEmailService), result.Errors[0]);
     }
   }
 }

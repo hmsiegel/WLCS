@@ -38,7 +38,6 @@ global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;
 global using WLCS.Common.Presentation.Endpoints;
 global using WLCS.Modules.Administration.IntegrationEvents;
-global using WLCS.Modules.Communication.Application.Abstractions.Data;
 global using WLCS.Modules.Communication.Application.Abstractions.Email;
 global using WLCS.Modules.Communication.Domain.EmailMessages;
 global using WLCS.Modules.Communication.Infrastructure.Database;

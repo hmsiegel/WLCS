@@ -24,4 +24,9 @@ internal sealed class PlatformRepository(CompetitionsDbContext dbContext) : IPla
     var platform = platforms.Find(p => p.Id.Value == id);
     return platform;
   }
+
+  public async Task<IEnumerable<Platform>> GetByMeetId(Guid meetId, CancellationToken cancellationToken = default)
+  {
+    return await _dbContext.Platforms.Where(p => p.MeetId.Value == meetId).ToListAsync(cancellationToken);
+  }
 }

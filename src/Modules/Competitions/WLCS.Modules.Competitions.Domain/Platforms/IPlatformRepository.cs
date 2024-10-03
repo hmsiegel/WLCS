@@ -11,4 +11,6 @@ public interface IPlatformRepository
   Task<Platform?> GetAsync(Guid id, CancellationToken cancellationToken = default);
 
   Task<IEnumerable<Platform>> GetAllAsync(CancellationToken cancellationToken = default);
+
+  Task<IEnumerable<Platform>> GetByMeetId(Guid meetId, CancellationToken cancellationToken = default);
 }

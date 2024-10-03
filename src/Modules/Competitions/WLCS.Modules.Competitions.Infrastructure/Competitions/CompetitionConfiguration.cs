@@ -17,7 +17,7 @@ internal sealed class CompetitionConfiguration : IEntityTypeConfiguration<Compet
 
     builder.Property(x => x.Name)
       .IsRequired()
-      .HasMaxLength(200)
+      .HasMaxLength(DatabaseSchemaConstants.DefaultMaxLength)
       .HasConversion(
       name => name.Value,
       value => new CompetitionName(value));

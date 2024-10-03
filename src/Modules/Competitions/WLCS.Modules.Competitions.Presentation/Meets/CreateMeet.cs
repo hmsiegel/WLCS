@@ -2,17 +2,13 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using IMapper = MapsterMapper.IMapper;
-
 namespace WLCS.Modules.Competitions.Presentation.Meets;
 
 internal sealed class CreateMeet(
-  ISender sender,
-  IMapper mapper)
-  : Endpoint<CreateMeetRequest, CreateMeetResponse>
+  ISender sender)
+  : Endpoint<CreateMeetRequest, Guid>
 {
   private readonly ISender _sender = sender;
-  private readonly IMapper _mapper = mapper;
 
   public override void Configure()
   {
@@ -35,7 +31,7 @@ internal sealed class CreateMeet(
 
     if (result.IsSuccess)
     {
-      await SendAsync(_mapper.Map<CreateMeetResponse>(result.Value), cancellation: ct);
+      await SendAsync(result.Value, cancellation: ct);
     }
     else
     {

@@ -47,7 +47,7 @@ public static class CompetitionModule
       options.UseNpgsql(
         connectionString,
         npgsqlOptions => npgsqlOptions
-          .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Competitions))
+          .MigrationsHistoryTable(HistoryRepository.DefaultTableName, DatabaseSchemaConstants.Competitions))
       .UseSnakeCaseNamingConvention()
       .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
     });

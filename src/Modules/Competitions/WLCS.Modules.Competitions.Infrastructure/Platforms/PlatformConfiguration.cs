@@ -18,7 +18,7 @@ internal sealed class PlatformConfiguration : IEntityTypeConfiguration<Platform>
 
     builder.Property(x => x.PlatformName)
       .IsRequired()
-      .HasMaxLength(200)
+      .HasMaxLength(DatabaseSchemaConstants.DefaultMaxLength)
       .HasConversion(
       name => name.Value,
       value => new PlatformName(value));

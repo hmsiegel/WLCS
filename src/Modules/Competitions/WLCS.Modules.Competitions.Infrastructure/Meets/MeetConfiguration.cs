@@ -18,7 +18,7 @@ internal sealed class MeetConfiguration : IEntityTypeConfiguration<Meet>
 
     builder.Property(x => x.Name)
       .IsRequired()
-      .HasMaxLength(100)
+      .HasMaxLength(DatabaseSchemaConstants.MeetNameMaxLength)
       .HasConversion(
       name => name.Value,
       value => new MeetName(value));
@@ -27,17 +27,17 @@ internal sealed class MeetConfiguration : IEntityTypeConfiguration<Meet>
     {
       locationBuilder
         .Property(x => x.City)
-        .HasMaxLength(200)
-        .HasColumnName("city");
+        .HasMaxLength(DatabaseSchemaConstants.DefaultMaxLength)
+        .HasColumnName(DatabaseSchemaConstants.City);
 
       locationBuilder
         .Property(x => x.State)
         .HasMaxLength(2)
-        .HasColumnName("state");
+        .HasColumnName(DatabaseSchemaConstants.State);
     });
 
     builder.Property(x => x.Venue)
-      .HasMaxLength(500)
+      .HasMaxLength(DatabaseSchemaConstants.VenueMaxLength)
       .HasConversion(
       venue => venue.Value,
       value => new Venue(value));

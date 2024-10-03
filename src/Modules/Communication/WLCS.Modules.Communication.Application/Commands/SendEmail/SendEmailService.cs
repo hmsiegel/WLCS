@@ -1,10 +1,10 @@
-﻿// <copyright file="SendEmailCommand.cs" company="WLCS">
+﻿// <copyright file="SendEmailService.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
 namespace WLCS.Modules.Communication.Application.Commands.SendEmail;
 
-public sealed record SendEmailCommand(
+public sealed record SendEmailService(
     string To,
     string Subject,
     string Body,

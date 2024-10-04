@@ -2,7 +2,6 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 global using System.Diagnostics;
-global using System.Globalization;
 global using System.Reflection;
 
 global using FastEndpoints;
@@ -30,6 +29,7 @@ global using WLCS.Common.Application.Data;
 global using WLCS.Common.Infrastructure;
 global using WLCS.Common.Infrastructure.Configuration;
 global using WLCS.Common.Infrastructure.EventBus;
+global using WLCS.Common.Infrastructure.Logging;
 global using WLCS.Common.Presentation.Endpoints;
 global using WLCS.Modules.Administration.Infrastructure;
 global using WLCS.Modules.Administration.Infrastructure.Database;

@@ -6,6 +6,7 @@ global using System.Buffers;
 global using System.Collections.Concurrent;
 global using System.Data;
 global using System.Data.Common;
+global using System.Globalization;
 global using System.Reflection;
 global using System.Security.Claims;
 global using System.Text.Json;
@@ -17,6 +18,7 @@ global using MassTransit;
 global using Microsoft.AspNetCore.Authentication;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Builder;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Diagnostics;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -43,6 +45,8 @@ global using OpenTelemetry.Trace;
 global using Quartz;
 
 global using Scrutor;
+
+global using Serilog;
 
 global using StackExchange.Redis;
 

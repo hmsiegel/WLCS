@@ -2,110 +2,98 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-var builder = WebApplication.CreateBuilder(args);
+StaticLogger.EnsureInitialized();
+Log.Information("Starting web host");
+try
 {
-  var logger = Log.Logger = new LoggerConfiguration()
-    .Enrich.FromLogContext()
-    .WriteTo.Console(formatProvider: CultureInfo.CurrentCulture)
-    .CreateLogger();
-
-  logger.Information("Starting web host");
-
-  builder.Host.UseSerilog((context, loggerConfiguration)
-    => loggerConfiguration.ReadFrom.Configuration(context.Configuration));
-
-  builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-  builder.Services.AddProblemDetails();
-
-  builder.Services.AddEndpointsApiExplorer();
-  builder.Services.AddSwaggerDocumentation();
-
-  Assembly[] applicationAssemblies =
-  [
-    WLCS.Modules.Competitions.Application.AssemblyReference.Assembly,
-    WLCS.Modules.Administration.Application.AssemblyReference.Assembly,
-    WLCS.Modules.Athletes.Application.AssemblyReference.Assembly,
-    WLCS.Modules.Communication.Application.AssemblyReference.Assembly
-  ];
-
-  Assembly[] presentationAssemblies =
-  [
-    WLCS.Modules.Competitions.Presentation.AssemblyReference.Assembly,
-    WLCS.Modules.Administration.Presentation.AssemblyReference.Assembly,
-    WLCS.Modules.Athletes.Presentation.AssemblyReference.Assembly,
-    WLCS.Modules.Communication.Presentation.AssemblyReference.Assembly
-  ];
-
-  builder.Services.AddApplication(applicationAssemblies);
-
-  builder.Services.AddMappings(presentationAssemblies);
-
-  var databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database")!;
-  var redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache")!;
-  var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionString("Queue")!);
-  var mongoConnectionString = builder.Configuration.GetConnectionString("Mongo")!;
-
-  builder.Services.AddInfrastructure(
-    DiagnosticsConfig.ServiceName,
-    [
-    CompetitionModule.ConfigureConsumers,
-    CommunicationModule.ConfigureConsumers,
-    ],
-    rabbitMqSettings,
-    databaseConnectionString,
-    redisConnectionString,
-    mongoConnectionString);
-
-  builder.Services.AddFastEndpoints(opt => opt.Assemblies = presentationAssemblies);
-
-  Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
-
-  builder.Services.AddHealthChecks()
-    .AddNpgSql(databaseConnectionString)
-    .AddRedis(redisConnectionString)
-    .AddMongoDb(mongoConnectionString)
-    .AddRabbitMQ(rabbitConnectionString: rabbitMqSettings.Host)
-    .AddKeyCloak(keyCloakHealthUrl);
-
-  builder.Configuration.AddModuleConfiguration(["competitions", "administration", "athletes", "communication"]);
-
-  builder.Services.AddCompetitionModule(logger, builder.Configuration);
-  builder.Services.AddAdministrationModule(logger, builder.Configuration);
-  builder.Services.AddAthletesModule(logger, builder.Configuration);
-  builder.Services.AddCommunicationModule(logger, builder.Configuration);
-}
-
-var app = builder.Build();
-{
-  if (app.Environment.IsDevelopment())
+  var builder = WebApplication.CreateBuilder(args);
   {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    builder.AddModuleConfiguration(["competitions", "administration", "athletes", "communication"]);
+    builder.RegisterSerilog();
 
-    app.ApplyMigrations();
+    builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+    builder.Services.AddProblemDetails();
+
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerDocumentation();
+
+    builder.Services.AddApplication(StaticAssemblies.ApplicationAssemblies);
+
+    builder.Services.AddMappings(StaticAssemblies.PresentationAssemblies);
+
+    var databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database");
+    var redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache");
+    var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionStringOrThrow("Queue"));
+    var mongoConnectionString = builder.Configuration.GetConnectionStringOrThrow("Mongo");
+
+    builder.Services.AddInfrastructure(
+      DiagnosticsConfig.ServiceName,
+      [
+      CompetitionModule.ConfigureConsumers,
+    CommunicationModule.ConfigureConsumers,
+      ],
+      rabbitMqSettings,
+      databaseConnectionString,
+      redisConnectionString,
+      mongoConnectionString);
+
+    builder.Services.AddFastEndpoints(opt => opt.Assemblies = StaticAssemblies.PresentationAssemblies);
+
+    Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
+
+    builder.Services.AddHealthChecks()
+      .AddNpgSql(databaseConnectionString)
+      .AddRedis(redisConnectionString)
+      .AddMongoDb(mongoConnectionString)
+      .AddRabbitMQ(rabbitConnectionString: rabbitMqSettings.Host)
+      .AddKeyCloak(keyCloakHealthUrl);
+
+    builder.Services.AddModules(builder.Configuration);
   }
 
-  app.MapEndpoints();
-
-  app.MapHealthChecks("health", new HealthCheckOptions
+  var app = builder.Build();
   {
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-  });
+    if (app.Environment.IsDevelopment())
+    {
+      app.UseSwagger();
+      app.UseSwaggerUI();
 
-  app.UseLogContextTraceLogging();
+      app.ApplyMigrations();
+    }
 
-  app.UseSerilogRequestLogging();
+    app.MapEndpoints();
 
-  app.UseExceptionHandler();
+    app.MapHealthChecks("health", new HealthCheckOptions
+    {
+      ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+    });
 
-  app.UseAuthentication();
+    app.UseLogContextTraceLogging();
 
-  app.UseAuthorization();
+    app.UseSerilogRequestLogging();
 
-  app.UseFastEndpoints()
-    .UseSwaggerGen();
+    app.UseExceptionHandler();
 
-  app.Run();
+    app.UseAuthentication();
+
+    app.UseAuthorization();
+
+    app.UseFastEndpoints()
+      .UseSwaggerGen();
+
+    app.Run();
+  }
+}
+catch (Exception ex) when (!ex.GetType().Name.Equals("StopTheHostException", StringComparison.Ordinal))
+{
+  StaticLogger.EnsureInitialized();
+  Log.Fatal(ex, "Unhandled exception");
+}
+finally
+{
+  StaticLogger.EnsureInitialized();
+  Log.Information("Stopping web host");
+  Log.CloseAndFlush();
 }
 
 public partial class Program

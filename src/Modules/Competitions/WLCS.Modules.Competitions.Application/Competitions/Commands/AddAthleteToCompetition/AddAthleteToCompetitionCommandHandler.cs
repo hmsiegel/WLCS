@@ -5,11 +5,11 @@
 namespace WLCS.Modules.Competitions.Application.Competitions.Commands.AddAthleteToCompetition;
 
 internal sealed class AddAthleteToCompetitionCommandHandler(
-  ICompetitionRespository competitionRepository,
+  ICompetitionRepository competitionRepository,
   IAthleteRepository athleteRepository)
   : ICommandHandler<AddAthleteToCompetitionCommand>
 {
-  private readonly ICompetitionRespository _competitionRepository = competitionRepository;
+  private readonly ICompetitionRepository _competitionRepository = competitionRepository;
   private readonly IAthleteRepository _athleteRepository = athleteRepository;
 
   public async Task<Result> Handle(AddAthleteToCompetitionCommand request, CancellationToken cancellationToken)

@@ -11,3 +11,4 @@ global using WLCS.Modules.Competitions.Domain.Competitions.ValueObjects;
 global using WLCS.Modules.Competitions.Domain.Meets.DomainEvents;
 global using WLCS.Modules.Competitions.Domain.Meets.Errors;
 global using WLCS.Modules.Competitions.Domain.Meets.ValueObjects;
+global using WLCS.Modules.Competitions.Domain.Platforms;

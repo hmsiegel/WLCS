@@ -14,7 +14,7 @@ public static class AthleteErrors
     "Athlete.NotFound",
     $"User with id {identitiyId} not found");
 
-  public static Error AthleteAlreadExists(string memberId) => Error.Conflict(
+  public static Error AthleteAlreadyExists(string memberId) => Error.Conflict(
     "Athlete.AthleteAlreadyExists",
     $"The athlete with the membership ID {memberId} is already registered.");
 }

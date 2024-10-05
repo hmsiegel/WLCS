@@ -16,3 +16,6 @@ global using WLCS.Modules.Competitions.Domain.Meets.Errors;
 global using WLCS.Modules.Competitions.Domain.Meets.ValueObjects;
 global using WLCS.Modules.Competitions.Domain.Platforms;
 global using WLCS.Modules.Competitions.UnitTests.Abstractions;
+global using WLCS.Modules.Competitions.UnitTests.Athletes;
+global using WLCS.Modules.Competitions.UnitTests.Competitions;
+global using WLCS.Modules.Competitions.UnitTests.Platforms;

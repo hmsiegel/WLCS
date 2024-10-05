@@ -1,6 +1,8 @@
 ﻿// <copyright file="CompetitionModule.cs" company="WLCS">
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
+using WLCS.Modules.Competitions.Application.Abstractions.Data;
+
 using ILogger = Serilog.ILogger;
 
 namespace WLCS.Modules.Competitions.Infrastructure;

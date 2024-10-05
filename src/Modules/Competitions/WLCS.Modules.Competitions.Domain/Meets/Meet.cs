@@ -7,6 +7,7 @@ public sealed class Meet : Entity<MeetId>
 {
   private readonly List<Guid> _competitions = [];
   private readonly List<Guid> _athletes = [];
+  private readonly List<Guid> _platforms = [];
 
   private Meet(
     MeetName name,
@@ -43,6 +44,8 @@ public sealed class Meet : Entity<MeetId>
   public IReadOnlyCollection<Guid> Competitions => [.. _competitions];
 
   public IReadOnlyCollection<Guid> Athletes => [.. _athletes];
+
+  public IReadOnlyCollection<Guid> Platforms => [.. _platforms];
 
   public static Result<Meet> Create(
     MeetName name,
@@ -95,7 +98,7 @@ public sealed class Meet : Entity<MeetId>
   {
     ArgumentNullException.ThrowIfNull(competition);
 
-    if (Competitions.Contains(competition.Id.Value))
+    if (_competitions.Contains(competition.Id.Value))
     {
       return Result.Failure(MeetErrors.CompetitionAlreadyAdded);
     }
@@ -111,7 +114,7 @@ public sealed class Meet : Entity<MeetId>
   {
     ArgumentNullException.ThrowIfNull(competition);
 
-    if (!Competitions.Contains(competition.Id.Value))
+    if (!_competitions.Contains(competition.Id.Value))
     {
       return Result.Failure(MeetErrors.CompetitionNotFound(competition.Id.Value));
     }
@@ -123,15 +126,67 @@ public sealed class Meet : Entity<MeetId>
     return Result.Success();
   }
 
-  public void AddAthleteToMeet(Athlete athlete)
+  public Result AddAthlete(Athlete athlete)
+  {
+    ArgumentNullException.ThrowIfNull(athlete);
+
+    if (_athletes.Contains(athlete.Id))
+    {
+      return Result.Failure(MeetErrors.AthleteAlreadyAdded);
+    }
+
+    _athletes.Add(athlete.Id);
+
+    Raise(new AthleteAddedToMeetDomainEvent(Id.Value, athlete.Id));
+
+    return Result.Success();
+  }
+
+  public Result RemoveAthlete(Athlete athlete)
   {
     ArgumentNullException.ThrowIfNull(athlete);
 
     if (!_athletes.Contains(athlete.Id))
     {
-      _athletes.Add(athlete.Id);
-
-      Raise(new AthleteAddedToMeetDomainEvent(Id.Value, athlete.Id));
+      return Result.Failure(MeetErrors.AthleteNotFound(athlete.Id));
     }
+
+    _athletes.Remove(athlete.Id);
+
+    Raise(new AthleteRemovedFromMeetDomainEvent(Id.Value, athlete.Id));
+
+    return Result.Success();
+  }
+
+  public Result AddPlatform(Platform platform)
+  {
+    ArgumentNullException.ThrowIfNull(platform);
+
+    if (_platforms.Contains(platform.Id.Value))
+    {
+      return Result.Failure(MeetErrors.PlatformAlreadyAdded);
+    }
+
+    _platforms.Add(platform.Id.Value);
+
+    Raise(new PlatformAddedToMeetDomainEvent(Id.Value, platform.Id.Value));
+
+    return Result.Success();
+  }
+
+  public Result RemovePlatform(Platform platform)
+  {
+    ArgumentNullException.ThrowIfNull(platform);
+
+    if (!_platforms.Contains(platform.Id.Value))
+    {
+      return Result.Failure(MeetErrors.PlatformNotFound(platform.Id.Value));
+    }
+
+    _platforms.Remove(platform.Id.Value);
+
+    Raise(new PlatformRemovedFromMeetDomainEvent(Id.Value, platform.Id.Value));
+
+    return Result.Success();
   }
 }

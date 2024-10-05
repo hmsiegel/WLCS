@@ -16,7 +16,7 @@ internal sealed class GetPlatformQueryHandler(IPlatformRepository platformReposi
 
     if (platform is null)
     {
-      return Result.Failure<GetPlatformResponse>(PlatfromErrors.NotFound(query.PlatformId));
+      return Result.Failure<GetPlatformResponse>(PlatformErrors.NotFound(query.PlatformId));
     }
 
     return new GetPlatformResponse(platform.PlatformName.Value);

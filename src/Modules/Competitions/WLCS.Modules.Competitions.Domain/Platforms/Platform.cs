@@ -41,13 +41,36 @@ public sealed class Platform : Entity<PlatformId>
     return platform;
   }
 
-  public void AddCompetition(Competition competition)
+  public Result AddCompetition(Competition competition)
   {
     if (_competitions.Contains(competition))
     {
-      return;
+      return Result.Failure(PlatformErrors.CompetitionAlreadyExists);
     }
 
     _competitions.Add(competition);
+
+    return Result.Success();
+  }
+
+  public Result RemoveCompetition(Competition competition)
+  {
+    ArgumentNullException.ThrowIfNull(competition);
+
+    if (!_competitions.Contains(competition))
+    {
+      return Result.Failure(PlatformErrors.CompetitionNotFound(competition.Id.Value));
+    }
+
+    _competitions.Remove(competition);
+
+    return Result.Success();
+  }
+
+  public void Update(PlatformName platformName)
+  {
+    PlatformName = Guard.Against.Default(platformName);
+
+    Raise(new PlatformUpdatedDomainEvent(Id.Value, MeetId.Value));
   }
 }

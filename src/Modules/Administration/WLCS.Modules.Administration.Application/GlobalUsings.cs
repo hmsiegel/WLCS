@@ -9,9 +9,6 @@ global using FluentValidation;
 
 global using MediatR;
 
-global using Microsoft.Extensions.DependencyInjection;
-
-global using WLCS.Common.Application;
 global using WLCS.Common.Application.Authorization;
 global using WLCS.Common.Application.Behaviors;
 global using WLCS.Common.Application.Data;
@@ -19,6 +16,7 @@ global using WLCS.Common.Application.EventBus;
 global using WLCS.Common.Application.Exceptions;
 global using WLCS.Common.Application.Messaging;
 global using WLCS.Common.Domain;
+global using WLCS.Modules.Administration.Application.Abstractions.Data;
 global using WLCS.Modules.Administration.Application.Abstractions.Identity;
 global using WLCS.Modules.Administration.Application.Abstractions.Users;
 global using WLCS.Modules.Administration.Application.Users.Queries.GetUser;

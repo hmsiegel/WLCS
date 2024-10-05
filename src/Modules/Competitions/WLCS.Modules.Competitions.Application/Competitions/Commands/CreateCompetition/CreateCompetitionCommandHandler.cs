@@ -7,12 +7,12 @@ using CompetitionName = WLCS.Modules.Competitions.Domain.Competitions.ValueObjec
 namespace WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 
 internal sealed class CreateCompetitionCommandHandler(
-  ICompetitionRespository competitionRepository,
+  ICompetitionRepository competitionRepository,
   IMeetRepository meetRepository,
   IUnitOfWork unitOfWork)
   : ICommandHandler<CreateCompetitionCommand, Guid>
 {
-  private readonly ICompetitionRespository _competitionRepository = competitionRepository;
+  private readonly ICompetitionRepository _competitionRepository = competitionRepository;
   private readonly IMeetRepository _meetRepository = meetRepository;
   private readonly IUnitOfWork _unitOfWork = unitOfWork;
 

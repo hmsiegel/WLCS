@@ -9,20 +9,8 @@ public class MeetTests : BaseTest
   [Fact]
   public void CreateMeet_ShouldRaiseDomainEvent_WhenMeetIsCreated()
   {
-    // Arrange
-    var name = MeetName.Create(Faker.Lorem.Word());
-    var location = Location.Create(Faker.Address.City(), Faker.Address.State());
-    var venue = Venue.Create(Faker.Company.CompanyName());
-    var startDate = DateOnly.FromDateTime(Faker.Date.Recent());
-    var endDate = DateOnly.FromDateTime(Faker.Date.Future());
-
     // Act
-    var meet = Meet.Create(
-      name.Value,
-      location.Value,
-      venue.Value,
-      startDate,
-      endDate);
+    var meet = MeetUtils.CreateMeet();
 
     var domainEvent = AssertDomainEventWasPublished<MeetCreatedDomainEvent>(meet.Value);
 
@@ -33,20 +21,7 @@ public class MeetTests : BaseTest
   [Fact]
   public void CreateMeet_ShouldReturnFailure_WhenEndDatePrecedesStartDate()
   {
-    // Arrange
-    var name = MeetName.Create(Faker.Lorem.Word());
-    var location = Location.Create(Faker.Address.City(), Faker.Address.State());
-    var venue = Venue.Create(Faker.Company.CompanyName());
-    var startDate = DateOnly.FromDateTime(Faker.Date.Recent());
-    var endDate = startDate.AddDays(-1);
-
-    // Act
-    var result = Meet.Create(
-      name.Value,
-      location.Value,
-      venue.Value,
-      startDate,
-      endDate);
+    var result = MeetUtils.CreateMeet();
 
     // Assert
     result.IsSuccess.Should().BeFalse();
@@ -57,105 +32,220 @@ public class MeetTests : BaseTest
   public void Archive_ShouldRaiseDomainEvent_WhenMeetIsArchived()
   {
     // Arrange
-    var meet = Meet.Create(
-      MeetName.Create(Faker.Lorem.Word()).Value,
-      Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
-      Venue.Create(Faker.Company.CompanyName()).Value,
-      DateOnly.FromDateTime(Faker.Date.Recent()),
-      DateOnly.FromDateTime(Faker.Date.Future())).Value;
+    var meet = MeetUtils.CreateMeet();
 
     // Act
-    meet.ArchiveMeet();
+    meet.Value.ArchiveMeet();
 
-    var domainEvent = AssertDomainEventWasPublished<MeetArchivedDomainEvent>(meet);
+    var domainEvent = AssertDomainEventWasPublished<MeetArchivedDomainEvent>(meet.Value);
 
     // Assert
-    domainEvent.MeetId.Should().Be(meet.Id.Value);
+    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
   }
 
   [Fact]
   public void AddCompetition_ShouldRaiseDomainEvent_WhenCompetitionIsAdded()
   {
     // Arrange
-    var meet = Meet.Create(
-      MeetName.Create(Faker.Lorem.Word()).Value,
-      Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
-      Venue.Create(Faker.Company.CompanyName()).Value,
-      DateOnly.FromDateTime(Faker.Date.Recent()),
-      DateOnly.FromDateTime(Faker.Date.Future())).Value;
+    var meet = MeetUtils.CreateMeet();
 
-    var competition = Competition.Create(
-      MeetId.Create(meet.Id.Value),
-      Domain.Competitions.ValueObjects.CompetitionName.Create(Faker.Company.CompanyName()).Value,
-      Scope.FromValue(Faker.Random.Number(0, 1)),
-      CompetitionType.FromValue(Faker.Random.Number(0, 2)),
-      AgeDivision.FromValue(Faker.Random.Number(0, 6)));
+    var competition = CompetitionUtils.CreateCompetition(meet.Value);
 
     // Act
-    meet.AddCompetition(competition);
+    meet.Value.AddCompetition(competition.Value);
 
-    var domainEvent = AssertDomainEventWasPublished<CompetitionAddedToMeetDomainEvent>(meet);
+    var domainEvent = AssertDomainEventWasPublished<CompetitionAddedToMeetDomainEvent>(meet.Value);
 
     // Assert
-    domainEvent.MeetId.Should().Be(meet.Id.Value);
-    domainEvent.CompetitionId.Should().Be(competition.Id.Value);
+    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
+    domainEvent.CompetitionId.Should().Be(competition.Value.Id.Value);
+  }
+
+  [Fact]
+  public void AddCompetition_ShouldReturnFailure_WhenCompetitionIsAlreadyAdded()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var competition = CompetitionUtils.CreateCompetition(meet.Value);
+
+    // Act
+    meet.Value.AddCompetition(competition.Value);
+
+    var result = meet.Value.AddCompetition(competition.Value);
+
+    // Assert
+    result.IsSuccess.Should().BeFalse();
+    result.Errors[0].Should().Be(MeetErrors.CompetitionAlreadyAdded);
   }
 
   [Fact]
   public void RemoveCompetition_ShouldRaiseDomainEvent_WhenCompetitionIsRemoved()
   {
     // Arrange
-    var meet = Meet.Create(
-      MeetName.Create(Faker.Lorem.Word()).Value,
-      Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
-      Venue.Create(Faker.Company.CompanyName()).Value,
-      DateOnly.FromDateTime(Faker.Date.Recent()),
-      DateOnly.FromDateTime(Faker.Date.Future())).Value;
+    var meet = MeetUtils.CreateMeet();
 
-    var competition = Competition.Create(
-      MeetId.Create(meet.Id.Value),
-      Domain.Competitions.ValueObjects.CompetitionName.Create(Faker.Company.CompanyName()).Value,
-      Scope.FromValue(Faker.Random.Number(0, 1)),
-      CompetitionType.FromValue(Faker.Random.Number(0, 2)),
-      AgeDivision.FromValue(Faker.Random.Number(0, 6)));
+    var competition = CompetitionUtils.CreateCompetition(meet.Value);
 
-    meet.AddCompetition(competition);
+    meet.Value.AddCompetition(competition.Value);
 
     // Act
-    meet.RemoveCompetition(competition);
+    meet.Value.RemoveCompetition(competition.Value);
 
-    var domainEvent = AssertDomainEventWasPublished<CompetitionRemovedFromMeetDomainEvent>(meet);
+    var domainEvent = AssertDomainEventWasPublished<CompetitionRemovedFromMeetDomainEvent>(meet.Value);
 
     // Assert
-    domainEvent.MeetId.Should().Be(meet.Id.Value);
-    domainEvent.CompetitionId.Should().Be(competition.Id.Value);
+    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
   }
 
   [Fact]
-  public void AddAthlete_ShouldRaiseDomainEvent_WhenAthleteIsAddedToCompetition()
+  public void AddAthlete_ShouldRaiseDomainEvent_WhenAthleteIsAddedToMeet()
   {
     // Arrange
-    var meet = Meet.Create(
-      MeetName.Create(Faker.Lorem.Word()).Value,
-      Location.Create(Faker.Address.City(), Faker.Address.State()).Value,
-      Venue.Create(Faker.Company.CompanyName()).Value,
-      DateOnly.FromDateTime(Faker.Date.Recent()),
-      DateOnly.FromDateTime(Faker.Date.Future())).Value;
+    var meet = MeetUtils.CreateMeet();
 
-    var athlete = Athlete.Create(
-      Faker.Random.Guid(),
-      Faker.Random.Number(5, 6).ToString(CultureInfo.InvariantCulture),
-      Faker.Name.FirstName(),
-      Faker.Name.LastName(),
-      Faker.Date.PastDateOnly(),
-      Gender.FromValue(Faker.Random.Number(0, 1)));
+    var athlete = AthleteUtils.CreateAthlete();
 
     // Act
-    meet.AddAthleteToMeet(athlete);
+    meet.Value.AddAthlete(athlete.Value);
 
-    var domainEvent = AssertDomainEventWasPublished<AthleteAddedToMeetDomainEvent>(meet);
+    var domainEvent = AssertDomainEventWasPublished<AthleteAddedToMeetDomainEvent>(meet.Value);
 
     // Assert
-    domainEvent.MeetId.Should().Be(meet.Id.Value);
+    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
+  }
+
+  [Fact]
+  public void RemoveAthlete_ShouldRaiseDomainEvent_WhenAthleteIsRemovedFromMeet()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var athlete = AthleteUtils.CreateAthlete();
+
+    // Act
+    meet.Value.AddAthlete(athlete.Value);
+
+    meet.Value.RemoveAthlete(athlete.Value);
+
+    var domainEvent = AssertDomainEventWasPublished<AthleteRemovedFromMeetDomainEvent>(meet.Value);
+
+    // Assert
+    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
+  }
+
+  [Fact]
+  public void AddAthlete_ShouldReturnFailure_WhenAthleteIsAlreadyAddedToMeet()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var athlete = AthleteUtils.CreateAthlete();
+
+    // Act
+    meet.Value.AddAthlete(athlete.Value);
+
+    var result = meet.Value.AddAthlete(athlete.Value);
+
+    // Assert
+    result.IsSuccess.Should().BeFalse();
+    result.Errors[0].Should().Be(MeetErrors.AthleteAlreadyAdded);
+  }
+
+  [Fact]
+  public void AddPlatform_ShouldRaiseDomainEvent_WhenPlatformIsAddedToMeet()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var platform = PlatformUtils.CreatePlatform(meet.Value);
+
+    // Act
+    meet.Value.AddPlatform(platform.Value);
+
+    var domainEvent = AssertDomainEventWasPublished<PlatformAddedToMeetDomainEvent>(meet.Value);
+
+    // Assert
+    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
+    domainEvent.PlatformId.Should().Be(platform.Value.Id.Value);
+  }
+
+  [Fact]
+  public void AddPlatform_ShouldReturnFailure_WhenPlatformIsAlreadyAddedToMeet()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var platform = PlatformUtils.CreatePlatform(meet.Value);
+
+    // Act
+    meet.Value.AddPlatform(platform.Value);
+
+    var result = meet.Value.AddPlatform(platform.Value);
+
+    // Assert
+    result.IsSuccess.Should().BeFalse();
+    result.Errors[0].Should().Be(MeetErrors.PlatformAlreadyAdded);
+  }
+
+  [Fact]
+  public void RemovePlatform_ShouldRaiseDomainEvent_WhenPlatformIsRemovedFromMeet()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var platform = PlatformUtils.CreatePlatform(meet.Value);
+
+    // Act
+    meet.Value.AddPlatform(platform.Value);
+
+    meet.Value.RemovePlatform(platform.Value);
+
+    var domainEvent = AssertDomainEventWasPublished<PlatformRemovedFromMeetDomainEvent>(meet.Value);
+
+    // Assert
+    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
+  }
+
+  [Fact]
+  public void RemovePlatform_ShouldReturnFailure_WhenPlatformDoesNotExist()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var platform = PlatformUtils.CreatePlatform(meet.Value);
+
+    // Act
+    var result = meet.Value.RemovePlatform(platform.Value);
+
+    result.Errors[0].Should().Be(MeetErrors.PlatformNotFound(platform.Value.Id.Value));
+  }
+
+  [Fact]
+  public void RemoveCompetition_ShouldReturnFailure_WhenCompetitionDoesNotExist()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var competition = CompetitionUtils.CreateCompetition(meet.Value);
+
+    // Act
+    var result = meet.Value.RemoveCompetition(competition.Value);
+
+    result.Errors[0].Should().Be(MeetErrors.CompetitionNotFound(competition.Value.Id.Value));
+  }
+
+  [Fact]
+  public void RemoveAthlete_ShouldReturnFailure_WhenAthleteDoesNotExist()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+
+    var athlete = AthleteUtils.CreateAthlete();
+
+    // Act
+    var result = meet.Value.RemoveAthlete(athlete.Value);
+
+    result.Errors[0].Should().Be(MeetErrors.AthleteNotFound(athlete.Value.Id));
   }
 }

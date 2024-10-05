@@ -35,6 +35,7 @@ global using WLCS.Common.Infrastructure.Inbox;
 global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;
 global using WLCS.Modules.Athletes.IntegrationEvents;
+global using WLCS.Modules.Competitions.Application.Abstractions.Data;
 global using WLCS.Modules.Competitions.Domain.Athletes;
 global using WLCS.Modules.Competitions.Domain.Competitions;
 global using WLCS.Modules.Competitions.Domain.Competitions.ValueObjects;

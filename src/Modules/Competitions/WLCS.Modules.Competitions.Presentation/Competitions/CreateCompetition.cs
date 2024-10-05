@@ -2,9 +2,11 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
+using WLCS.Modules.Competitions.Application.Competitions.Commands.UpdateCompetition;
+
 namespace WLCS.Modules.Competitions.Presentation.Competitions;
 
-internal sealed class CreateCompetition(ISender sender) : Endpoint<CreateCompetitionRequest>
+internal sealed class CreateCompetition(ISender sender) : Endpoint<CompetitionRequest>
 {
   private readonly ISender _sender = sender;
 
@@ -12,10 +14,10 @@ internal sealed class CreateCompetition(ISender sender) : Endpoint<CreateCompeti
   {
     Post("meets/{meetId}/competition");
     Policies(Presentation.Permissions.CreateCompetition);
-    Options(opt => opt.WithTags(Presentation.Tags.Competitions));
+    Options(opt => opt.WithTags(Presentation.Tags.Meets));
   }
 
-  public override async Task HandleAsync(CreateCompetitionRequest req, CancellationToken ct)
+  public override async Task HandleAsync(CompetitionRequest req, CancellationToken ct)
   {
     var meetId = Route<Guid>("meetId");
 

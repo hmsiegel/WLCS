@@ -41,6 +41,7 @@ global using WLCS.Common.Infrastructure.Inbox;
 global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;
 global using WLCS.Common.Presentation.Endpoints;
+global using WLCS.Modules.Administration.Application.Abstractions.Data;
 global using WLCS.Modules.Administration.Application.Abstractions.Identity;
 global using WLCS.Modules.Administration.Application.Abstractions.Users;
 global using WLCS.Modules.Administration.Application.Users.Queries.GetUserPermissions;

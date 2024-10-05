@@ -68,4 +68,28 @@ public sealed class Competition : Entity<CompetitionId>
 
     _athletes.Add(athlete);
   }
+
+  public void RemoveAthlete(Athlete athlete)
+  {
+    if (!_athletes.Contains(athlete))
+    {
+      return;
+    }
+
+    _athletes.Remove(athlete);
+  }
+
+  public void Update(
+    CompetitionName competitionName,
+    Scope scope,
+    CompetitionType competitionType,
+    AgeDivision ageDivision)
+  {
+    Name = Guard.Against.Default(competitionName);
+    Scope = Guard.Against.Default(scope);
+    CompetitionType = Guard.Against.Default(competitionType);
+    AgeDivision = Guard.Against.Default(ageDivision);
+
+    Raise(new CompetitionUpdatedDomainEvent(Id.Value, MeetId.Value));
+  }
 }

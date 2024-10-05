@@ -13,6 +13,11 @@ internal sealed class PlatformRepository(CompetitionsDbContext dbContext) : IPla
     _dbContext.Platforms.Add(platform);
   }
 
+  public void Update(Platform platform)
+  {
+    _dbContext.Platforms.Update(platform);
+  }
+
   public async Task<IEnumerable<Platform>> GetAllAsync(CancellationToken cancellationToken = default)
   {
     return await _dbContext.Platforms.ToListAsync(cancellationToken);

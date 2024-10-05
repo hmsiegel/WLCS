@@ -14,7 +14,7 @@ internal sealed class ListPlatformsByMeetQueryHandler(IPlatformRepository platfo
 
     if (result is null)
     {
-      return Result.Failure<List<GetPlatformResponse>>(PlatfromErrors.NoPlatformsFound);
+      return Result.Failure<List<GetPlatformResponse>>(PlatformErrors.NoPlatformsFound);
     }
 
     var platforms = result.Select(p => new GetPlatformResponse(p.PlatformName.Value)).ToList();

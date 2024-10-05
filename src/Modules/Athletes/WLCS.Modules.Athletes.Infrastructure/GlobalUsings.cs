@@ -33,6 +33,7 @@ global using WLCS.Common.Infrastructure.Extensions;
 global using WLCS.Common.Infrastructure.Inbox;
 global using WLCS.Common.Infrastructure.Outbox;
 global using WLCS.Common.Infrastructure.Serialization;
+global using WLCS.Modules.Athletes.Application.Abstractions.Data;
 global using WLCS.Modules.Athletes.Domain.Athletes;
 global using WLCS.Modules.Athletes.Domain.Athletes.ValueObjects;
 global using WLCS.Modules.Athletes.Infrastructure.Database;

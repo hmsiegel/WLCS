@@ -8,6 +8,8 @@ public interface IPlatformRepository
 {
   void Add(Platform platform);
 
+  void Update(Platform platform);
+
   Task<Platform?> GetAsync(Guid id, CancellationToken cancellationToken = default);
 
   Task<IEnumerable<Platform>> GetAllAsync(CancellationToken cancellationToken = default);

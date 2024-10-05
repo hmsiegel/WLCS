@@ -14,7 +14,7 @@ internal sealed class AddAthlete(
   {
     Post("competitions/{competitionId}/athletes/{athleteId}");
     Policies(Presentation.Permissions.ModifyCompetition);
-    Options(opt => opt.WithTags(Presentation.Tags.Competitions));
+    Options(opt => opt.WithTags(Presentation.Tags.Meets));
   }
 
   public override async Task HandleAsync(AddAthleteToCompetitionRequest req, CancellationToken ct)

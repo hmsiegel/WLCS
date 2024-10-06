@@ -21,7 +21,7 @@ internal sealed class ArchiveMeetCommandHandler(
       return Result.Failure(MeetErrors.NotFound(command.MeetId));
     }
 
-    meet.ArchiveMeet();
+    meet.ToggleIsActive(false);
 
     await _unitOfWork.SaveChangesAsync(cancellationToken);
 

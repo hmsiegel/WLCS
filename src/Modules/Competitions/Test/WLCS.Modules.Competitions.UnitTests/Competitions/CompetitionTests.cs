@@ -2,7 +2,7 @@
 // Copyright (c) WLCS. All rights reserved.
 // </copyright>
 
-using CompetitionName = WLCS.Modules.Competitions.Domain.Competitions.ValueObjects.CompetitionName;
+using WLCS.Modules.Competitions.UnitTests.Meets;
 
 namespace WLCS.Modules.Competitions.UnitTests.Competitions;
 
@@ -30,5 +30,27 @@ public class CompetitionTests : BaseTest
 
     // Assert
     domainEvent.CompetitionId.Should().Be(competition.Id.Value);
+  }
+
+  [Fact]
+  public void UpdateCompetition_ShouldRaiseDomainEvent_WhenCompetitionIsUpdate()
+  {
+    // Arrange
+    var meet = MeetUtils.CreateMeet();
+    var competition = CompetitionUtils.CreateCompetition(meet.Value);
+
+    // Act
+    var result = competition.Value;
+    result.Update(
+      CompetitionName.Create(Faker.Lorem.Word()).Value,
+      Scope.FromValue(Faker.Random.Number(0, 1)),
+      CompetitionType.FromValue(Faker.Random.Number(0, 2)),
+      AgeDivision.FromValue(Faker.Random.Number(0, 6)));
+
+    var domainEvent = AssertDomainEventWasPublished<CompetitionUpdatedDomainEvent>(result);
+
+    // Assert
+    domainEvent.CompetitionId.Should().Be(result.Id.Value);
+    domainEvent.MeetId.Should().Be(result.MeetId.Value);
   }
 }

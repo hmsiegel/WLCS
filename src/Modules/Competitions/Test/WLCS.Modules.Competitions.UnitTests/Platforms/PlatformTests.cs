@@ -24,4 +24,24 @@ public class PlatformTests : BaseTest
     domainEvent.MeetId.Should().Be(platform.MeetId.Value);
     domainEvent.PlatformId.Should().Be(platform.Id.Value);
   }
+
+  [Fact]
+  public void UpdatePlatform_ShouldRaiseDomainEvent_WhenPlatformIsUpdate()
+  {
+    // Arrange
+    var name = PlatformName.Create(Faker.Lorem.Word());
+    var meetId = MeetId.Create(Faker.Random.Guid());
+
+    var platform = Platform.Create(
+      meetId,
+      name.Value);
+
+    platform.Update(platformName: PlatformName.Create(Faker.Lorem.Word()).Value);
+
+    var domainEvent = AssertDomainEventWasPublished<PlatformUpdatedDomainEvent>(platform);
+
+    // Assert
+    domainEvent.MeetId.Should().Be(platform.MeetId.Value);
+    domainEvent.PlatformId.Should().Be(platform.Id.Value);
+  }
 }

@@ -9,4 +9,4 @@ public sealed record SendEmailService(
     string Subject,
     string Body,
     string? Cc = null,
-    string? Bcc = null) : ICommand<Guid>;
+    string? Bcc = null) : IRequest<Result<Guid>>;

@@ -5,7 +5,7 @@
 namespace WLCS.Modules.Communication.Application.Commands.SendEmail;
 
 internal sealed class SendEmailServiceHandler(IOutboxService outboxService)
-    : ICommandHandler<SendEmailService, Guid>
+    : IRequestHandler<SendEmailService, Result<Guid>>
 {
   private readonly IOutboxService _outboxService = outboxService;
 

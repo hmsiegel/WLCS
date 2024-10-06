@@ -10,7 +10,7 @@ internal sealed class CompetitionUtils : BaseTest
   {
     return Competition.Create(
       MeetId.Create(meet.Id.Value),
-      Domain.Competitions.ValueObjects.CompetitionName.Create(Faker.Company.CompanyName()).Value,
+      CompetitionName.Create(Faker.Company.CompanyName()).Value,
       Scope.FromValue(Faker.Random.Number(0, 1)),
       CompetitionType.FromValue(Faker.Random.Number(0, 2)),
       AgeDivision.FromValue(Faker.Random.Number(0, 6)));

@@ -29,18 +29,37 @@ public class MeetTests : BaseTest
   }
 
   [Fact]
-  public void Archive_ShouldRaiseDomainEvent_WhenMeetIsArchived()
+  public void ArchiveMeet_ShouldRaiseDomainEvent_WhenMeetIsArchived()
   {
     // Arrange
-    var meet = MeetUtils.CreateMeet();
+    var result = MeetUtils.CreateMeet();
+    var meet = result.Value;
 
     // Act
-    meet.Value.ArchiveMeet();
+    meet.ToggleIsActive(false);
 
-    var domainEvent = AssertDomainEventWasPublished<MeetArchivedDomainEvent>(meet.Value);
+    var domainEvent = AssertDomainEventWasPublished<MeetArchivedDomainEvent>(meet);
 
     // Assert
-    domainEvent.MeetId.Should().Be(meet.Value.Id.Value);
+    domainEvent.MeetId.Should().Be(meet.Id.Value);
+  }
+
+  [Fact]
+  public void ReactivateMeet_ShouldRaiseDomainEvent_WhenMeetIsReactivated()
+  {
+    // Arrange
+    var result = MeetUtils.CreateMeet();
+    var meet = result.Value;
+
+    // Act
+    meet.ToggleIsActive(false);
+
+    meet.ToggleIsActive(true);
+
+    var domainEvent = AssertDomainEventWasPublished<MeetReactivatedDomainEvent>(meet);
+
+    // Assert
+    domainEvent.MeetId.Should().Be(meet.Id.Value);
   }
 
   [Fact]

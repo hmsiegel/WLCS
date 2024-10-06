@@ -71,11 +71,18 @@ public sealed class Meet : Entity<MeetId>
     return meet;
   }
 
-  public void ArchiveMeet()
+  public void ToggleIsActive(bool isActive)
   {
-    IsActive = false;
-
-    Raise(new MeetArchivedDomainEvent(Id.Value));
+    if (!isActive)
+    {
+      IsActive = true;
+      Raise(new MeetReactivatedDomainEvent(Id.Value));
+    }
+    else
+    {
+      IsActive = false;
+      Raise(new MeetArchivedDomainEvent(Id.Value));
+    }
   }
 
   public void UpdateMeet(

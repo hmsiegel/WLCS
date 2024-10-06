@@ -23,6 +23,7 @@ global using WLCS.Modules.Competitions.Application.Competitions.Commands.AddAthl
 global using WLCS.Modules.Competitions.Application.Competitions.Commands.CreateCompetition;
 global using WLCS.Modules.Competitions.Application.Competitions.Commands.RemoveCompetitionFromMeet;
 global using WLCS.Modules.Competitions.Application.Competitions.Commands.UpdateCompetition;
+global using WLCS.Modules.Competitions.Application.Meets.Commands.ArchiveMeet;
 global using WLCS.Modules.Competitions.Application.Meets.Commands.CreateMeet;
 global using WLCS.Modules.Competitions.Application.Meets.Queries;
 global using WLCS.Modules.Competitions.Application.Meets.Queries.GetMeet;

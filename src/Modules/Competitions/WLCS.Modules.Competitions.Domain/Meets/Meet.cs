@@ -73,14 +73,14 @@ public sealed class Meet : Entity<MeetId>
 
   public void ToggleIsActive(bool isActive)
   {
-    if (!isActive)
+    if (!IsActive)
     {
-      IsActive = true;
+      IsActive = isActive;
       Raise(new MeetReactivatedDomainEvent(Id.Value));
     }
     else
     {
-      IsActive = false;
+      IsActive = isActive;
       Raise(new MeetArchivedDomainEvent(Id.Value));
     }
   }

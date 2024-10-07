@@ -21,7 +21,18 @@ public class MeetTests : BaseTest
   [Fact]
   public void CreateMeet_ShouldReturnFailure_WhenEndDatePrecedesStartDate()
   {
-    var result = MeetUtils.CreateMeet();
+    var name = MeetName.Create(Faker.Lorem.Word());
+    var location = Location.Create(Faker.Address.City(), Faker.Address.State());
+    var venue = Venue.Create(Faker.Company.CompanyName());
+    var startDate = DateOnly.FromDateTime(Faker.Date.Recent());
+    var endDate = startDate.AddDays(Faker.Random.Int(-20, -1));
+
+    var result = Meet.Create(
+      name.Value,
+      location.Value,
+      venue.Value,
+      startDate,
+      endDate);
 
     // Assert
     result.IsSuccess.Should().BeFalse();
